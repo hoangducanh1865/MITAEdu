@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AvatarDropdown from "./AvatarDropdown";
 
 const NAV_ITEMS = [
@@ -15,95 +15,118 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [search, setSearch] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    // Lấy state từ localStorage
+    const saved = localStorage.getItem("sidebarOpen");
+    if (saved !== null) {
+      setSidebarOpen(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Lưu state và update DOM
+    localStorage.setItem("sidebarOpen", JSON.stringify(sidebarOpen));
+    
+    const sidebar = document.querySelector(".sidebar") as HTMLElement | null;
+    const mainContent = document.querySelector(".main-content") as HTMLElement | null;
+    
+    if (sidebar) {
+      if (sidebarOpen) {
+        sidebar.style.display = "block";
+        sidebar.style.opacity = "1";
+      } else {
+        sidebar.style.display = "none";
+        sidebar.style.opacity = "0";
+      }
+    }
+    
+    if (mainContent) {
+      mainContent.style.flex = sidebarOpen ? "1" : "1";
+    }
+  }, [sidebarOpen]);
 
   return (
-    <header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: "#fff",
-        borderBottom: "2px solid #f0d5d5",
-        padding: "0 28px",
-        height: "62px",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        gap: "12px",
-      }}
-    >
-      {/* Left */}
-      <div style={{ display: "flex", alignItems: "center", gap: "18px", flex: 1 }}>
-        <Link
-          href="/"
-          style={{
-            display: "flex", alignItems: "center", gap: "8px",
-            fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem",
-            color: "#d32f2f",
-          }}
-        >
-          <span style={{ fontSize: "1.6rem" }}>🌙</span>
-          <span>MITA<span style={{ color: "#b71c1c" }}>Edu</span></span>
+    <header style={{
+      background: "#fff", borderBottom: "1px solid #f0d5d5",
+      padding: "0 32px", height: "62px", display: "flex",
+      alignItems: "center", justifyContent: "space-between",
+      position: "sticky", top: 0, zIndex: 100,
+    }}>
+      {/* Left: Logo + Search */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <Link href="/" style={{
+          fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.2rem",
+          color: "#d32f2f", display: "flex", alignItems: "center", gap: "6px",
+          textDecoration: "none",
+        }}>
+          <span style={{ fontSize: "1.5rem" }}>🌙</span>
+          MITA<span style={{ color: "#b71c1c" }}>Edu</span>
         </Link>
-        <div
+
+        {/* Toggle Sidebar Button */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
-            display: "flex", alignItems: "center", gap: "10px",
-            background: "#fdf0f0", border: "1.5px solid #f0d5d5",
-            borderRadius: "10px", padding: "8px 14px", width: "260px",
+            background: "none", border: "1px solid #f0d5d5",
+            width: "36px", height: "36px", borderRadius: "8px",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", color: "#d32f2f", fontSize: "1rem",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#fdf0f0";
+            e.currentTarget.style.borderColor = "#d32f2f";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "none";
+            e.currentTarget.style.borderColor = "#f0d5d5";
           }}
         >
-          <i className="fas fa-search" style={{ color: "#d32f2f", fontSize: "0.85rem" }} />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Tìm kiếm khóa học, bài tập..."
-            style={{
-              border: "none", background: "transparent", outline: "none",
-              fontSize: "0.875rem", width: "100%",
-            }}
-          />
-        </div>
+          <i className={`fas ${sidebarOpen ? "fa-sidebar" : "fa-bars"}`} />
+        </button>
       </div>
 
-      {/* Center nav */}
-      <nav style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        {NAV_ITEMS.map(({ href, icon, title }) => {
-          const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+      {/* Center: Navigation */}
+      <nav style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        {NAV_ITEMS.map((item) => {
+          const isActive = pathname === item.href;
           return (
             <Link
-              key={href}
-              href={href}
-              title={title}
+              key={item.href}
+              href={item.href}
+              title={item.title}
               style={{
-                width: "38px", height: "38px", borderRadius: "10px",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                color: active ? "#d32f2f" : "#777",
-                background: active ? "#fdf0f0" : "transparent",
-                fontSize: "1.1rem", transition: "all .18s",
+                width: "36px", height: "36px", borderRadius: "8px",
+                background: isActive ? "#fdf0f0" : "transparent",
+                color: isActive ? "#d32f2f" : "#777",
+                fontSize: "1rem", transition: "all 0.2s",
+                textDecoration: "none",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "#fdf0f0";
+                  (e.currentTarget as HTMLElement).style.color = "#d32f2f";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLElement).style.background = "transparent";
+                  (e.currentTarget as HTMLElement).style.color = "#777";
+                }
               }}
             >
-              <i className={`fas ${icon}`} />
+              <i className={`fas ${item.icon}`} />
             </Link>
           );
         })}
       </nav>
 
-      {/* Right */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <AvatarDropdown />
-        <Link
-          href="#"
-          style={{
-            display: "flex", alignItems: "center", gap: "6px",
-            background: "linear-gradient(135deg,#d32f2f,#b71c1c)",
-            color: "#fff", borderRadius: "20px", padding: "7px 16px",
-            fontSize: "0.8rem", fontWeight: 600,
-          }}
-        >
-          <i className="fas fa-key" /> Mã truy cập
-        </Link>
-      </div>
+      {/* Right: Avatar */}
+      <AvatarDropdown />
     </header>
   );
 }

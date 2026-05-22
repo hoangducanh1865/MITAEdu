@@ -241,7 +241,7 @@ export default function PracticeSidebar() {
           Thoát
         </Link>
         <div style={{ fontSize: "0.7rem", color: "#999", textAlign: "center" }}>
-          MoonEdu © 2026<br />Copyright by MoonEdu
+          MITAEdu © 2026<br />Copyright by MITAEdu
         </div>
       </div>
     </aside>

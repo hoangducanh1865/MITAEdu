@@ -21,8 +21,6 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
-    # Skip V2__seed_data.sql migration that has errors
-    target: 1.0
 
 logging:
   level:

@@ -64,3 +64,11 @@ a { text-decoration: none; color: inherit; }
   .border-mita { border-color: var(--border); }
   .shadow-mita { box-shadow: var(--shadow); }
 }
+/* Thêm vào cuối frontend/src/styles/globals.css */
+
+/* 3-column layout cho trang chủ: sidebar + main + right panel */
+.layout-home {
+  display: grid;
+  grid-template-columns: 240px 1fr 260px;
+  min-height: calc(100vh - 62px);
+}

@@ -109,3 +109,6 @@ gradle-app.setting
 # Logs
 backend_new.log
 *.log
+.metals
+bin
+build

@@ -49,7 +49,7 @@ export default function CoursesCategorySidebar() {
                 <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#2c2c2c" }}>
                   {cat.label}
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "#999" }}>MoonEdu</div>
+                <div style={{ fontSize: "0.7rem", color: "#999" }}>MITAEdu</div>
               </div>
             </Link>
           );
