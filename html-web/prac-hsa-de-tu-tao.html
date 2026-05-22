@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Đề Tự Tạo HSA</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="practice-body">
+<header class="navbar prac-navbar">
+  <div class="navbar-left"><a href="index.html" class="logo"><div class="logo-icon">🌙</div><span class="logo-text">Moon<span class="logo-accent">Edu</span></span></a></div>
+  <div class="prac-nav-right">
+    <button class="pnav-icon"><i class="fas fa-cog"></i></button>
+    <button class="pnav-icon"><i class="fas fa-bell"></i></button>
+    <div class="pnav-user"><div class="pnav-avatar"><i class="fas fa-user"></i></div><span class="pnav-name">Hoàng Đức Anh</span><i class="fas fa-chevron-down pnav-caret"></i></div>
+  </div>
+</header>
+<div class="prac-layout">
+  <aside class="prac-sidebar">
+    <nav class="prac-nav">
+      <a href="practice.html" class="pnav-item"><i class="fas fa-home pnav-ico"></i><span>Trang chủ</span></a>
+      <div class="pnav-group" id="grp-tsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-tsa')">
+          <div class="pnav-group-left"><i class="fas fa-file-alt pnav-ico"></i><span>Đánh giá tư duy</span></div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-tsa"></i>
+        </div>
+        <div class="pnav-group-body" id="body-tsa">
+          <a href="prac-tsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-tsa-de')"><i class="fas fa-file-alt"></i> Luyện đề gộp<i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-tsa-de"></i></div>
+            <div class="pnav-sub-body" id="subbody-tsa-de">
+              <a href="prac-tsa-de-tu-tao.html" class="pnav-sub2"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-tsa-de-admin.html" class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-tsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+      <div class="pnav-group" id="grp-hsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-hsa')">
+          <div class="pnav-group-left"><i class="fas fa-star pnav-ico"></i><span>Đánh giá năng lực</span></div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-hsa"></i>
+        </div>
+        <div class="pnav-group-body open" id="body-hsa">
+          <a href="prac-hsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-hsa-de')"><i class="fas fa-file-alt"></i> Luyện đề gộp<i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-hsa-de"></i></div>
+            <div class="pnav-sub-body open" id="subbody-hsa-de">
+              <a href="prac-hsa-de-tu-tao.html" class="pnav-sub2 pnav-sub2-active"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-hsa-de-admin.html" class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-hsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+      <a href="prac-tra-cuu-sach.html" class="pnav-item"><i class="fas fa-book pnav-ico"></i><span>Tra cứu sách</span></a>
+      <a href="prac-lich-su.html" class="pnav-item"><i class="fas fa-history pnav-ico"></i><span>Lịch sử làm bài</span></a>
+      <a href="profile.html" class="pnav-item"><i class="fas fa-user-circle pnav-ico"></i><span>Tài khoản</span></a>
+      <a href="#" class="pnav-item"><i class="fas fa-question-circle pnav-ico"></i><span>Câu hỏi thường gặp</span></a>
+    </nav>
+    <div class="prac-sidebar-foot">
+      <a href="index.html" class="psf-logout">Thoát</a>
+      <div class="psf-copy">MoonEdu © 2026</div>
+      <div class="psf-copy">Copyright by MoonEdu</div>
+    </div>
+  </aside>
+  <main class="prac-main">
+    <div class="plab-header">
+      <h2 class="plab-title">Kết quả bài làm của tôi - HSA</h2>
+      <button class="plab-btn-solid" style="background:#2e7d32" onclick="openHsaModal()"><i class="fas fa-plus"></i> Chọn bộ đề và bắt đầu làm bài</button>
+    </div>
+
+    <div class="plab-empty-box">
+      <i class="fas fa-book-open plab-empty-icon"></i>
+      <div class="plab-empty-title">Chưa có kết quả nào</div>
+      <div class="plab-empty-sub">Bạn chưa có bài làm nào. Hãy bắt đầu làm bài!</div>
+      <button class="plab-start-btn" style="background:#2e7d32" onclick="openHsaModal()">
+        <i class="fas fa-plus"></i> Bắt đầu làm bài
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- ═══ HSA MODAL: Tạo Đề Thi HSA Mới ═══ -->
+<div class="hm-backdrop" id="hmBackdrop"></div>
+<div class="hm-modal" id="hmModal">
+
+  <div class="hm-head">
+    <h2 class="hm-title">Tạo Đề Thi HSA Mới</h2>
+    <button class="hm-close" onclick="closeHsaModal()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <div class="hm-body">
+
+    <!-- Guide -->
+    <div class="hm-guide">
+      <i class="fas fa-book-open hm-guide-ico"></i>
+      <div>
+        <div class="hm-guide-title">Tạo đề thi HSA</div>
+        <div class="hm-guide-sub">Chọn đề theo cấu trúc: 1 đề Toán, 1 đề Văn, và 1 đề Tiếng Anh HOẶC 3 đề Khoa học.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: Toán -->
+    <div class="hm-section hm-section-green">
+      <div class="hm-section-title">1. Tư duy định lượng <span class="hm-section-note">(1 đề Toán)</span> <span class="hm-req">*</span></div>
+      <div class="hm-picker" id="pickerToan" onclick="openSubList('toan','Toán')">
+        <span class="hm-picker-text" id="pickerToanText">-- Chọn đề Toán --</span>
+        <i class="fas fa-search hm-picker-ico"></i>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Văn -->
+    <div class="hm-section hm-section-green">
+      <div class="hm-section-title">2. Tư duy định tính <span class="hm-section-note">(1 đề Văn)</span> <span class="hm-req">*</span></div>
+      <div class="hm-picker" id="pickerVan" onclick="openSubList('van','Văn')">
+        <span class="hm-picker-text" id="pickerVanText">-- Chọn đề Văn --</span>
+        <i class="fas fa-search hm-picker-ico"></i>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Khoa học / Tiếng Anh -->
+    <div class="hm-section hm-section-orange">
+      <div class="hm-section-title">3. Tư duy khoa học/tiếng anh <span class="hm-req">*</span></div>
+
+      <div class="hm-th-label"><strong>TH1:</strong> <span class="hm-section-note">1 đề Tiếng Anh</span></div>
+      <div class="hm-picker" id="pickerTA" onclick="openSubList('tieng_anh','Tiếng Anh')">
+        <span class="hm-picker-text" id="pickerTAText">-- Chọn đề Tiếng Anh --</span>
+        <i class="fas fa-search hm-picker-ico"></i>
+      </div>
+
+      <div class="hm-or">--- HOẶC ---</div>
+
+      <div class="hm-th-label"><strong>TH2:</strong> <span class="hm-section-note">3 đề Khoa học (Lý, Hóa, Sinh, Sử, Địa)</span> <span class="hm-kh-counter" id="khCounter">0/3</span></div>
+      <div class="hm-picker" id="pickerKH" onclick="openSubList('khoa_hoc','Khoa học')">
+        <span class="hm-picker-text" id="pickerKHText">-- Chọn đề Khoa học (3 còn lại) --</span>
+        <i class="fas fa-search hm-picker-ico"></i>
+      </div>
+      <div class="hm-kh-chips" id="khChips"></div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="hm-footer">
+    <button class="hm-cancel-btn" onclick="closeHsaModal()">Hủy</button>
+    <button class="hm-start-btn" id="hmStartBtn" disabled onclick="startHsaExam()">Bắt đầu làm bài</button>
+  </div>
+</div>
+
+<!-- ═══ SUB-MODAL: Chọn đề ═══ -->
+<div class="hs-backdrop" id="hsBackdrop"></div>
+<div class="hs-modal" id="hsModal">
+  <div class="hs-head">
+    <h3 class="hs-title" id="hsTitle">Chọn đề</h3>
+    <button class="hs-close" onclick="closeSubList()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="hs-search">
+    <i class="fas fa-search hs-search-ico"></i>
+    <input type="text" id="hsSearch" class="hs-search-input" placeholder="Tìm kiếm đề..." oninput="filterSubList()"/>
+  </div>
+  <div class="hs-list" id="hsList"></div>
+  <div class="hs-foot">
+    <button class="hs-close-btn" onclick="closeSubList()">Đóng</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="hm-toast" id="hmToast"></div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-contact">
+      <div class="footer-heading">LIÊN HỆ</div>
+      <ul>
+        <li><i class="fas fa-bullhorn"></i> CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MOONEDU</li>
+        <li><i class="fas fa-map-marker-alt"></i> Hà Nội</li>
+        <li><i class="fas fa-clipboard-list"></i> Chịu trách nhiệm nội dung: MoonEdu - Trần Duy Mạnh</li>
+        <li><i class="fas fa-envelope"></i> moonedu@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0387.929.807</li>
+      </ul>
+      <div class="footer-socials">
+        <a href="#" class="fsoc fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fsoc ms"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="fsoc yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><div class="footer-heading">THÔNG TIN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+    <div class="footer-col"><div class="footer-heading">ĐIỀU KHOẢN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 MoonEdu. All rights reserved.</div>
+</footer>
+<script src="app.js"></script>
+<script src="data/hsa-mock-data.js"></script>
+<script>
+function toggleGroup(id){
+  var k=id.replace("grp-","");
+  var b=document.getElementById("body-"+k);
+  var a=document.getElementById("arr-"+k);
+  var o=b.classList.toggle("open");
+  a.style.transform=o?"rotate(90deg)":"rotate(0deg)";
+}
+function toggleSub(id){
+  var bid="sub"+id.replace("subgrp","body");
+  var b=document.getElementById(bid);
+  var aid="sarr-"+id.replace("subgrp-","");
+  var a=document.getElementById(aid);
+  var o=b.classList.toggle("open");
+  if(a) a.style.transform=o?"rotate(180deg)":"rotate(0deg)";
+}
+document.addEventListener("DOMContentLoaded",function(){
+  ["tsa","hsa"].forEach(function(k){
+    var b=document.getElementById("body-"+k);
+    if(b && b.classList.contains("open")){
+      var a=document.getElementById("arr-"+k);
+      if(a) a.style.transform="rotate(90deg)";
+    }
+  });
+  ["tsa-de","hsa-de"].forEach(function(sk){
+    var sb=document.getElementById("subbody-"+sk);
+    if(sb && sb.classList.contains("open")){
+      var sa=document.getElementById("sarr-"+sk);
+      if(sa) sa.style.transform="rotate(180deg)";
+    }
+  });
+});
+
+/* ══════════════════════════════════════════
+   HSA MODAL LOGIC
+   ══════════════════════════════════════════ */
+var selection = { toan: null, van: null, tieng_anh: null, khoa_hoc: [] };
+var currentCategory = "";
+var currentLabel    = "";
+
+/* ── Open / Close HSA modal ── */
+function openHsaModal() {
+  selection = { toan: null, van: null, tieng_anh: null, khoa_hoc: [] };
+  updateAllPickers();
+  updateStartBtn();
+  show("hmBackdrop"); show("hmModal");
+}
+function closeHsaModal() { hide("hmBackdrop"); hide("hmModal"); }
+
+/* ── Open / Close sub-list modal ── */
+function openSubList(cat, label) {
+  /* if TH1 chosen, block KH and vice versa */
+  if (cat === "tieng_anh" && selection.khoa_hoc.length > 0) {
+    showToast("Bạn đã chọn đề Khoa học. Hãy xóa trước khi chọn Tiếng Anh.", true);
+    return;
+  }
+  if (cat === "khoa_hoc" && selection.tieng_anh) {
+    showToast("Bạn đã chọn đề Tiếng Anh. Hãy xóa trước khi chọn Khoa học.", true);
+    return;
+  }
+  currentCategory = cat;
+  currentLabel    = label;
+  document.getElementById("hsTitle").textContent = "Chọn đề (" + label + ")";
+  document.getElementById("hsSearch").value = "";
+  renderSubList();
+  show("hsBackdrop"); show("hsModal");
+}
+function closeSubList() { hide("hsBackdrop"); hide("hsModal"); }
+
+/* ── Render sub-list items ── */
+function renderSubList() {
+  var list = document.getElementById("hsList");
+  var q    = document.getElementById("hsSearch").value.toLowerCase();
+  list.innerHTML = "";
+
+  var items = getItemsForCategory(currentCategory);
+  items.filter(function(it){
+    return it.name.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q);
+  }).forEach(function(it) {
+    var row = document.createElement("div");
+    row.className = "hs-item";
+    row.innerHTML =
+      '<div class="hs-item-left">' +
+        '<div class="hs-item-name">' + it.name + '</div>' +
+        '<div class="hs-item-desc">' + it.desc + '</div>' +
+        '<span class="hs-item-tag">' + it.tag + '</span>' +
+      '</div>' +
+      '<button class="hs-choose-btn" onclick="chooseItem(\'' + currentCategory + '\',\'' + it.id + '\')">Chọn</button>';
+    list.appendChild(row);
+  });
+
+  if (list.innerHTML === "") {
+    list.innerHTML = '<div class="hs-empty">Không tìm thấy đề phù hợp</div>';
+  }
+}
+
+function filterSubList() { renderSubList(); }
+
+/* ── Get items for a category ── */
+function getItemsForCategory(cat) {
+  if (cat === "toan")      return HSA_DATA.toan;
+  if (cat === "van")       return HSA_DATA.van;
+  if (cat === "tieng_anh") return HSA_DATA.tieng_anh;
+  if (cat === "khoa_hoc") {
+    /* Merge all subjects, excluding already-chosen subjects */
+    var chosenMons = selection.khoa_hoc.map(function(x){ return x.mon; });
+    var all = [];
+    Object.keys(HSA_DATA.khoa_hoc).forEach(function(mon){
+      if (chosenMons.indexOf(mon) === -1) {
+        HSA_DATA.khoa_hoc[mon].forEach(function(it){ all.push(it); });
+      }
+    });
+    return all;
+  }
+  return [];
+}
+
+/* ── Choose an item ── */
+function chooseItem(cat, itemId) {
+  var item = findItem(cat, itemId);
+  if (!item) return;
+
+  if (cat === "toan") {
+    selection.toan = item;
+  } else if (cat === "van") {
+    selection.van = item;
+  } else if (cat === "tieng_anh") {
+    selection.tieng_anh = item;
+    selection.khoa_hoc  = [];   /* clear KH if switching to TA */
+  } else if (cat === "khoa_hoc") {
+    if (selection.khoa_hoc.length >= 3) {
+      showToast("Đã chọn đủ 3 đề Khoa học.", true);
+      return;
+    }
+    selection.tieng_anh = null; /* clear TA if switching to KH */
+    selection.khoa_hoc.push(item);
+  }
+
+  showToast("Đã chọn: " + item.name);
+  closeSubList();
+  updateAllPickers();
+  updateStartBtn();
+}
+
+function findItem(cat, id) {
+  var pool;
+  if (cat === "khoa_hoc") {
+    var found = null;
+    Object.keys(HSA_DATA.khoa_hoc).forEach(function(mon){
+      HSA_DATA.khoa_hoc[mon].forEach(function(it){ if(it.id===id) found=it; });
+    });
+    return found;
+  }
+  pool = HSA_DATA[cat] || [];
+  for (var i=0;i<pool.length;i++) { if(pool[i].id===id) return pool[i]; }
+  return null;
+}
+
+/* ── Update picker display texts ── */
+function updateAllPickers() {
+  document.getElementById("pickerToanText").textContent = selection.toan
+    ? selection.toan.name : "-- Chọn đề Toán --";
+  document.getElementById("pickerToan").classList.toggle("hm-picker-filled", !!selection.toan);
+
+  document.getElementById("pickerVanText").textContent = selection.van
+    ? selection.van.name : "-- Chọn đề Văn --";
+  document.getElementById("pickerVan").classList.toggle("hm-picker-filled", !!selection.van);
+
+  document.getElementById("pickerTAText").textContent = selection.tieng_anh
+    ? selection.tieng_anh.name : "-- Chọn đề Tiếng Anh --";
+  document.getElementById("pickerTA").classList.toggle("hm-picker-filled", !!selection.tieng_anh);
+
+  /* KH chips */
+  var khChips = document.getElementById("khChips");
+  khChips.innerHTML = "";
+  selection.khoa_hoc.forEach(function(it, idx){
+    var sp = document.createElement("span");
+    sp.className = "hm-kh-chip";
+    sp.innerHTML = it.name + ' <button onclick="removeKH(' + idx + ')"><i class="fas fa-times"></i></button>';
+    khChips.appendChild(sp);
+  });
+  document.getElementById("khCounter").textContent = selection.khoa_hoc.length + "/3";
+
+  var khLeft = 3 - selection.khoa_hoc.length;
+  document.getElementById("pickerKHText").textContent = selection.khoa_hoc.length >= 3
+    ? "Đã chọn đủ 3 đề" : "-- Chọn đề Khoa học (" + khLeft + " còn lại) --";
+  document.getElementById("pickerKH").classList.toggle("hm-picker-filled", selection.khoa_hoc.length >= 3);
+
+  /* Disable pickers based on mutual exclusion */
+  document.getElementById("pickerTA").classList.toggle("hm-picker-disabled", selection.khoa_hoc.length > 0);
+  document.getElementById("pickerKH").classList.toggle("hm-picker-disabled", !!selection.tieng_anh);
+}
+
+function removeKH(idx) {
+  selection.khoa_hoc.splice(idx, 1);
+  updateAllPickers();
+  updateStartBtn();
+}
+
+/* ── Validate & enable start button ── */
+function updateStartBtn() {
+  var hasToan = !!selection.toan;
+  var hasVan  = !!selection.van;
+  var hasPart3 = !!selection.tieng_anh || selection.khoa_hoc.length === 3;
+  var btn = document.getElementById("hmStartBtn");
+  btn.disabled = !(hasToan && hasVan && hasPart3);
+}
+
+function startHsaExam() {
+  var names = [selection.toan.name, selection.van.name];
+  if (selection.tieng_anh) names.push(selection.tieng_anh.name);
+  else selection.khoa_hoc.forEach(function(it){ names.push(it.name); });
+  alert("Bắt đầu bài thi HSA!\nĐề đã chọn:\n" + names.join("\n"));
+  closeHsaModal();
+}
+
+/* ── Toast ── */
+function showToast(msg, isErr) {
+  var el = document.getElementById("hmToast");
+  el.textContent = msg;
+  el.className = "hm-toast hm-toast-show" + (isErr ? " hm-toast-err" : "");
+  clearTimeout(el._t);
+  el._t = setTimeout(function(){ el.className = "hm-toast"; }, 2500);
+}
+
+/* ── Show / Hide helpers ── */
+function show(id) { var e=document.getElementById(id); e.style.display=id.includes("modal")||id.includes("Modal")?"flex":"block"; e.offsetHeight; e.classList.add("hm-show"); }
+function hide(id) { var e=document.getElementById(id); e.classList.remove("hm-show"); setTimeout(function(){ e.style.display="none"; }, 260); }
+</script>
+</body>
+</html>

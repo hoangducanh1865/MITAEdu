@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Đề Tự Tạo TSA</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="practice-body">
+<header class="navbar prac-navbar">
+  <div class="navbar-left"><a href="index.html" class="logo"><div class="logo-icon">🌙</div><span class="logo-text">Moon<span class="logo-accent">Edu</span></span></a></div>
+  <div class="prac-nav-right">
+    <button class="pnav-icon"><i class="fas fa-cog"></i></button>
+    <button class="pnav-icon"><i class="fas fa-bell"></i></button>
+    <div class="pnav-user"><div class="pnav-avatar"><i class="fas fa-user"></i></div><span class="pnav-name">Hoàng Đức Anh</span><i class="fas fa-chevron-down pnav-caret"></i></div>
+  </div>
+</header>
+<div class="prac-layout">
+  <aside class="prac-sidebar">
+    <nav class="prac-nav">
+      <a href="practice.html" class="pnav-item"><i class="fas fa-home pnav-ico"></i><span>Trang chủ</span></a>
+      <div class="pnav-group" id="grp-tsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-tsa')">
+          <div class="pnav-group-left"><i class="fas fa-file-alt pnav-ico"></i><span>Đánh giá tư duy</span></div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-tsa"></i>
+        </div>
+        <div class="pnav-group-body open" id="body-tsa">
+          <a href="prac-tsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-tsa-de')"><i class="fas fa-file-alt"></i> Luyện đề gộp<i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-tsa-de"></i></div>
+            <div class="pnav-sub-body open" id="subbody-tsa-de">
+              <a href="prac-tsa-de-tu-tao.html" class="pnav-sub2 pnav-sub2-active"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-tsa-de-admin.html" class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-tsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+      <div class="pnav-group" id="grp-hsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-hsa')">
+          <div class="pnav-group-left"><i class="fas fa-star pnav-ico"></i><span>Đánh giá năng lực</span></div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-hsa"></i>
+        </div>
+        <div class="pnav-group-body" id="body-hsa">
+          <a href="prac-hsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-hsa-de')"><i class="fas fa-file-alt"></i> Luyện đề gộp<i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-hsa-de"></i></div>
+            <div class="pnav-sub-body" id="subbody-hsa-de">
+              <a href="prac-hsa-de-tu-tao.html" class="pnav-sub2"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-hsa-de-admin.html" class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-hsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+      <a href="prac-tra-cuu-sach.html" class="pnav-item"><i class="fas fa-book pnav-ico"></i><span>Tra cứu sách</span></a>
+      <a href="prac-lich-su.html" class="pnav-item"><i class="fas fa-history pnav-ico"></i><span>Lịch sử làm bài</span></a>
+      <a href="profile.html" class="pnav-item"><i class="fas fa-user-circle pnav-ico"></i><span>Tài khoản</span></a>
+      <a href="#" class="pnav-item"><i class="fas fa-question-circle pnav-ico"></i><span>Câu hỏi thường gặp</span></a>
+    </nav>
+    <div class="prac-sidebar-foot">
+      <a href="index.html" class="psf-logout">Thoát</a>
+      <div class="psf-copy">MoonEdu © 2026</div>
+      <div class="psf-copy">Copyright by MoonEdu</div>
+    </div>
+  </aside>
+  <main class="prac-main">
+    <div class="plab-header">
+      <h2 class="plab-title">Kết quả bài làm của tôi</h2>
+      <button class="plab-btn-solid" style="background:#c62828" onclick="openCreateModal()"><i class="fas fa-plus"></i> Chọn bộ đề và bắt đầu làm bài</button>
+    </div>
+
+    <div class="plab-empty-box">
+      <i class="fas fa-book-open plab-empty-icon"></i>
+      <div class="plab-empty-title">Chưa có kết quả nào</div>
+      <div class="plab-empty-sub">Bạn chưa có bài làm nào. Hãy bắt đầu làm bài!</div>
+      <button class="plab-start-btn" style="background:#c62828" onclick="openCreateModal()">
+        <i class="fas fa-plus"></i> Bắt đầu làm bài
+      </button>
+    </div>
+  </main>
+</div>
+
+<!-- ═══ MODAL TẠO ĐỀ THI MỚI ═══ -->
+<div class="ctm-backdrop" id="ctmBackdrop" onclick="closeCreateModal()"></div>
+<div class="ctm-modal" id="ctmModal">
+
+  <div class="ctm-head">
+    <h2 class="ctm-title">TẠO ĐỀ THI <span class="ctm-title-accent">MỚI</span></h2>
+    <button class="ctm-close" onclick="closeCreateModal()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Hướng dẫn -->
+  <div class="ctm-guide">
+    <i class="fas fa-exclamation-circle ctm-guide-ico"></i>
+    <div>
+      <div class="ctm-guide-title">Hướng dẫn tạo đề</div>
+      <div class="ctm-guide-sub">Chọn tối đa 3 phần thi để tạo thành một đề thi tổng hợp. Sau đó nhấn nút "Mua bài làm mới" để bắt đầu làm bài.</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="ctm-search-label">Tìm kiếm phần thi</div>
+  <div class="ctm-search-wrap">
+    <i class="fas fa-search ctm-search-ico"></i>
+    <input type="text" id="ctmSearch" class="ctm-search-input" placeholder="Nhập tên phần thi hoặc mô tả..." oninput="filterItems()"/>
+  </div>
+
+  <!-- Selected chips -->
+  <div class="ctm-selected-row" id="ctmSelectedRow" style="display:none">
+    <div class="ctm-selected-label" id="ctmSelectedLabel">Đã chọn (0/3)</div>
+    <div class="ctm-chips" id="ctmChips"></div>
+  </div>
+
+  <!-- List -->
+  <div class="ctm-list-label">Danh sách phần thi có sẵn</div>
+  <div class="ctm-list" id="ctmList"></div>
+
+  <!-- Footer -->
+  <div class="ctm-footer">
+    <div class="ctm-footer-note">Bạn có thể chọn tối đa 3 bộ đề</div>
+    <button class="ctm-buy-btn" id="ctmBuyBtn" disabled onclick="handleBuy()">
+      MUA BÀI LÀM MỚI <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+
+</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-contact">
+      <div class="footer-heading">LIÊN HỆ</div>
+      <ul>
+        <li><i class="fas fa-bullhorn"></i> CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MOONEDU</li>
+        <li><i class="fas fa-map-marker-alt"></i> Hà Nội</li>
+        <li><i class="fas fa-clipboard-list"></i> Chịu trách nhiệm nội dung: MoonEdu - Trần Duy Mạnh</li>
+        <li><i class="fas fa-envelope"></i> moonedu@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0387.929.807</li>
+      </ul>
+      <div class="footer-socials">
+        <a href="#" class="fsoc fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fsoc ms"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="fsoc yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><div class="footer-heading">THÔNG TIN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+    <div class="footer-col"><div class="footer-heading">ĐIỀU KHOẢN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 MoonEdu. All rights reserved.</div>
+</footer>
+<script src="app.js"></script>
+<script>
+function toggleGroup(id){
+  var k=id.replace("grp-","");
+  var b=document.getElementById("body-"+k);
+  var a=document.getElementById("arr-"+k);
+  var o=b.classList.toggle("open");
+  a.style.transform=o?"rotate(90deg)":"rotate(0deg)";
+}
+function toggleSub(id){
+  var bid="sub"+id.replace("subgrp","body");
+  var b=document.getElementById(bid);
+  var aid="sarr-"+id.replace("subgrp-","");
+  var a=document.getElementById(aid);
+  var o=b.classList.toggle("open");
+  if(a) a.style.transform=o?"rotate(180deg)":"rotate(0deg)";
+}
+document.addEventListener("DOMContentLoaded",function(){
+  ["tsa","hsa"].forEach(function(k){
+    var b=document.getElementById("body-"+k);
+    if(b && b.classList.contains("open")){
+      var a=document.getElementById("arr-"+k);
+      if(a) a.style.transform="rotate(90deg)";
+    }
+  });
+  ["tsa-de","hsa-de"].forEach(function(sk){
+    var sb=document.getElementById("subbody-"+sk);
+    if(sb && sb.classList.contains("open")){
+      var sa=document.getElementById("sarr-"+sk);
+      if(sa) sa.style.transform="rotate(180deg)";
+    }
+  });
+  renderList();
+});
+
+/* ── MODAL DATA ── */
+var PHAN_THI = [
+  { id:1, name:"Ngữ Liệu Đề Kíp 3",       desc:"a", tag:"TSA" },
+  { id:2, name:"Sách Khoa Học Sinh",        desc:"a", tag:"TSA" },
+  { id:3, name:"Ngữ Liệu Đề Kíp 2",        desc:"a", tag:"TSA" },
+  { id:4, name:"Tư Duy Toán Học Cơ Bản",   desc:"Phần 1", tag:"TSA" },
+  { id:5, name:"Tư Duy Đọc Hiểu Nâng Cao", desc:"Phần 2", tag:"TSA" },
+  { id:6, name:"Tư Duy Khoa Học Tổng Hợp", desc:"Phần 3", tag:"TSA" },
+];
+
+var selected = []; /* array of ids */
+
+function openCreateModal() {
+  var backdrop = document.getElementById("ctmBackdrop");
+  var modal    = document.getElementById("ctmModal");
+  backdrop.style.display = "block";
+  modal.style.display    = "flex";
+  /* force reflow so transition fires */
+  modal.offsetHeight;
+  backdrop.classList.add("ctm-show");
+  modal.classList.add("ctm-show");
+  document.body.style.overflow = "hidden";
+  selected = [];
+  document.getElementById("ctmSearch").value = "";
+  renderList();
+  renderChips();
+  /* update buy button state */
+  var btn = document.getElementById("ctmBuyBtn");
+  btn.disabled = true;
+  btn.classList.remove("ctm-buy-active");
+}
+
+function closeCreateModal() {
+  var backdrop = document.getElementById("ctmBackdrop");
+  var modal    = document.getElementById("ctmModal");
+  backdrop.classList.remove("ctm-show");
+  modal.classList.remove("ctm-show");
+  document.body.style.overflow = "";
+  setTimeout(function(){
+    backdrop.style.display = "none";
+    modal.style.display    = "none";
+  }, 260);
+}
+
+function filterItems() {
+  renderList();
+}
+
+function renderList() {
+  var q = (document.getElementById("ctmSearch") ? document.getElementById("ctmSearch").value : "").toLowerCase();
+  var list = document.getElementById("ctmList");
+  if (!list) return;
+  list.innerHTML = "";
+  PHAN_THI.filter(function(p){
+    return p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+  }).forEach(function(p) {
+    var isSelected = selected.includes(p.id);
+    var div = document.createElement("div");
+    div.className = "ctm-item" + (isSelected ? " ctm-item-selected" : "");
+    div.innerHTML =
+      '<div class="ctm-item-left">' +
+        '<div class="ctm-item-name">' + p.name + '</div>' +
+        '<div class="ctm-item-desc">' + p.desc + '</div>' +
+        '<span class="ctm-item-tag">' + p.tag + '</span>' +
+      '</div>' +
+      (isSelected ? '<div class="ctm-check"><i class="fas fa-check-circle"></i></div>' : '');
+    div.onclick = function(){ toggleItem(p.id); };
+    list.appendChild(div);
+  });
+}
+
+function toggleItem(id) {
+  var idx = selected.indexOf(id);
+  if (idx > -1) {
+    selected.splice(idx, 1);
+  } else {
+    if (selected.length >= 3) return; /* max 3 */
+    selected.push(id);
+  }
+  renderList();
+  renderChips();
+  /* update buy button */
+  var btn = document.getElementById("ctmBuyBtn");
+  btn.disabled = selected.length === 0;
+  btn.classList.toggle("ctm-buy-active", selected.length > 0);
+}
+
+function renderChips() {
+  var row   = document.getElementById("ctmSelectedRow");
+  var chips = document.getElementById("ctmChips");
+  var label = document.getElementById("ctmSelectedLabel");
+  if (selected.length === 0) {
+    row.style.display = "none";
+    return;
+  }
+  row.style.display = "flex";
+  label.textContent = "Đã chọn (" + selected.length + "/3)";
+  chips.innerHTML = "";
+  selected.forEach(function(id) {
+    var p = PHAN_THI.find(function(x){ return x.id === id; });
+    if (!p) return;
+    var span = document.createElement("span");
+    span.className = "ctm-chip";
+    span.innerHTML = p.name + ' <button onclick="removeChip(' + id + ')"><i class="fas fa-times"></i></button>';
+    chips.appendChild(span);
+  });
+}
+
+function removeChip(id) {
+  var idx = selected.indexOf(id);
+  if (idx > -1) selected.splice(idx, 1);
+  renderList();
+  renderChips();
+  var btn = document.getElementById("ctmBuyBtn");
+  btn.disabled = selected.length === 0;
+  btn.classList.toggle("ctm-buy-active", selected.length > 0);
+}
+
+function handleBuy() {
+  if (selected.length === 0) return;
+  var names = selected.map(function(id){
+    var p = PHAN_THI.find(function(x){ return x.id===id; });
+    return p ? p.name : "";
+  }).join(", ");
+  alert("Đã tạo đề thi gồm: " + names + "\nTính năng thanh toán sẽ được tích hợp sau!");
+  closeCreateModal();
+}
+</script>
+</body>
+</html>

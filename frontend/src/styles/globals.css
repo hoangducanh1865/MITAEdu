@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --red:       #d32f2f;
+  --red-dark:  #b71c1c;
+  --red-light: #ffebee;
+  --pink-bg:   #fdf0f0;
+  --gold:      #f5a623;
+  --silver:    #9e9e9e;
+  --text:      #2c2c2c;
+  --text-muted:#777;
+  --white:     #ffffff;
+  --border:    #f0d5d5;
+  --radius:    14px;
+  --shadow:    0 4px 20px rgba(211,47,47,.13);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: var(--pink-bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--pink-bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+/* ── Layout ─── */
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 62px);
+}
+
+/* ── Practice layout ─── */
+.prac-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 62px);
+}
+
+/* ── Exam taking layout ─── */
+.et-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: calc(100vh - 56px);
+}
+
+@layer utilities {
+  .text-muted { color: var(--text-muted); }
+  .bg-pink-bg { background-color: var(--pink-bg); }
+  .border-mita { border-color: var(--border); }
+  .shadow-mita { box-shadow: var(--shadow); }
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Khóa Học</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="navbar-left">
+    <a href="index.html" class="logo"><div class="logo-icon">🌙</div><span class="logo-text">Moon<span class="logo-accent">Edu</span></span></a>
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Tìm kiếm khóa học..."/></div>
+  </div>
+  <nav class="navbar-center">
+    <a href="index.html" class="nav-icon" title="Trang chủ"><i class="fas fa-home"></i></a>
+    <a href="courses.html" class="nav-icon active" title="Khóa học"><i class="fas fa-bookmark"></i></a>
+    <a href="practice.html" class="nav-icon" title="Phòng luyện"><i class="fas fa-flask"></i></a>
+    <a href="documents.html" class="nav-icon" title="Tài liệu"><i class="fas fa-file-alt"></i></a>
+    <a href="library.html" class="nav-icon" title="Thư viện"><i class="fas fa-book-open"></i></a>
+  </nav>
+  <div class="navbar-right">
+    <span class="user-name">Hoàng Đức Anh</span>
+    <div class="avatar"><i class="fas fa-user"></i></div>
+    <a href="#" class="access-code-btn"><i class="fas fa-key"></i> Mã truy cập</a>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar"><i class="fas fa-user-circle"></i></div>
+      <div>
+        <div class="sidebar-name">Hoàng Đức Anh</div>
+        <div class="sidebar-email">hoangducanh.1865.2@gmail.com</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="courses.html" class="sidebar-item active-item"><span class="sidebar-icon courses-icon"><i class="fas fa-graduation-cap"></i></span>Khóa học</a>
+      <a href="practice.html" class="sidebar-item"><span class="sidebar-icon practice-icon"><i class="fas fa-dumbbell"></i></span>Phòng luyện</a>
+      <a href="news.html" class="sidebar-item"><span class="sidebar-icon news-icon"><i class="fas fa-newspaper"></i></span>Tin tức</a>
+      <a href="schedule.html" class="sidebar-item"><span class="sidebar-icon schedule-icon"><i class="fas fa-calendar-alt"></i></span>Lịch học</a>
+    </nav>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-links-label">Liên kết</div>
+    <div class="sidebar-social">
+      <a href="#" class="social-link facebook"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="#" class="social-link messenger"><i class="fab fa-facebook-messenger"></i> Messenger</a>
+      <a href="#" class="social-link youtube"><i class="fab fa-youtube"></i> Youtube</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content courses-page" style="grid-column:2/4;">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+      <a href="index.html"><i class="fas fa-home"></i></a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">Khóa học</span>
+    </nav>
+
+    <div class="courses-layout">
+
+      <!-- LEFT: CATEGORY LIST -->
+      <aside class="cat-sidebar">
+        <div class="cat-title">DANH MỤC</div>
+        <div class="cat-list">
+          <div class="cat-item active" data-cat="tsa" onclick="switchCat(this,'tsa')">
+            <div class="cat-badge tsa-badge">TSA</div>
+            <div class="cat-text">
+              <div class="cat-name">Đánh giá tư duy</div>
+              <div class="cat-sub">MoonEdu</div>
+            </div>
+          </div>
+          <div class="cat-item" data-cat="hsa" onclick="switchCat(this,'hsa')">
+            <div class="cat-badge hsa-badge">HSA</div>
+            <div class="cat-text">
+              <div class="cat-name">Đánh giá năng lực</div>
+              <div class="cat-sub">MoonEdu</div>
+            </div>
+          </div>
+          <div class="cat-item" data-cat="thpt" onclick="switchCat(this,'thpt')">
+            <div class="cat-badge thpt-badge">THPT</div>
+            <div class="cat-text">
+              <div class="cat-name">Trung học phổ thông quốc gia</div>
+              <div class="cat-sub">MoonEdu</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: COURSE GRID PANELS -->
+      <div class="courses-panel-wrap">
+
+        <!-- TSA PANEL -->
+        <div class="courses-panel" id="panel-tsa">
+          <div class="cp-header">
+            <h2 class="cp-title">KHÓA HỌC ĐÁNH GIÁ TƯ DUY</h2>
+            <div class="cp-count">5 khóa học có sẵn</div>
+          </div>
+          <div class="cp-grid">
+
+            <div class="cp-card" onclick="goToCourse('Chuyên Đề Toán 2K9 - 02','linear-gradient(135deg,%23e0e0e0,%23bdbdbd)','Chuyên đề<br><strong>TOÁN</strong>')">
+              <div class="cp-thumb blank-thumb"></div>
+              <div class="cp-info">
+                <div class="cp-name">CHUYÊN ĐỀ TOÁN 2K9 - 02</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Lê Tuấn Anh - Trần Hoàng Anh</div>
+              </div>
+            </div>
+
+            <div class="cp-card" onclick="goToCourse('Thực Chiến Luyện Đề 2K9','linear-gradient(135deg,%23e0e0e0,%23bdbdbd)','Thực Chiến<br><strong>LUYỆN ĐỀ</strong>')">
+              <div class="cp-thumb blank-thumb"></div>
+              <div class="cp-info">
+                <div class="cp-name">THỰC CHIẾN LUYỆN ĐỀ 2K9</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> LAB</div>
+              </div>
+            </div>
+
+            <div class="cp-card" onclick="goToCourse('Chuyên Đề Đọc Hiểu 2K9','linear-gradient(135deg,%23f5a623,%23e8821a)','Chuyên đề<br><strong>ĐỌC HIỂU</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#f5a623,#e8821a);">
+                <div class="cp-thumb-overlay">Chuyên đề<br><strong>ĐỌC HIỂU</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">CHUYÊN ĐỀ ĐỌC HIỂU 2K9</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> LAB</div>
+              </div>
+            </div>
+
+            <div class="cp-card" onclick="goToCourse('Chuyên Đề Khoa Học 2K9','linear-gradient(135deg,%238e24aa,%23c2185b)','Chuyên đề<br><strong>KHOA HỌC</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#8e24aa,#c2185b);">
+                <div class="cp-thumb-overlay">Chuyên đề<br><strong>KHOA HỌC</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">CHUYÊN ĐỀ KHOA HỌC 2K9</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> LAB</div>
+              </div>
+            </div>
+
+            <div class="cp-card" onclick="goToCourse('Chuyên Đề Toán Học 2K9','linear-gradient(135deg,%23c62828,%23e53935)','Chuyên đề<br><strong>TOÁN HỌC</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#c62828,#e53935);">
+                <div class="cp-thumb-overlay">Chuyên đề<br><strong>TOÁN HỌC</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">CHUYÊN ĐỀ TOÁN HỌC 2K9</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> LAB</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- HSA PANEL -->
+        <div class="courses-panel hidden" id="panel-hsa">
+          <div class="cp-header">
+            <h2 class="cp-title">KHÓA HỌC ĐÁNH GIÁ NĂNG LỰC</h2>
+            <div class="cp-count">3 khóa học có sẵn</div>
+          </div>
+          <div class="cp-grid">
+            <div class="cp-card" onclick="goToCourse('Luyện Thi HSA Toán','linear-gradient(135deg,%231565c0,%231e88e5)','Chuyên đề<br><strong>TOÁN</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#1565c0,#1e88e5);">
+                <div class="cp-thumb-overlay">Chuyên đề<br><strong>TOÁN</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">LUYỆN THI HSA TOÁN</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Trần Hoàng Anh</div>
+              </div>
+            </div>
+            <div class="cp-card" onclick="goToCourse('Luyện Thi HSA Vật Lý','linear-gradient(135deg,%232e7d32,%2343a047)','Chuyên đề<br><strong>VẬT LÝ</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#2e7d32,#43a047);">
+                <div class="cp-thumb-overlay">Chuyên đề<br><strong>VẬT LÝ</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">LUYỆN THI HSA VẬT LÝ</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Nguyễn Minh Tuấn</div>
+              </div>
+            </div>
+            <div class="cp-card" onclick="goToCourse('Đề Thi Thử HSA Tổng Hợp','linear-gradient(135deg,%23e0e0e0,%23bdbdbd)','Đề Thi Thử<br><strong>HSA</strong>')">
+              <div class="cp-thumb blank-thumb"></div>
+              <div class="cp-info">
+                <div class="cp-name">ĐỀ THI THỬ HSA TỔNG HỢP</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> LAB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THPT PANEL -->
+        <div class="courses-panel hidden" id="panel-thpt">
+          <div class="cp-header">
+            <h2 class="cp-title">KHÓA HỌC THPT QUỐC GIA</h2>
+            <div class="cp-count">4 khóa học có sẵn</div>
+          </div>
+          <div class="cp-grid">
+            <div class="cp-card" onclick="goToCourse('Khoá Luyện Đề THPT Môn Toán','linear-gradient(135deg,%23c62828,%23e53935)','Luyện đề<br><strong>TOÁN</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#c62828,#e53935);">
+                <div class="cp-thumb-overlay">Luyện đề<br><strong>TOÁN</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">KHOÁ LUYỆN ĐỀ THPT MÔN TOÁN</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Trần Hoàng Anh</div>
+              </div>
+            </div>
+            <div class="cp-card" onclick="goToCourse('Khoá Luyện Đề Hóa Học','linear-gradient(135deg,%2300695c,%2300897b)','Luyện đề<br><strong>HÓA HỌC</strong>')">
+              <div class="cp-thumb" style="background:linear-gradient(135deg,#00695c,#00897b);">
+                <div class="cp-thumb-overlay">Luyện đề<br><strong>HÓA HỌC</strong></div>
+              </div>
+              <div class="cp-info">
+                <div class="cp-name">KHOÁ LUYỆN ĐỀ HÓA HỌC</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Lê Tuấn Anh</div>
+              </div>
+            </div>
+            <div class="cp-card" onclick="goToCourse('Khoá Xác Suất THPT','linear-gradient(135deg,%23e0e0e0,%23bdbdbd)','Khoá<br><strong>XÁC SUẤT</strong>')">
+              <div class="cp-thumb blank-thumb"></div>
+              <div class="cp-info">
+                <div class="cp-name">KHOÁ XÁC SUẤT THPT</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Trần Hoàng Anh</div>
+              </div>
+            </div>
+            <div class="cp-card" onclick="goToCourse('Chuyên Đề Vật Lý 2K9','linear-gradient(135deg,%23e0e0e0,%23bdbdbd)','Chuyên đề<br><strong>VẬT LÝ</strong>')">
+              <div class="cp-thumb blank-thumb"></div>
+              <div class="cp-info">
+                <div class="cp-name">CHUYÊN ĐỀ VẬT LÝ 2K9</div>
+                <div class="cp-teacher"><i class="fas fa-user"></i> Nguyễn Minh Tuấn</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end courses-panel-wrap -->
+    </div><!-- end courses-layout -->
+
+  </main>
+</div><!-- end layout -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-contact">
+      <div class="footer-heading">LIÊN HỆ</div>
+      <ul>
+        <li><i class="fas fa-bullhorn"></i> CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MOONEDU</li>
+        <li><i class="fas fa-map-marker-alt"></i> Hà Nội</li>
+        <li><i class="fas fa-clipboard-list"></i> Chịu trách nhiệm nội dung: MoonEdu - Trần Duy Mạnh</li>
+        <li><i class="fas fa-envelope"></i> moonedu@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0387.929.807</li>
+      </ul>
+      <div class="footer-socials">
+        <a href="#" class="fsoc fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fsoc ms"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="fsoc yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">THÔNG TIN</div>
+      <ul>
+        <li><a href="#">Giới thiệu</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+        <li><a href="#">Điều khoản dịch vụ</a></li>
+        <li><a href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">ĐIỀU KHOẢN</div>
+      <ul>
+        <li><a href="#">Giới thiệu</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+        <li><a href="#">Điều khoản dịch vụ</a></li>
+        <li><a href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MoonEdu. All rights reserved.</div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+function switchCat(el, cat) {
+  document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.courses-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById('panel-' + cat).classList.remove('hidden');
+}
+
+function goToCourse(name, color, label) {
+  const params = new URLSearchParams({ name, color, label });
+  window.location.href = 'course-detail.html?' + params.toString();
+}
+</script>
+</body>
+</html>

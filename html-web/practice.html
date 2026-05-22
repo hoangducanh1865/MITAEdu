@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Phòng Luyện</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="practice-body">
+
+<!-- NAVBAR -->
+<header class="navbar prac-navbar">
+  <div class="navbar-left">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌙</div>
+      <span class="logo-text">Moon<span class="logo-accent">Edu</span></span>
+    </a>
+  </div>
+  <div class="prac-nav-right">
+    <button class="pnav-icon" title="Cài đặt"><i class="fas fa-cog"></i></button>
+    <button class="pnav-icon" title="Thông báo"><i class="fas fa-bell"></i></button>
+    <div class="pnav-user">
+      <div class="pnav-avatar"><i class="fas fa-user"></i></div>
+      <span class="pnav-name">Hoàng Đức Anh</span>
+      <i class="fas fa-chevron-down pnav-caret"></i>
+    </div>
+  </div>
+</header>
+
+<!-- BODY -->
+<div class="prac-layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="prac-sidebar">
+    <nav class="prac-nav">
+      <!-- Trang chủ -->
+      <a href="practice.html" class="pnav-item active">
+        <i class="fas fa-home pnav-ico"></i>
+        <span>Trang chủ</span>
+      </a>
+
+      <!-- Đánh giá tư duy (accordion) -->
+      <div class="pnav-group" id="grp-tsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-tsa')">
+          <div class="pnav-group-left">
+            <i class="fas fa-file-alt pnav-ico"></i>
+            <span>Đánh giá tư duy</span>
+          </div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-tsa"></i>
+        </div>
+        <div class="pnav-group-body" id="body-tsa">
+          <a href="prac-tsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group" id="subgrp-luyende">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-luyende')">
+              <i class="fas fa-file-alt"></i> Luyện đề gộp
+              <i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-luyende"></i>
+            </div>
+            <div class="pnav-sub-body" id="subbody-luyende">
+              <a href="prac-tsa-de-tu-tao.html" class="pnav-sub2"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-tsa-de-admin.html" class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-tsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+
+      <!-- Đánh giá năng lực -->
+      <div class="pnav-group" id="grp-hsa">
+        <div class="pnav-group-hd" onclick="toggleGroup('grp-hsa')">
+          <div class="pnav-group-left">
+            <i class="fas fa-star pnav-ico"></i>
+            <span>Đánh giá năng lực</span>
+          </div>
+          <i class="fas fa-chevron-right pnav-arrow" id="arr-hsa"></i>
+        </div>
+        <div class="pnav-group-body" id="body-hsa">
+          <a href="prac-hsa-luyen-tung-phan.html" class="pnav-sub"><i class="fas fa-book-open"></i> Luyện từng phần</a>
+          <div class="pnav-sub-group" id="subgrp-hsa-de">
+            <div class="pnav-sub-hd" onclick="toggleSub('subgrp-hsa-de')">
+              <i class="fas fa-file-alt"></i> Luyện đề gộp
+              <i class="fas fa-chevron-down pnav-sub-arrow" id="sarr-hsa-de"></i>
+            </div>
+            <div class="pnav-sub-body" id="subbody-hsa-de">
+              <a href="prac-hsa-de-tu-tao.html"  class="pnav-sub2"><i class="fas fa-user"></i> Đề tự tạo</a>
+              <a href="prac-hsa-de-admin.html"   class="pnav-sub2"><i class="fas fa-user-shield"></i> Đề Admin tạo</a>
+            </div>
+          </div>
+          <a href="prac-hsa-khao-thi.html" class="pnav-sub"><i class="fas fa-clock"></i> Khảo thí (Thi thử)</a>
+        </div>
+      </div>
+
+      <!-- Tra cứu sách -->
+      <a href="prac-tra-cuu-sach.html" class="pnav-item">
+        <i class="fas fa-book pnav-ico"></i>
+        <span>Tra cứu sách</span>
+      </a>
+
+      <!-- Lịch sử làm bài -->
+      <a href="prac-lich-su.html" class="pnav-item">
+        <i class="fas fa-history pnav-ico"></i>
+        <span>Lịch sử làm bài</span>
+      </a>
+
+      <!-- Tài khoản -->
+      <a href="profile.html" class="pnav-item">
+        <i class="fas fa-user-circle pnav-ico"></i>
+        <span>Tài khoản</span>
+      </a>
+
+      <!-- Câu hỏi thường gặp -->
+      <a href="#" class="pnav-item">
+        <i class="fas fa-question-circle pnav-ico"></i>
+        <span>Câu hỏi thường gặp</span>
+      </a>
+    </nav>
+
+    <!-- SIDEBAR FOOTER -->
+    <div class="prac-sidebar-foot">
+      <a href="index.html" class="psf-logout">Thoát</a>
+      <div class="psf-copy">MoonEdu © 2026</div>
+      <div class="psf-copy">Copyright by MoonEdu</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="prac-main">
+
+    <!-- PROFILE + STATS CARD -->
+    <div class="prac-card pstat-card">
+      <div class="pstat-grid">
+
+        <!-- Profile block -->
+        <div class="pstat-profile">
+          <div class="pstat-avatar"><i class="fas fa-user"></i></div>
+          <div>
+            <div class="pstat-greeting">Xin chào,</div>
+            <div class="pstat-name">Hoàng Đức Anh</div>
+            <div class="pstat-email">hoangducanh.1865.2@gmail.com</div>
+          </div>
+        </div>
+
+        <!-- Total attempts -->
+        <div class="pstat-box border-left">
+          <div class="pstat-label">Tổng lượt làm</div>
+          <div class="pstat-num">0</div>
+          <div class="pstat-unit">bài thi</div>
+        </div>
+
+        <!-- Weekly attempts -->
+        <div class="pstat-box border-top">
+          <div class="pstat-label">Tổng lượt làm trong tuần</div>
+          <div class="pstat-num">0</div>
+          <div class="pstat-unit">bài thi</div>
+        </div>
+
+        <!-- Role -->
+        <div class="pstat-box border-top border-left">
+          <div class="pstat-label">Vai trò</div>
+          <div class="pstat-role">HỌC SINH NGOAN</div>
+          <div class="pstat-role-code">TSABB60DD</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HEATMAP CARD -->
+    <div class="prac-card">
+      <div class="heat-header">
+        <div>
+          <span class="heat-title">Thống kê làm bài (2026)</span>
+        </div>
+        <span class="heat-total">0 bài thi từ 2024 đến nay</span>
+      </div>
+
+      <!-- Year selector -->
+      <div class="year-tabs">
+        <button class="ytab" onclick="switchYear(this,'2024')">2024</button>
+        <button class="ytab" onclick="switchYear(this,'2025')">2025</button>
+        <button class="ytab active" onclick="switchYear(this,'2026')">2026</button>
+      </div>
+
+      <!-- Heatmap grid -->
+      <div class="heatmap-wrap">
+        <div class="heatmap-months" id="heatmapMonths"></div>
+        <div class="heatmap-grid"  id="heatmapGrid"></div>
+        <div class="heat-count-row">
+          <span class="heat-count" id="heatCount">0 bài thi trong năm</span>
+        </div>
+        <!-- scroll bar decoration -->
+        <div class="heat-scrollbar"><div class="heat-scrollthumb"></div></div>
+      </div>
+    </div>
+
+    <!-- TÚI ĐỀ CARD -->
+    <div class="prac-card">
+      <div class="tuide-header">
+        <span class="tuide-title">Các túi đề</span>
+        <span class="tuide-count">3 túi đề</span>
+      </div>
+      <div class="tuide-list">
+        <div class="tuide-item">
+          <span class="tuide-dot dot-blue"></span>
+          <div>
+            <div class="tuide-name">Phòng Luyện Test</div>
+            <div class="tuide-sub">Chỉ Cho ADMIN</div>
+          </div>
+        </div>
+        <div class="tuide-item">
+          <span class="tuide-dot dot-blue"></span>
+          <div>
+            <div class="tuide-name">Phòng Luyện LAB 2k9</div>
+            <div class="tuide-sub">CHƯA MỞ PHÒNG LUYỆN</div>
+          </div>
+        </div>
+        <div class="tuide-item">
+          <span class="tuide-dot dot-blue"></span>
+          <div>
+            <div class="tuide-name">Phòng Luyện Thi HSA</div>
+            <div class="tuide-sub">Gói HSA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BÀI THI GẦN ĐÂY CARD -->
+    <div class="prac-card">
+      <div class="recent-header">
+        <span class="recent-title">Bài thi gần đây</span>
+        <span class="recent-count">0 lượt làm</span>
+      </div>
+      <div class="recent-empty">Chưa có dữ liệu bài thi.</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER (reuse site-footer style) -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-contact">
+      <div class="footer-heading">LIÊN HỆ</div>
+      <ul>
+        <li><i class="fas fa-bullhorn"></i> CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MOONEDU</li>
+        <li><i class="fas fa-map-marker-alt"></i> Hà Nội</li>
+        <li><i class="fas fa-clipboard-list"></i> Chịu trách nhiệm nội dung: MoonEdu - Trần Duy Mạnh</li>
+        <li><i class="fas fa-envelope"></i> moonedu@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0387.929.807</li>
+      </ul>
+      <div class="footer-socials">
+        <a href="#" class="fsoc fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fsoc ms"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="fsoc yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">THÔNG TIN</div>
+      <ul>
+        <li><a href="#">Giới thiệu</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+        <li><a href="#">Điều khoản dịch vụ</a></li>
+        <li><a href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">ĐIỀU KHOẢN</div>
+      <ul>
+        <li><a href="#">Giới thiệu</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+        <li><a href="#">Điều khoản dịch vụ</a></li>
+        <li><a href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 MoonEdu. All rights reserved.</div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+/* ── ACCORDION ── */
+function toggleGroup(id) {
+  const body  = document.getElementById('body-' + id.replace('grp-',''));
+  const arrow = document.getElementById('arr-'  + id.replace('grp-',''));
+  const open  = body.classList.toggle('open');
+  arrow.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+function toggleSub(id) {
+  const body  = document.getElementById('sub' + id.replace('subgrp','body'));
+  const arrow = document.getElementById('sarr-' + id.replace('subgrp-',''));
+  const open  = body.classList.toggle('open');
+  if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+/* ── HEATMAP ── */
+const MONTHS = ['Th.1','Th.2','Th.3','Th.4','Th.5','Th.6','Th.7','Th.8','Th.9','Th.10','Th.11','Th.12'];
+const DAYS_PER_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+function buildHeatmap(year) {
+  const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  DAYS_PER_MONTH[1] = isLeap ? 29 : 28;
+
+  const monthsEl = document.getElementById('heatmapMonths');
+  const gridEl   = document.getElementById('heatmapGrid');
+
+  monthsEl.innerHTML = '';
+  gridEl.innerHTML   = '';
+
+  MONTHS.forEach((m, mi) => {
+    const lbl = document.createElement('span');
+    lbl.className   = 'hm-month-lbl';
+    lbl.textContent = m;
+    lbl.style.gridColumn = `span ${DAYS_PER_MONTH[mi]}`;
+    monthsEl.appendChild(lbl);
+
+    for (let d = 0; d < DAYS_PER_MONTH[mi]; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'hm-cell';
+      // randomly dim some cells (empty = light pink)
+      gridEl.appendChild(cell);
+    }
+  });
+
+  document.getElementById('heatCount').textContent = '0 bài thi trong năm';
+}
+
+function switchYear(btn, year) {
+  document.querySelectorAll('.ytab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildHeatmap(parseInt(year));
+
+  // update header title
+  document.querySelector('.heat-title').textContent = `Thống kê làm bài (${year})`;
+}
+
+document.addEventListener('DOMContentLoaded', () => buildHeatmap(2026));
+</script>
+</body>
+</html>

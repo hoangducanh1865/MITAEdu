@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Tài Khoản</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-left">
+    <a href="index.html" class="logo"><div class="logo-icon">🌙</div><span class="logo-text">Moon<span class="logo-accent">Edu</span></span></a>
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Tìm kiếm..."/></div>
+  </div>
+  <nav class="navbar-center">
+    <a href="index.html"    class="nav-icon"><i class="fas fa-home"></i></a>
+    <a href="courses.html"  class="nav-icon"><i class="fas fa-bookmark"></i></a>
+    <a href="practice.html" class="nav-icon"><i class="fas fa-flask"></i></a>
+    <a href="documents.html"class="nav-icon"><i class="fas fa-file-alt"></i></a>
+    <a href="library.html"  class="nav-icon"><i class="fas fa-book-open"></i></a>
+  </nav>
+  <div class="navbar-right">
+    <span class="user-name">Hoàng Đức Anh</span>
+    <div class="avatar"><i class="fas fa-user"></i></div>
+    <a href="#" class="access-code-btn"><i class="fas fa-key"></i> Mã truy cập</a>
+  </div>
+</header>
+
+<div class="profile-page">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="index.html"><i class="fas fa-home"></i></a>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">Thông tin cá nhân</span>
+  </nav>
+
+  <!-- Profile Header -->
+  <div class="profile-header-bar">
+    <div class="profile-header-left">
+      <div class="profile-avatar-lg"><i class="fas fa-user"></i></div>
+      <div>
+        <div class="profile-fullname">Hoàng Đức Anh</div>
+        <div class="profile-role">USER</div>
+        <div class="profile-email">hoangducanh.1865.2@gmail.com</div>
+      </div>
+    </div>
+    <button class="profile-logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="profile-tabs">
+    <button class="ptab active" onclick="switchTab(this,'info')">Thông tin cá nhân</button>
+    <button class="ptab" onclick="switchTab(this,'courses')">Khóa học đã mua</button>
+    <button class="ptab" onclick="switchTab(this,'password')">Đổi mật khẩu</button>
+  </div>
+
+  <!-- Tab: Thông tin cá nhân -->
+  <div class="ptab-content" id="tab-info">
+    <div class="profile-info-list">
+      <div class="profile-info-row"><span class="pil-label">Họ và tên:</span><span class="pil-val">Hoàng Đức Anh</span></div>
+      <div class="profile-info-row"><span class="pil-label">Email:</span><span class="pil-val">hoangducanh.1865.2@gmail.com</span></div>
+      <div class="profile-info-row"><span class="pil-label">Phone:</span><span class="pil-val muted">Chưa update</span></div>
+      <div class="profile-info-row"><span class="pil-label">Quê quán:</span><span class="pil-val muted">Chưa update</span></div>
+      <div class="profile-info-row"><span class="pil-label">Mô tả:</span><span class="pil-val muted">Chưa update</span></div>
+    </div>
+    <button class="profile-edit-btn">Chỉnh sửa</button>
+  </div>
+
+  <!-- Tab: Khóa học đã mua -->
+  <div class="ptab-content hidden" id="tab-courses">
+    <div class="profile-empty-tab">
+      <i class="fas fa-graduation-cap profile-empty-ico"></i>
+      <div class="profile-empty-title">Chưa mua khóa học nào</div>
+      <div class="profile-empty-sub">Khám phá các khóa học của MoonEdu để bắt đầu hành trình học tập!</div>
+      <a href="courses.html" class="profile-edit-btn">Xem khóa học</a>
+    </div>
+  </div>
+
+  <!-- Tab: Đổi mật khẩu -->
+  <div class="ptab-content hidden" id="tab-password">
+    <div class="profile-password-form">
+      <div class="ppf-group">
+        <label>Mật khẩu hiện tại</label>
+        <input type="password" placeholder="Nhập mật khẩu hiện tại..."/>
+      </div>
+      <div class="ppf-group">
+        <label>Mật khẩu mới</label>
+        <input type="password" placeholder="Nhập mật khẩu mới..."/>
+      </div>
+      <div class="ppf-group">
+        <label>Xác nhận mật khẩu mới</label>
+        <input type="password" placeholder="Nhập lại mật khẩu mới..."/>
+      </div>
+      <button class="profile-edit-btn">Lưu thay đổi</button>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-contact">
+      <div class="footer-heading">LIÊN HỆ</div>
+      <ul>
+        <li><i class="fas fa-bullhorn"></i> CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MOONEDU</li>
+        <li><i class="fas fa-map-marker-alt"></i> Hà Nội</li>
+        <li><i class="fas fa-clipboard-list"></i> Chịu trách nhiệm nội dung: MoonEdu - Trần Duy Mạnh</li>
+        <li><i class="fas fa-envelope"></i> moonedu@gmail.com</li>
+        <li><i class="fas fa-phone"></i> 0387.929.807</li>
+      </ul>
+      <div class="footer-socials">
+        <a href="#" class="fsoc fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fsoc ms"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="fsoc yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><div class="footer-heading">THÔNG TIN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+    <div class="footer-col"><div class="footer-heading">ĐIỀU KHOẢN</div><ul><li><a href="#">Giới thiệu</a></li><li><a href="#">Câu hỏi thường gặp</a></li><li><a href="#">Điều khoản dịch vụ</a></li><li><a href="#">Chính sách bảo mật</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 MoonEdu. All rights reserved.</div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+function switchTab(btn, tab) {
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ptab-content').forEach(c => c.classList.add('hidden'));
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+}
+</script>
+</body>
+</html>

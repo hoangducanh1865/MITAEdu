@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MoonEdu - Danh Sách Bài Thi</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="exam-bg">
+
+<div class="exam-list-wrap">
+
+  <!-- Header -->
+  <div class="el-header">
+    <div class="el-brand">
+      <div class="el-logo">🌙</div>
+      <span class="el-logo-text">Moon<strong>Edu</strong></span>
+      <div class="el-divider"></div>
+      <span class="el-sys">HỆ THỐNG MOONEDU</span>
+    </div>
+  </div>
+
+  <!-- User info -->
+  <div class="el-userinfo">
+    <div class="el-ui-item">
+      <i class="fas fa-user-circle el-ui-ico"></i>
+      <div>
+        <div class="el-ui-label">HỌ TÊN</div>
+        <div class="el-ui-val">Hoàng Đức Anh</div>
+      </div>
+    </div>
+    <div class="el-ui-item">
+      <i class="fas fa-calendar el-ui-ico"></i>
+      <div>
+        <div class="el-ui-label">NGÀY SINH</div>
+        <div class="el-ui-val muted">Chưa xác định</div>
+      </div>
+    </div>
+    <div class="el-ui-item">
+      <i class="fas fa-fingerprint el-ui-ico"></i>
+      <div>
+        <div class="el-ui-label">MÃ ĐỊNH DANH</div>
+        <div class="el-ui-val" id="examCode">114846</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam list -->
+  <div class="el-section-hd">
+    <span class="el-section-title">Danh sách bài thi</span>
+    <span class="el-section-count">3 BÀI THI KHẢ DỤNG</span>
+  </div>
+
+  <div class="el-list">
+
+    <div class="el-row">
+      <div class="el-row-left">
+        <div class="el-row-title">1. Tư Duy Toán Học 07</div>
+        <div class="el-row-meta">
+          <span>Giờ mở kíp: 18:01 24/01/2026 – 18:01 30/04/2026</span>
+          <span>Thời gian: <strong>60 phút</strong></span>
+          <span>Trạng thái: <span class="el-status-open">Chưa thi</span></span>
+        </div>
+      </div>
+      <button class="el-continue-btn active" onclick="goConfirm('tu-duy-toan-hoc-07','Tư Duy Toán Học 07',60)">Tiếp tục</button>
+    </div>
+
+    <div class="el-row">
+      <div class="el-row-left">
+        <div class="el-row-title">2. Đề Đọc Hiểu Số 07</div>
+        <div class="el-row-meta">
+          <span>Giờ mở kíp: 18:01 24/01/2026 – 18:01 30/04/2026</span>
+          <span>Thời gian: <strong>60 phút</strong></span>
+          <span>Trạng thái: <span class="el-status-open">Chưa thi</span></span>
+        </div>
+      </div>
+      <button class="el-continue-btn" onclick="goConfirm('de-doc-hieu-07','Đề Đọc Hiểu Số 07',60)">Tiếp tục</button>
+    </div>
+
+    <div class="el-row">
+      <div class="el-row-left">
+        <div class="el-row-title">3. Đề Khoa Học Số 07</div>
+        <div class="el-row-meta">
+          <span>Giờ mở kíp: 18:01 24/01/2026 – 18:01 30/04/2026</span>
+          <span>Thời gian: <strong>60 phút</strong></span>
+          <span>Trạng thái: <span class="el-status-open">Chưa thi</span></span>
+        </div>
+      </div>
+      <button class="el-continue-btn" onclick="goConfirm('de-khoa-hoc-07','Đề Khoa Học Số 07',60)">Tiếp tục</button>
+    </div>
+
+  </div>
+
+  <a href="prac-tsa-de-admin.html" class="el-back-link">← Về trang luyện đề</a>
+
+</div>
+
+<script>
+function goConfirm(slug, name, minutes) {
+  var params = new URLSearchParams({ slug: slug, name: encodeURIComponent(name), minutes: minutes });
+  window.location.href = 'exam-confirm.html?' + params.toString();
+}
+// set exam code from URL
+var params = new URLSearchParams(location.search);
+var examNum = params.get('exam') || '7';
+document.getElementById('examCode').textContent = '11484' + examNum;
+</script>
+</body>
+</html>
