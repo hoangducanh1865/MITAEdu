@@ -39,9 +39,16 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Layout ─── */
 .layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
+  display: flex;
+  flex-direction: row;
   min-height: calc(100vh - 62px);
+  overflow: hidden;
+}
+
+.layout > main,
+.layout > div.main-content {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ── Practice layout ─── */
@@ -67,8 +74,22 @@ a { text-decoration: none; color: inherit; }
 /* Thêm vào cuối frontend/src/styles/globals.css */
 
 /* 3-column layout cho trang chủ: sidebar + main + right panel */
+/* Dùng flexbox thay grid để sidebar có thể collapse mượt mà */
 .layout-home {
-  display: grid;
-  grid-template-columns: 240px 1fr 260px;
+  display: flex;
+  flex-direction: row;
   min-height: calc(100vh - 62px);
+  overflow: hidden;
+}
+
+.layout-home > main {
+  flex: 1;
+  min-width: 0; /* ngăn overflow khi sidebar ẩn */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sidebar animation wrapper */
+.sidebar-wrapper {
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }

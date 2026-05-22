@@ -7,13 +7,27 @@ import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
 import LessonAccordion from "@/components/course/LessonAccordion";
 import VideoPlayer from "@/components/course/VideoPlayer";
+import LocalCourseDetail from "@/components/course/LocalCourseDetail";
 import api from "@/lib/api";
+import { findLocalCourse } from "@/lib/localCourses";
 import type { ApiResponse, Course, Lesson } from "@/types";
 import Badge from "@/components/ui/Badge";
 
 export default function CourseDetailPage() {
   const params = useParams();
   const courseId = params.courseId as string;
+
+  // ── Kiểm tra xem có phải local course không ──
+  const localCourse = findLocalCourse(courseId);
+  if (localCourse) {
+    return <LocalCourseDetail course={localCourse} />;
+  }
+
+  // ── API course (courseId là số) ──
+  return <ApiCourseDetail courseId={courseId} />;
+}
+
+function ApiCourseDetail({ courseId }: { courseId: string }) {
   const [course, setCourse] = useState<Course | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +46,7 @@ export default function CourseDetailPage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "60px", textAlign: "center", color: "#d32f2f" }}>
+        <main style={{ padding: "60px", textAlign: "center", color: "#d32f2f", background: "#fdf0f0" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
         </main>
       </div>
@@ -44,7 +58,7 @@ export default function CourseDetailPage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "60px", textAlign: "center", color: "#777" }}>Không tìm thấy khóa học</main>
+        <main style={{ padding: "60px", textAlign: "center", color: "#777", background: "#fdf0f0" }}>Không tìm thấy khóa học</main>
       </div>
     </>
   );
@@ -56,7 +70,7 @@ export default function CourseDetailPage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "24px 28px", display: "flex", gap: "24px" }}>
+        <main style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#fdf0f0" }}>
           {/* Left: video + info */}
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* Breadcrumb */}

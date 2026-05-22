@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import AvatarDropdown from "./AvatarDropdown";
+import { useSidebar } from "@/lib/SidebarContext";
 
 const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
@@ -15,37 +15,7 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  useEffect(() => {
-    // Lấy state từ localStorage
-    const saved = localStorage.getItem("sidebarOpen");
-    if (saved !== null) {
-      setSidebarOpen(JSON.parse(saved));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Lưu state và update DOM
-    localStorage.setItem("sidebarOpen", JSON.stringify(sidebarOpen));
-    
-    const sidebar = document.querySelector(".sidebar") as HTMLElement | null;
-    const mainContent = document.querySelector(".main-content") as HTMLElement | null;
-    
-    if (sidebar) {
-      if (sidebarOpen) {
-        sidebar.style.display = "block";
-        sidebar.style.opacity = "1";
-      } else {
-        sidebar.style.display = "none";
-        sidebar.style.opacity = "0";
-      }
-    }
-    
-    if (mainContent) {
-      mainContent.style.flex = sidebarOpen ? "1" : "1";
-    }
-  }, [sidebarOpen]);
+  const { sidebarOpen, toggleSidebar } = useSidebar();
 
   return (
     <header style={{
@@ -67,7 +37,7 @@ export default function Navbar() {
 
         {/* Toggle Sidebar Button */}
         <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={toggleSidebar}
           title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
             background: "none", border: "1px solid #f0d5d5",
@@ -85,7 +55,7 @@ export default function Navbar() {
             e.currentTarget.style.borderColor = "#f0d5d5";
           }}
         >
-          <i className={`fas ${sidebarOpen ? "fa-sidebar" : "fa-bars"}`} />
+          <i className="fas fa-bars" />
         </button>
       </div>
 

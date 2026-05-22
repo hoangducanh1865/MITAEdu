@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
@@ -16,17 +19,23 @@ interface Document {
   createdAt: string;
 }
 
-async function getDocuments(): Promise<Document[]> {
-  try {
-    const res = await api.get<ApiResponse<Document[]>>("/api/documents");
-    return res.data.data || [];
-  } catch {
-    return [];
-  }
-}
+export default function LibraryPage() {
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function LibraryPage() {
-  const documents = await getDocuments();
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await api.get<ApiResponse<Document[]>>("/api/documents");
+        setDocuments(res.data.data || []);
+      } catch {
+        setDocuments([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
   
   // Group documents by course
   const byCourse: Record<string, Document[]> = {};
@@ -51,7 +60,11 @@ export default async function LibraryPage() {
             <p style={{ color: "#777", fontSize: "0.875rem" }}>Kho tài liệu học tập phong phú từ các khóa học</p>
           </div>
 
-          {documents.length === 0 ? (
+          {loading ? (
+            <div style={{ textAlign: "center", padding: "80px", color: "#d32f2f" }}>
+              <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
+            </div>
+          ) : documents.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5" }}>
               <i className="fas fa-book" style={{ fontSize: "3rem", marginBottom: "16px", display: "block", color: "#d32f2f" }} />
               <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, marginBottom: "8px" }}>Thư viện học liệu</h3>
