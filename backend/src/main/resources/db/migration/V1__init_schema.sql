@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS questions (
     option_b       TEXT            NOT NULL,
     option_c       TEXT            NOT NULL,
     option_d       TEXT            NOT NULL,
-    correct_answer CHAR(1)         NOT NULL   -- A | B | C | D
+    correct_answer VARCHAR(1)         NOT NULL   -- A | B | C | D
 );
 
 CREATE TABLE IF NOT EXISTS submissions (
