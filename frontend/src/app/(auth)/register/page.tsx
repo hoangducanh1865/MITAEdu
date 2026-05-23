@@ -67,7 +67,7 @@ export default function RegisterPage() {
 
         <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
           Đã có tài khoản?{" "}
-          <Link href="/login" style={{ color: "#d32f2f", fontWeight: 600 }}>Đăng nhập</Link>
+          <Link href="/login" prefetch={false} style={{ color: "#d32f2f", fontWeight: 600 }}>Đăng nhập</Link>
         </p>
       </div>
     </div>

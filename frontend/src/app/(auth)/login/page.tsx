@@ -87,7 +87,7 @@ export default function LoginPage() {
 
         <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
           Chưa có tài khoản?{" "}
-          <Link href="/register" style={{ color: "#d32f2f", fontWeight: 600 }}>
+          <Link href="/register" prefetch={false} style={{ color: "#d32f2f", fontWeight: 600 }}>
             Đăng ký ngay
           </Link>
         </p>
