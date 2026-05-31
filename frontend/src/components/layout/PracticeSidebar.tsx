@@ -51,6 +51,14 @@ const NAV_GROUPS: NavGroup[] = [
       { label: "Khảo thí (Thi thử)", href: "/practice/hsa/khao-thi", icon: "fa-clock" },
     ],
   },
+  {
+    id: "thpt",
+    label: "Thi THPT Quốc Gia",
+    icon: "fa-graduation-cap",
+    children: [
+      { label: "Khảo thí (Thi thử)", href: "/practice/thpt/khao-thi", icon: "fa-clock" },
+    ],
+  },
 ];
 
 export default function PracticeSidebar() {
