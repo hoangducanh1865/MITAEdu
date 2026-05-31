@@ -53,9 +53,14 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Practice layout ─── */
 .prac-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
+  display: flex;
+  flex-direction: row;
   min-height: calc(100vh - 62px);
+}
+
+.prac-layout > main {
+  flex: 1;
+  min-width: 0;
 }
 
 /* ── Exam taking layout ─── */

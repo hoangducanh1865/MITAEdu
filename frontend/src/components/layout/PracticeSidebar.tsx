@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useSidebar } from "@/lib/SidebarContext";
 
 interface NavGroup {
   id: string;
@@ -56,6 +57,7 @@ export default function PracticeSidebar() {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const [openSubs, setOpenSubs] = useState<Record<string, boolean>>({});
+  const { sidebarOpen } = useSidebar();
 
   function toggleGroup(id: string) {
     setOpenGroups((p) => ({ ...p, [id]: !p[id] }));
@@ -65,9 +67,17 @@ export default function PracticeSidebar() {
   }
 
   return (
+    <div style={{
+      width: sidebarOpen ? "260px" : "0",
+      overflow: "hidden",
+      flexShrink: 0,
+      transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    }}>
     <aside style={{
+      width: "260px",
       background: "#fff", borderRight: "2px solid #f0d5d5",
       padding: "12px 0", overflowY: "auto",
+      height: "100%",
     }}>
       {/* Home */}
       <NavItem href="/practice" icon="fa-home" active={pathname === "/practice"}>
@@ -149,6 +159,7 @@ export default function PracticeSidebar() {
         Tra cứu sách
       </NavItem>
     </aside>
+    </div>
   );
 }
 
