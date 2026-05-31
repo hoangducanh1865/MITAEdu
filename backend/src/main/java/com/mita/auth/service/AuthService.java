@@ -23,9 +23,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final EmailVerificationService emailVerificationService;
 
+    /**
+     * Đăng ký: tạo tài khoản (chưa kích hoạt) và gửi email xác minh.
+     * KHÔNG cấp JWT — user phải xác minh email trước khi đăng nhập.
+     */
     @Transactional
-    public AuthResponse register(RegisterRequest req) {
+    public void register(RegisterRequest req) {
         if (userRepository.existsByEmail(req.getEmail())) {
             throw ApiException.badRequest("Email đã được sử dụng");
         }
@@ -39,16 +44,21 @@ public class AuthService {
                 .build();
         userRepository.save(user);
 
-        String token = jwtTokenProvider.generateTokenFromEmail(user.getEmail());
-        return AuthResponse.of(token, user.getId(), user.getName(), user.getEmail(), user.getRole().name());
+        emailVerificationService.sendVerification(user);
     }
 
     public AuthResponse login(LoginRequest req) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         User user = (User) authentication.getPrincipal();
+
+        // Chặn đăng nhập nếu chưa xác minh email
+        if (!user.isEmailVerified()) {
+            throw ApiException.forbidden("Tài khoản chưa được xác minh. Vui lòng kiểm tra email để kích hoạt tài khoản.");
+        }
+
         String token = jwtTokenProvider.generateToken(authentication);
-        return AuthResponse.of(token, user.getId(), user.getName(), user.getEmail(), user.getRole().name());
+        return AuthResponse.of(token, user.getId(), user.getName(), user.getEmail(), user.getRole().name(), user.isEmailVerified());
     }
 
     public User getCurrentUser(String email) {

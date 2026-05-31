@@ -16,8 +16,9 @@ public class AuthResponse {
     private String name;
     private String email;
     private String role;
+    private boolean emailVerified;
 
-    public static AuthResponse of(String token, Long userId, String name, String email, String role) {
+    public static AuthResponse of(String token, Long userId, String name, String email, String role, boolean emailVerified) {
         return AuthResponse.builder()
                 .token(token)
                 .tokenType("Bearer")
@@ -25,6 +26,7 @@ public class AuthResponse {
                 .name(name)
                 .email(email)
                 .role(role)
+                .emailVerified(emailVerified)
                 .build();
     }
 }

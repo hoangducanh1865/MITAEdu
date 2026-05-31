@@ -6,6 +6,7 @@ export interface AuthResponse {
   name: string;
   email: string;
   role: "USER" | "ADMIN";
+  emailVerified: boolean;
 }
 
 export interface LoginRequest {
@@ -32,6 +33,7 @@ export interface User {
   city?: string;
   birthYear?: number;
   createdAt: string;
+  emailVerified?: boolean;
 }
 
 export interface UpdateProfileRequest {
