@@ -178,6 +178,53 @@ function MediaViewer({
     );
   }
 
+  // Content roadmap viewer
+  if (lesson.content && lesson.content.length > 0) {
+    return (
+      <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", overflow: "hidden" }}>
+        {/* Header */}
+        <div style={{
+          background: "linear-gradient(135deg,#1565c0,#0d47a1)",
+          padding: "14px 20px",
+          display: "flex", alignItems: "center", gap: "10px",
+        }}>
+          <i className="fas fa-book-open" style={{ color: "#fff", fontSize: "0.95rem" }} />
+          <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem", flex: 1 }}>
+            {lesson.title}
+          </span>
+        </div>
+        {/* Content items */}
+        <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: "10px" }}>
+          {lesson.content.map((item, i) => {
+            const isAdvanced = item.level === "VD/VDC";
+            return (
+              <div key={i} style={{
+                display: "flex", gap: "12px", alignItems: "flex-start",
+                padding: "12px 14px", borderRadius: "10px",
+                background: isAdvanced ? "#fff8f8" : "#f0f7ff",
+                border: `1px solid ${isAdvanced ? "#fecaca" : "#bfdbfe"}`,
+              }}>
+                <span style={{
+                  display: "inline-block", padding: "3px 8px", borderRadius: "6px",
+                  fontSize: "0.68rem", fontWeight: 800, flexShrink: 0, marginTop: "2px",
+                  background: isAdvanced ? "#fef2f2" : "#eff8ff",
+                  color: isAdvanced ? "#d32f2f" : "#1565c0",
+                  border: `1px solid ${isAdvanced ? "#fca5a5" : "#93c5fd"}`,
+                  whiteSpace: "nowrap",
+                }}>
+                  {item.level || "—"}
+                </span>
+                <span style={{ fontSize: "0.875rem", color: "#333", lineHeight: 1.65 }}>
+                  {item.text}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   // Placeholder (no media)
   return (
     <div style={{
