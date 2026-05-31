@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   findLocalThptExam,
   computeScore,
@@ -36,12 +37,24 @@ function timerColor(s: number) {
   return "#b71c1c";
 }
 
-// ── Main component ─────────────────────────────────────────
-export default function ThptExamTakingPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ examId?: string }>;
-}) {
+// ── Root export: wraps in Suspense (required for useSearchParams) ──
+export default function ThptExamTakingPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#b71c1c" }}>
+        <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
+      </div>
+    }>
+      <ExamRoom />
+    </Suspense>
+  );
+}
+
+// ── Inner component (uses useSearchParams safely inside Suspense) ──
+function ExamRoom() {
+  const searchParams                = useSearchParams();
+  const examId                      = searchParams.get("examId");
+
   const [exam, setExam]           = useState<ThptExam | null>(null);
   const [user, setUser]           = useState<User | null>(null);
   const [p1, setP1]               = useState<P1Answers>({});
@@ -59,16 +72,14 @@ export default function ThptExamTakingPage({
 
   // Load exam + user
   useEffect(() => {
-    searchParams.then(({ examId }) => {
-      if (!examId) return;
-      const found = findLocalThptExam(examId);
-      if (found) {
-        setExam(found);
-        setTimeLeft(found.durationMinutes * 60);
-      }
-    });
+    if (!examId) return;
+    const found = findLocalThptExam(examId);
+    if (found) {
+      setExam(found);
+      setTimeLeft(found.durationMinutes * 60);
+    }
     setUser(getSavedUser<User>());
-  }, [searchParams]);
+  }, [examId]);
 
   // Countdown timer
   useEffect(() => {
@@ -132,8 +143,11 @@ export default function ThptExamTakingPage({
 
   if (!exam) {
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#b71c1c" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", gap: "12px", color: "#b71c1c" }}>
         <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
+        <span style={{ fontSize: "0.85rem", color: "#888" }}>
+          {examId ? "Đang tải đề thi..." : "Không tìm thấy đề thi"}
+        </span>
       </div>
     );
   }
