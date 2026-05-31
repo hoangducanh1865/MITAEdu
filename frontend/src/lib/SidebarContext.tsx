@@ -19,6 +19,9 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem("sidebarOpen");
     if (saved !== null) {
       setSidebarOpen(JSON.parse(saved));
+    } else {
+      // Default closed on mobile (first visit, no saved preference)
+      setSidebarOpen(window.innerWidth > 768);
     }
   }, []);
 

@@ -60,7 +60,7 @@ export default function Navbar() {
       </div>
 
       {/* Center: Navigation */}
-      <nav style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+      <nav className="navbar-center-nav" style={{ display: "flex", gap: "16px", alignItems: "center" }}>
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;
           return (

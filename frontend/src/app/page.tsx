@@ -6,6 +6,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import api from "@/lib/api";
+import { useSidebar } from "@/lib/SidebarContext";
 import type { ApiResponse, Course } from "@/types";
 
 // ── Carousel slides ──────────────────────────────────────────────
@@ -62,6 +63,7 @@ export default function DashboardPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const { sidebarOpen, toggleSidebar } = useSidebar();
 
   // Auto-advance carousel
   useEffect(() => {
@@ -88,13 +90,18 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
+      {/* Backdrop: click to close sidebar on mobile */}
+      <div
+        className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
+        onClick={toggleSidebar}
+      />
       <div className="layout-home">
         <Sidebar />
         <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
 
           {/* ── HERO CAROUSEL ─────────────────────────────── */}
-          <section style={{ padding: "20px 28px 0" }}>
-            <div style={{
+          <section className="home-section" style={{ padding: "20px 28px 0" }}>
+            <div className="hero-inner" style={{
               background: s.bg,
               borderRadius: "20px",
               padding: "40px 48px",
@@ -109,7 +116,7 @@ export default function DashboardPage() {
             }}>
               {/* Left content */}
               <div style={{ flex: 1, zIndex: 2 }}>
-                <h2 style={{
+                <h2 className="hero-title" style={{
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "2.4rem", lineHeight: 1.15,
                   marginBottom: "10px", whiteSpace: "pre-line",
@@ -142,7 +149,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Right visual */}
-              <div style={{ flexShrink: 0, zIndex: 2, marginLeft: "32px" }}>
+              <div className="hero-visual" style={{ flexShrink: 0, zIndex: 2, marginLeft: "32px" }}>
                 <div style={{ position: "relative", width: "160px", height: "120px" }}>
                   {[0,1,2].map((i) => (
                     <div key={i} style={{
@@ -194,7 +201,7 @@ export default function DashboardPage() {
           </section>
 
           {/* ── VINH DANH BANNER ──────────────────────────── */}
-          <section style={{ padding: "16px 28px 0" }}>
+          <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
               background: "#d32f2f", borderRadius: "12px",
               padding: "14px 24px", color: "#fff",
@@ -210,7 +217,7 @@ export default function DashboardPage() {
           </section>
 
           {/* ── TOP 2 STUDENTS ────────────────────────────── */}
-          <section style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
               { rank: "Thủ Khoa", score: "96.10", gold: true },
               { rank: "Á Khoa",   score: "96.08", gold: false },
@@ -248,7 +255,7 @@ export default function DashboardPage() {
           </section>
 
           {/* ── CHIẾN THẦN 80+ ────────────────────────────── */}
-          <section style={{ padding: "20px 28px 0" }}>
+          <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{ marginBottom: "16px" }}>
               <span style={{
                 display: "inline-block", background: "#d32f2f", color: "#fff",
@@ -259,7 +266,7 @@ export default function DashboardPage() {
                 CHIẾN THẦN 80+ TSA - MITAEdu
               </span>
             </div>
-            <div style={{
+            <div className="home-champions-grid" style={{
               border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px",
               display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px",
             }}>
@@ -300,7 +307,7 @@ export default function DashboardPage() {
           </section>
 
           {/* ── BẠN ĐANG TÌM GÌ ───────────────────────────── */}
-          <section style={{ padding: "20px 28px 0" }}>
+          <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{
               border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
             }}>
@@ -334,7 +341,7 @@ export default function DashboardPage() {
           </section>
 
           {/* ── KHÓA HỌC MỚI NHẤT ─────────────────────────── */}
-          <section style={{ padding: "20px 28px 28px" }}>
+          <section className="home-section" style={{ padding: "20px 28px 28px" }}>
             <div style={{
               border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
             }}>
@@ -361,7 +368,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div ref={sliderRef} style={{
+              <div ref={sliderRef} className="home-courses-grid" style={{
                 display: "grid",
                 gridTemplateColumns: `repeat(3, 1fr)`,
                 gap: "16px",
@@ -428,7 +435,7 @@ const NEWS_ITEMS = [
 
 function RightPanel() {
   return (
-    <aside style={{
+    <aside className="home-right-panel" style={{
       width: "260px",
       flexShrink: 0,
       padding: "20px 16px 20px 0",

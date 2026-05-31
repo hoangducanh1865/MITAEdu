@@ -1,12 +1,12 @@
 export default function Footer() {
   return (
-    <footer style={{
+    <footer className="footer-root" style={{
       background: "#b71c1c",
       borderTop: "none",
       padding: "40px 60px 0",
       marginTop: "auto",
     }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "40px", maxWidth: "1100px", margin: "0 auto" }}>
+      <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "40px", maxWidth: "1100px", margin: "0 auto" }}>
         {/* LIÊN HỆ */}
         <div>
           <h4 style={colTitle}>LIÊN HỆ</h4>

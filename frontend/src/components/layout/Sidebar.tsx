@@ -14,6 +14,7 @@ export default function Sidebar() {
 
   return (
     <aside
+      className="home-left-sidebar"
       style={{
         background: "#fff",
         borderRight: "2px solid #f0d5d5",
