@@ -197,3 +197,54 @@ a { text-decoration: none; color: inherit; }
     display: none !important;
   }
 }
+
+/* ── Courses list page ──────────────────────────────── */
+@media (max-width: 768px) {
+  /* Stack categories above course list */
+  .courses-layout {
+    flex-direction: column !important;
+    padding: 0 14px 24px !important;
+    gap: 16px !important;
+  }
+
+  /* Categories: horizontal scrollable chips */
+  .courses-cat-sidebar {
+    width: 100% !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .courses-cat-sidebar::-webkit-scrollbar { display: none; }
+
+  /* Each category button: compact card */
+  .courses-cat-btn {
+    width: 150px !important;
+    min-width: 150px !important;
+    flex-shrink: 0 !important;
+    padding: 10px 12px !important;
+  }
+
+  /* ── Course detail (video + lesson list) ── */
+  .course-detail-main {
+    flex-direction: column !important;
+    padding: 14px !important;
+    gap: 16px !important;
+  }
+
+  /* Lesson panel takes full width, loses sticky */
+  .course-lesson-panel {
+    width: 100% !important;
+  }
+  .course-lesson-sticky {
+    position: static !important;
+    max-height: none !important;
+  }
+
+  /* PDF viewer: comfortable height on mobile */
+  .pdf-iframe {
+    height: 420px !important;
+  }
+}

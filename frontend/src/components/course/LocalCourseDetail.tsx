@@ -32,7 +32,7 @@ export default function LocalCourseDetail({ course }: Props) {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#fdf0f0", minHeight: "calc(100vh - 62px)" }}>
+        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#fdf0f0", minHeight: "calc(100vh - 62px)" }}>
 
           {/* LEFT: media viewer + info */}
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -70,8 +70,8 @@ export default function LocalCourseDetail({ course }: Props) {
           </div>
 
           {/* RIGHT: lesson list - LAB style */}
-          <div style={{ width: "340px", flexShrink: 0 }}>
-            <div style={{
+          <div className="course-lesson-panel" style={{ width: "340px", flexShrink: 0 }}>
+            <div className="course-lesson-sticky" style={{
               background: "#fff", borderRadius: "16px",
               border: "2px solid #f0d5d5", padding: "16px",
               position: "sticky", top: "80px", maxHeight: "calc(100vh - 120px)",
@@ -169,6 +169,7 @@ function MediaViewer({
           </a>
         </div>
         <iframe
+          className="pdf-iframe"
           src={pdfUrl}
           title={lesson.title}
           style={{ width: "100%", height: "600px", border: "none" }}

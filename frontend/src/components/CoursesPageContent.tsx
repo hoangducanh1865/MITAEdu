@@ -125,6 +125,7 @@ export default function CoursesPageContent() {
           </div>
 
           <div
+            className="courses-layout"
             style={{
               padding: "0 28px 32px",
               display: "flex",
@@ -133,6 +134,7 @@ export default function CoursesPageContent() {
             }}
           >
             <div
+              className="courses-cat-sidebar"
               style={{
                 width: "230px",
                 flexShrink: 0,
@@ -160,6 +162,7 @@ export default function CoursesPageContent() {
                 return (
                   <button
                     key={cat.value}
+                    className="courses-cat-btn"
                     onClick={() =>
                       router.push(`/courses?category=${cat.value}`)
                     }

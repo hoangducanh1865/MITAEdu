@@ -70,7 +70,7 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#fdf0f0" }}>
+        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#fdf0f0" }}>
           {/* Left: video + info */}
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* Breadcrumb */}
@@ -116,8 +116,8 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
           </div>
 
           {/* Right: lesson list */}
-          <div style={{ width: "320px", flexShrink: 0 }}>
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", padding: "16px", position: "sticky", top: "80px" }}>
+          <div className="course-lesson-panel" style={{ width: "320px", flexShrink: 0 }}>
+            <div className="course-lesson-sticky" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", padding: "16px", position: "sticky", top: "80px" }}>
               <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#d32f2f", marginBottom: "14px" }}>
                 Danh sách bài học
               </h3>
