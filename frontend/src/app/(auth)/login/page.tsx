@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { setToken, saveUser } from "@/lib/auth";
-import type { ApiResponse, AuthResponse } from "@/types";
+import type { ApiResponse, AuthResponse, User } from "@/types";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
@@ -26,9 +26,15 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const res = await api.post<ApiResponse<AuthResponse>>("/api/auth/login", form);
-      const { token, ...user } = res.data.data;
+      const { token, userId, ...rest } = res.data.data;
       setToken(token);
-      saveUser(user);
+      // Fetch full user profile (includes school, city, birthYear) and save with correct `id` field
+      try {
+        const meRes = await api.get<ApiResponse<User>>("/api/auth/me");
+        saveUser(meRes.data.data);
+      } catch {
+        saveUser({ ...rest, id: userId });
+      }
       router.push("/");
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status;

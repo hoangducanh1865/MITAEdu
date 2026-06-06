@@ -75,7 +75,7 @@ export default function PracticeSidebar() {
   }
 
   return (
-    <div style={{
+    <div className="prac-sidebar-wrapper" style={{
       width: sidebarOpen ? "260px" : "0",
       overflow: "hidden",
       flexShrink: 0,

@@ -21,8 +21,8 @@ const P1_RANGE = Array.from({ length: 12 }, (_, i) => i + 1);   // 1–12
 const P2_RANGE = Array.from({ length: 4 }, (_, i) => i + 13);   // 13–16
 const P3_RANGE = Array.from({ length: 6 }, (_, i) => i + 17);   // 17–22
 const P2_ITEMS = ["a", "b", "c", "d"] as const;
-const TIMER_GREEN  = 15 * 60; // >15 min
-const TIMER_ORANGE = 5 * 60;  // >5 min
+const TIMER_GREEN  = 15 * 60;
+const TIMER_ORANGE = 5 * 60;
 
 // ── Helpers ───────────────────────────────────────────────
 function formatTime(s: number) {
@@ -37,7 +37,7 @@ function timerColor(s: number) {
   return "#b71c1c";
 }
 
-// ── Root export: wraps in Suspense (required for useSearchParams) ──
+// ── Root export ────────────────────────────────────────────
 export default function ThptExamTakingPage() {
   return (
     <Suspense fallback={
@@ -50,7 +50,7 @@ export default function ThptExamTakingPage() {
   );
 }
 
-// ── Inner component (uses useSearchParams safely inside Suspense) ──
+// ── Inner component ────────────────────────────────────────
 function ExamRoom() {
   const searchParams                = useSearchParams();
   const examId                      = searchParams.get("examId");
@@ -64,13 +64,13 @@ function ExamRoom() {
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [result, setResult]       = useState<ScoreResult | null>(null);
+  const [mobileTab, setMobileTab] = useState<"pdf" | "answers">("answers");
 
   const part1Ref = useRef<HTMLDivElement>(null);
   const part2Ref = useRef<HTMLDivElement>(null);
   const part3Ref = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
 
-  // Load exam + user
   useEffect(() => {
     if (!examId) return;
     const found = findLocalThptExam(examId);
@@ -81,7 +81,6 @@ function ExamRoom() {
     setUser(getSavedUser<User>());
   }, [examId]);
 
-  // Countdown timer
   useEffect(() => {
     if (submitted) return;
     const id = setInterval(() => {
@@ -120,6 +119,7 @@ function ExamRoom() {
     setResult(score);
     setSubmitted(true);
     setShowModal(false);
+    setMobileTab("answers");
   }
 
   function handleReset() {
@@ -132,7 +132,7 @@ function ExamRoom() {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ── Progress counts ────────────────────────────────────
+  // ── Progress ───────────────────────────────────────────
   const p1Done = P1_RANGE.filter((q) => p1[q] !== undefined).length;
   const p2Done = P2_RANGE.filter((q) =>
     P2_ITEMS.some((k) => p2[q]?.[k] !== undefined)
@@ -157,14 +157,13 @@ function ExamRoom() {
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
 
       {/* ── Sticky header ─────────────────────────────── */}
-      <header style={{
+      <header className="exam-room-header" style={{
         height: "56px", flexShrink: 0,
         background: "#fff", borderBottom: "2px solid #f0d5d5",
         display: "flex", alignItems: "center",
         padding: "0 20px", gap: "16px",
         position: "sticky", top: 0, zIndex: 100,
       }}>
-        {/* Logo / back */}
         <Link href="/practice/thpt/khao-thi" style={{
           display: "flex", alignItems: "center", gap: "8px",
           color: "#777", fontSize: "0.82rem", textDecoration: "none",
@@ -174,17 +173,16 @@ function ExamRoom() {
           Thoát
         </Link>
 
-        <div style={{ width: "1px", height: "24px", background: "#f0d5d5" }} />
+        <div className="exam-header-sep" style={{ width: "1px", height: "24px", background: "#f0d5d5" }} />
 
-        {/* Badge + title */}
-        <span style={{
+        <span className="exam-header-badge" style={{
           background: "#b71c1c", color: "#fff",
           borderRadius: "6px", padding: "3px 10px",
           fontSize: "0.72rem", fontWeight: 800, flexShrink: 0,
         }}>
           THPT {exam.year}
         </span>
-        <span style={{
+        <span className="exam-header-title" style={{
           fontFamily: "Nunito, sans-serif", fontWeight: 800,
           fontSize: "0.95rem", color: "#2c2c2c",
           overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -192,6 +190,9 @@ function ExamRoom() {
         }}>
           {exam.title}
         </span>
+
+        {/* Spacer on mobile (title is hidden) */}
+        <div style={{ flex: 1 }} className="exam-header-title" />
 
         {/* Timer */}
         {!submitted && (
@@ -211,9 +212,9 @@ function ExamRoom() {
           </div>
         )}
 
-        {/* Nộp bài button */}
         {!submitted && (
           <button
+            className="exam-submit-btn"
             onClick={() => setShowModal(true)}
             style={{
               background: "#b71c1c", color: "#fff", border: "none",
@@ -227,11 +228,34 @@ function ExamRoom() {
         )}
       </header>
 
+      {/* ── Mobile tab switcher (hidden on desktop) ───── */}
+      {!submitted && (
+        <div className="exam-mobile-tabs">
+          <button
+            className={`exam-tab-btn${mobileTab === "pdf" ? " active" : ""}`}
+            onClick={() => setMobileTab("pdf")}
+          >
+            <i className="fas fa-file-pdf" />
+            Xem đề
+          </button>
+          <button
+            className={`exam-tab-btn${mobileTab === "answers" ? " active" : ""}`}
+            onClick={() => setMobileTab("answers")}
+          >
+            <i className="fas fa-pencil-alt" />
+            Làm bài ({p1Done + p2Done + p3Done}/22)
+          </button>
+        </div>
+      )}
+
       {/* ── Main body ─────────────────────────────────── */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div
+        className={`exam-body-split${mobileTab === "pdf" ? " show-pdf" : ""}`}
+        style={{ display: "flex", flex: 1, overflow: "hidden" }}
+      >
 
         {/* LEFT: PDF viewer */}
-        <div style={{
+        <div className="exam-pdf-panel" style={{
           width: "55%", flexShrink: 0,
           borderRight: "2px solid #f0d5d5",
           background: "#f5f5f5",
@@ -244,16 +268,14 @@ function ExamRoom() {
         </div>
 
         {/* RIGHT: Answer panel */}
-        <div ref={rightRef} style={{
+        <div ref={rightRef} className="exam-answers-panel" style={{
           flex: 1, overflowY: "auto",
           background: "#fff",
           display: "flex", flexDirection: "column",
         }}>
           {submitted && result ? (
-            /* ── KẾT QUẢ ────────────────────────────── */
             <ResultPanel result={result} exam={exam} p1={p1} p2={p2} p3={p3} onReset={handleReset} />
           ) : (
-            /* ── FORM TRẢ LỜI ──────────────────────── */
             <>
               {/* Section navigator tabs */}
               <div style={{
@@ -342,7 +364,6 @@ function ExamRoom() {
                     color="#2e7d32"
                     bg="#e8f5e9"
                   />
-                  {/* Scoring legend */}
                   <div style={{
                     display: "flex", gap: "10px", marginTop: "10px",
                     padding: "8px 12px", background: "#f9f9f9",
@@ -364,14 +385,12 @@ function ExamRoom() {
                         border: "1.5px solid #e8f5e9", borderRadius: "10px",
                         overflow: "hidden",
                       }}>
-                        {/* Question number */}
                         <div style={{
                           background: "#e8f5e9", padding: "7px 12px",
                           fontWeight: 800, fontSize: "0.82rem", color: "#2e7d32",
                         }}>
                           Câu {q}
                         </div>
-                        {/* Items */}
                         <div style={{ padding: "8px 12px", display: "flex", flexDirection: "column", gap: "6px" }}>
                           {P2_ITEMS.map((item) => {
                             const val = p2[q]?.[item];
@@ -383,7 +402,6 @@ function ExamRoom() {
                                 <span style={{ fontWeight: 600, fontSize: "0.8rem", color: "#555", minWidth: "20px" }}>
                                   {item})
                                 </span>
-                                {/* Toggle buttons */}
                                 <div style={{ display: "flex", gap: "6px" }}>
                                   <button
                                     onClick={() => {
@@ -480,7 +498,7 @@ function ExamRoom() {
 
               </div>
 
-              {/* Sticky submit button at bottom of right panel */}
+              {/* Sticky submit bar */}
               <div style={{
                 position: "sticky", bottom: 0,
                 padding: "12px 16px",
@@ -513,10 +531,11 @@ function ExamRoom() {
           position: "fixed", inset: 0, zIndex: 999,
           background: "rgba(0,0,0,0.5)",
           display: "flex", alignItems: "center", justifyContent: "center",
+          padding: "16px",
         }}>
           <div style={{
             background: "#fff", borderRadius: "16px",
-            padding: "28px 32px", maxWidth: "380px", width: "90%",
+            padding: "28px 32px", maxWidth: "380px", width: "100%",
             boxShadow: "0 8px 32px rgba(0,0,0,.2)",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
@@ -524,6 +543,7 @@ function ExamRoom() {
                 width: "44px", height: "44px", borderRadius: "50%",
                 background: "#fff5f5", display: "flex", alignItems: "center",
                 justifyContent: "center", color: "#b71c1c", fontSize: "1.1rem",
+                flexShrink: 0,
               }}>
                 <i className="fas fa-paper-plane" />
               </div>
@@ -587,7 +607,7 @@ function SectionHeader({
   title: string; subtitle: string; color: string; bg: string;
 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
       <div style={{
         background: bg, borderRadius: "8px", padding: "6px 14px",
         fontFamily: "Nunito, sans-serif", fontWeight: 900,

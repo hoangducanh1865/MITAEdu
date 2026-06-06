@@ -7,7 +7,7 @@ export default function ThptKhaoThiPage() {
   return (
     <div style={{ maxWidth: "860px" }}>
       {/* Page header */}
-      <div style={{
+      <div className="thpt-banner" style={{
         background: "linear-gradient(135deg,#b71c1c,#880e0e)",
         borderRadius: "16px",
         padding: "28px 32px",
@@ -62,7 +62,7 @@ export default function ThptKhaoThiPage() {
         <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "0.9rem", color: "#b71c1c", marginBottom: "12px" }}>
           Cấu trúc điểm
         </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
+        <div className="thpt-score-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
           {[
             { part: "Phần I", desc: "12 câu × 0,25 điểm", total: "3,0 điểm", color: "#1565c0", bg: "#e3f2fd" },
             { part: "Phần II", desc: "4 câu × tối đa 1 điểm", total: "4,0 điểm", color: "#2e7d32", bg: "#e8f5e9" },
@@ -91,7 +91,7 @@ export default function ThptKhaoThiPage() {
 
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {LOCAL_THPT_EXAMS.map((exam) => (
-          <div key={exam.id} style={{
+          <div key={exam.id} className="thpt-exam-card" style={{
             background: "#fff", border: "2px solid #f0d5d5",
             borderRadius: "14px", padding: "20px 24px",
             display: "flex", alignItems: "center", gap: "20px",
@@ -135,6 +135,7 @@ export default function ThptKhaoThiPage() {
             {/* CTA */}
             <Link
               href={`/practice/thpt/exam-taking?examId=${exam.id}`}
+              className="thpt-exam-cta"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
                 background: "#b71c1c", color: "#fff",

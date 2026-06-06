@@ -18,11 +18,22 @@ export default function ProfilePage() {
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   useEffect(() => {
-    const saved = getSavedUser<User>();
-    if (saved) {
-      setUser(saved);
-      setForm({ name: saved.name, school: saved.school ?? "", city: saved.city ?? "", birthYear: saved.birthYear?.toString() ?? "" });
+    async function loadUser() {
+      try {
+        const res = await api.get<ApiResponse<User>>("/api/auth/me");
+        const freshUser = res.data.data;
+        setUser(freshUser);
+        saveUser(freshUser);
+        setForm({ name: freshUser.name, school: freshUser.school ?? "", city: freshUser.city ?? "", birthYear: freshUser.birthYear?.toString() ?? "" });
+      } catch {
+        const saved = getSavedUser<User>();
+        if (saved) {
+          setUser(saved);
+          setForm({ name: saved.name, school: saved.school ?? "", city: saved.city ?? "", birthYear: saved.birthYear?.toString() ?? "" });
+        }
+      }
     }
+    loadUser();
   }, []);
 
   async function save() {

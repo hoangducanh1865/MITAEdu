@@ -198,6 +198,135 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
+/* ── Practice sidebar + layout ─────────────────────── */
+.prac-main {
+  padding: 28px 32px;
+}
+
+@media (max-width: 768px) {
+  /* Overlay sidebar (same behaviour as home sidebar) */
+  .prac-sidebar-wrapper {
+    position: fixed !important;
+    top: 62px !important;
+    left: 0 !important;
+    z-index: 200 !important;
+    height: calc(100vh - 62px) !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,.18) !important;
+  }
+
+  .prac-main {
+    padding: 16px !important;
+  }
+
+  /* ── THPT Khao thi page ───────────────────────────── */
+  .thpt-banner {
+    flex-direction: column !important;
+    padding: 20px !important;
+    gap: 12px !important;
+  }
+
+  .thpt-score-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .thpt-exam-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+
+  .thpt-exam-cta {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── THPT Exam taking – mobile tab switcher ─────────── */
+.exam-mobile-tabs {
+  display: none;               /* hidden on desktop */
+  flex-shrink: 0;
+  background: #fff;
+  border-bottom: 2px solid #f0d5d5;
+}
+
+.exam-tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #777;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.exam-tab-btn.active {
+  color: #b71c1c;
+  border-bottom-color: #b71c1c;
+  background: #fff5f5;
+}
+
+@media (max-width: 768px) {
+  .exam-mobile-tabs {
+    display: flex !important;
+  }
+
+  /* Compact header */
+  .exam-room-header {
+    padding: 0 12px !important;
+    gap: 8px !important;
+    height: 52px !important;
+  }
+
+  /* Hide decorative elements to save space */
+  .exam-header-sep,
+  .exam-header-badge,
+  .exam-header-title {
+    display: none !important;
+  }
+
+  /* Submit button: smaller on mobile */
+  .exam-submit-btn {
+    padding: 7px 12px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Main split: stack vertically */
+  .exam-body-split {
+    flex-direction: column !important;
+  }
+
+  /* PDF panel: hidden by default (answers shown) */
+  .exam-pdf-panel {
+    display: none !important;
+    border-right: none !important;
+  }
+
+  /* When "show-pdf" tab active: swap visibility */
+  .exam-body-split.show-pdf .exam-pdf-panel {
+    display: flex !important;
+    flex: 1 !important;
+    width: 100% !important;
+  }
+
+  .exam-body-split.show-pdf .exam-answers-panel {
+    display: none !important;
+  }
+
+  /* Answers panel fills full height when alone */
+  .exam-answers-panel {
+    flex: 1 !important;
+  }
+}
+
 /* ── Courses list page ──────────────────────────────── */
 @media (max-width: 768px) {
   /* Stack categories above course list */
