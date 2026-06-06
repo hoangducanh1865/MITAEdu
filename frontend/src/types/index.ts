@@ -23,6 +23,15 @@ export interface RegisterRequest {
   birthYear?: number;
 }
 
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword: string;
+}
+
 // ── User ─────────────────────────────────────────────────────────
 export interface User {
   id: number;

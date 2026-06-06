@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "admin@mita.edu.vn", password: "admin123" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [needVerify, setNeedVerify] = useState(false);   // true khi tài khoản chưa xác minh
+  const [needVerify, setNeedVerify] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendDone, setResendDone] = useState(false);
 
@@ -28,7 +28,6 @@ export default function LoginPage() {
       const res = await api.post<ApiResponse<AuthResponse>>("/api/auth/login", form);
       const { token, userId, ...rest } = res.data.data;
       setToken(token);
-      // Fetch full user profile (includes school, city, birthYear) and save with correct `id` field
       try {
         const meRes = await api.get<ApiResponse<User>>("/api/auth/me");
         saveUser(meRes.data.data);
@@ -39,7 +38,6 @@ export default function LoginPage() {
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status;
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
-      // 403 = tài khoản chưa xác minh email
       if (status === 403) setNeedVerify(true);
       setError(msg ?? "Đăng nhập thất bại, vui lòng thử lại");
     } finally {
@@ -71,9 +69,7 @@ export default function LoginPage() {
       }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{
-            fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f",
-          }}>
+          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f" }}>
             🌙 MITA<span style={{ color: "#b71c1c" }}>Edu</span>
           </div>
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
@@ -91,15 +87,26 @@ export default function LoginPage() {
             leftIcon={<i className="fas fa-envelope" />}
             required
           />
-          <Input
-            label="Mật khẩu"
-            type="password"
-            placeholder="••••••"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            leftIcon={<i className="fas fa-lock" />}
-            required
-          />
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <Input
+              label="Mật khẩu"
+              type="password"
+              placeholder="••••••"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              leftIcon={<i className="fas fa-lock" />}
+              required
+            />
+            <div style={{ textAlign: "right" }}>
+              <Link
+                href="/forgot-password"
+                style={{ fontSize: "0.8rem", color: "#d32f2f", fontWeight: 600 }}
+              >
+                Quên mật khẩu?
+              </Link>
+            </div>
+          </div>
 
           {error && (
             <div style={{

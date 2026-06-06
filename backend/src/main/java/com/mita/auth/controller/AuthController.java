@@ -1,10 +1,13 @@
 package com.mita.auth.controller;
 
 import com.mita.auth.dto.AuthResponse;
+import com.mita.auth.dto.ForgotPasswordRequest;
 import com.mita.auth.dto.LoginRequest;
 import com.mita.auth.dto.RegisterRequest;
+import com.mita.auth.dto.ResetPasswordRequest;
 import com.mita.auth.service.AuthService;
 import com.mita.auth.service.EmailVerificationService;
+import com.mita.auth.service.PasswordResetService;
 import com.mita.common.dto.ApiResponse;
 import com.mita.user.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +29,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final EmailVerificationService emailVerificationService;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/register")
     @Operation(summary = "Đăng ký tài khoản mới — gửi email xác minh, chưa cấp quyền truy cập")
@@ -66,8 +70,24 @@ public class AuthController {
         if (email != null && !email.isBlank()) {
             emailVerificationService.resendVerification(email);
         }
-        // Luôn trả message chung để tránh dò email tồn tại
         return ResponseEntity.ok(ApiResponse.ok(
                 "Nếu email hợp lệ và chưa được xác minh, chúng tôi đã gửi lại link xác minh.", null));
+    }
+
+    @PostMapping("/forgot-password")
+    @Operation(summary = "Yêu cầu đặt lại mật khẩu — gửi link qua email")
+    public ResponseEntity<ApiResponse<Void>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest req) {
+        passwordResetService.requestReset(req.getEmail());
+        // Luôn trả 200 để không lộ email nào tồn tại trong hệ thống
+        return ResponseEntity.ok(ApiResponse.ok(
+                "Nếu email hợp lệ, chúng tôi đã gửi hướng dẫn đặt lại mật khẩu.", null));
+    }
+
+    @PostMapping("/reset-password")
+    @Operation(summary = "Đặt lại mật khẩu mới bằng token từ email")
+    public ResponseEntity<ApiResponse<Void>> resetPassword(@Valid @RequestBody ResetPasswordRequest req) {
+        passwordResetService.resetPassword(req.getToken(), req.getNewPassword());
+        return ResponseEntity.ok(ApiResponse.ok(
+                "Đặt lại mật khẩu thành công. Vui lòng đăng nhập lại.", null));
     }
 }
