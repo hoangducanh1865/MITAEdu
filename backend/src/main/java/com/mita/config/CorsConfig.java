@@ -18,7 +18,8 @@ public class CorsConfig {
             "http://localhost:3000",
             "https://mita-edu.vercel.app",
             "https://mita-edu.com",
-            "https://www.mita-edu.com"
+            "https://www.mita-edu.com",
+            "https://staging.mita-edu.com"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
