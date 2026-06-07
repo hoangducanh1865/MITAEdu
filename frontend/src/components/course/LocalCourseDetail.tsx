@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
+import SecureMediaViewer from "@/components/course/SecureMediaViewer";
 import type { LocalCourse, LocalLesson, LocalSession } from "@/lib/localCourses";
 
 interface Props {
@@ -117,6 +118,11 @@ function MediaViewer({
   courseName: string;
   thumbnailGradient?: string;
 }) {
+  // Ưu tiên media bảo mật (video/PDF lưu trên Viettel Cloud Object Storage)
+  if (lesson.videoMediaId || lesson.pdfMediaId || lesson.handwrittenMediaId) {
+    return <SecureMediaViewer lesson={lesson} />;
+  }
+
   if (lesson.videoUrl) {
     // YouTube embed
     const videoId = extractYouTubeId(lesson.videoUrl);
@@ -289,12 +295,15 @@ function SessionAccordion({
         <div style={{ border: "2px solid #f0d5d5", borderTop: "none", borderRadius: "0 0 10px 10px", overflow: "hidden" }}>
           {session.lessons.map((lesson) => {
             const active = lesson.id === activeId;
+            const hasVideo = lesson.videoUrl || lesson.videoMediaId;
             const icon = lesson.videoUrl
               ? "fab fa-youtube"
+              : lesson.videoMediaId
+              ? "fas fa-play-circle"
               : lesson.handwrittenPdfUrl
               ? "fas fa-pen"
               : "fas fa-file-alt";
-            const iconColor = lesson.videoUrl ? "#ff0000" : lesson.handwrittenPdfUrl ? "#555" : "#d32f2f";
+            const iconColor = hasVideo ? "#ff0000" : lesson.handwrittenPdfUrl ? "#555" : "#d32f2f";
 
             return (
               <button

@@ -44,3 +44,13 @@ resend:
 app:
   frontend-url: ${APP_FRONTEND_URL:http://localhost:3000}
   from-email: ${APP_FROM_EMAIL:onboarding@resend.dev}
+
+# Viettel Cloud Object Storage (S3-compatible) - dùng để ký presigned URL cho video/PDF bài giảng
+viettel:
+  s3:
+    endpoint: ${VCOS_ENDPOINT:https://vcos.cloudstorage.com.vn}
+    region: ${VCOS_REGION:us-east-1}
+    access-key: ${VCOS_ACCESS_KEY:}
+    secret-key: ${VCOS_SECRET_KEY:}
+    bucket: ${VCOS_BUCKET:mita-edu-123}
+    url-ttl-seconds: ${VCOS_URL_TTL_SECONDS:7200}   # 2 giờ - đủ phủ một buổi xem

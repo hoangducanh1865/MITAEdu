@@ -58,6 +58,10 @@ dependencies {
     // Jackson (JSON for answersJson column)
     implementation("com.fasterxml.jackson.core:jackson-databind")
 
+    // AWS S3 SDK (tương thích Viettel Cloud Object Storage - dùng để ký presigned URL)
+    implementation(platform("software.amazon.awssdk:bom:2.25.0"))
+    implementation("software.amazon.awssdk:s3")
+
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
