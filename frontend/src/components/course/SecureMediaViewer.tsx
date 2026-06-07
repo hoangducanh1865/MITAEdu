@@ -94,7 +94,7 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
         top: `${5 + Math.random() * 80}%`,
         left: `${5 + Math.random() * 70}%`,
       });
-    }, 12000);
+    }, 180000);
     return () => clearInterval(id);
   }, []);
 
