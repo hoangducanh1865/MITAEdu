@@ -8,6 +8,11 @@ export interface LocalLesson {
   pdfUrl?: string;            // File đề
   handwrittenPdfUrl?: string; // File viết tay
   content?: { level: string; text: string }[]; // Nội dung lộ trình
+  // ── Media bảo mật (lưu trên Viettel Cloud Object Storage) ──
+  // Chỉ là id tham chiếu; URL thật do backend ký presigned khi xem.
+  videoMediaId?: string;
+  pdfMediaId?: string;
+  handwrittenMediaId?: string;
 }
 
 export interface LocalSession {
@@ -81,6 +86,9 @@ export const LOCAL_COURSES: LocalCourse[] = [
           {
             id: "b1",
             title: "Bài 1 · Tính đơn điệu & Cực trị hàm số",
+            videoMediaId: "toan-vact-hsa-b1-video",
+            pdfMediaId: "toan-vact-hsa-b1-pdf",
+            handwrittenMediaId: "toan-vact-hsa-b1-handwritten",
             content: [
               { level: "Cơ bản", text: "Dạng 1. Xét tính đơn điệu, cực trị của hàm số cho bởi công thức (bậc 3, phân thức hữu tỉ)." },
               { level: "Cơ bản", text: "Dạng 2. Xét tính đơn điệu, tìm cực trị dựa vào BBT và đồ thị cho sẵn." },
