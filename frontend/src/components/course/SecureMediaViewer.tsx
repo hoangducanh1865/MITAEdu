@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getMediaUrl } from "@/lib/media";
 import { getSavedUser } from "@/lib/auth";
 import type { LocalLesson } from "@/lib/localCourses";
@@ -87,14 +87,14 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
     return () => { alive = false; };
   }, [mediaId]);
 
-  // Watermark di chuyển để khó che/crop
+  // Watermark di chuyển chậm, thưa để không ảnh hưởng trải nghiệm xem
   useEffect(() => {
     const id = setInterval(() => {
       setPos({
         top: `${5 + Math.random() * 80}%`,
         left: `${5 + Math.random() * 70}%`,
       });
-    }, 4000);
+    }, 12000);
     return () => clearInterval(id);
   }, []);
 
@@ -135,7 +135,7 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
             position: "absolute", top: pos.top, left: pos.left,
             color: "rgba(255,255,255,0.35)", fontSize: "0.85rem", fontWeight: 600,
             pointerEvents: "none", userSelect: "none",
-            textShadow: "0 1px 3px rgba(0,0,0,0.6)", transition: "top 1s, left 1s",
+            textShadow: "0 1px 3px rgba(0,0,0,0.6)", transition: "top 2s ease, left 2s ease",
             whiteSpace: "nowrap",
           }}
         >
