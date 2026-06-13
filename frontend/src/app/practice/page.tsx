@@ -6,6 +6,7 @@ import api from "@/lib/api";
 import type { ApiResponse, Submission } from "@/types";
 import { getSavedUser } from "@/lib/auth";
 import type { User } from "@/types";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 
 export default function PracticeHomePage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -32,21 +33,12 @@ export default function PracticeHomePage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       {/* Hero */}
-      <div style={{
-        background: "linear-gradient(135deg,#1565c0,#0d47a1)",
-        borderRadius: "18px", padding: "28px 32px", color: "#fff",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
-        <div>
-          <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", marginBottom: "6px" }}>
-            Phòng Luyện MITA 🏆
-          </h1>
-          <p style={{ opacity: 0.85, fontSize: "0.9rem" }}>
-            Xin chào, <strong>{user?.name ?? "bạn"}</strong>! Luyện đề TSA, HSA đầy đủ — từng phần, đề gộp, thi thử.
-          </p>
-        </div>
-        <div style={{ fontSize: "4rem", opacity: 0.2 }}>📚</div>
-      </div>
+      <ImagePlaceholder
+        width="100%"
+        height="120px"
+        desc={"Banner Phòng Luyện MITA\n100% × 120px | JPG/PNG\nBao gồm: tiêu đề, lời chào cá nhân,\nảnh minh họa (sách, đề thi, cúp)"}
+        style={{ borderRadius: "18px" }}
+      />
 
       {/* Stats row */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
