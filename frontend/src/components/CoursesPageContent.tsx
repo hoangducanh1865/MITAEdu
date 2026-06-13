@@ -9,6 +9,7 @@ import Link from "next/link";
 import api from "@/lib/api";
 import type { ApiResponse, Course, CourseCategory } from "@/types";
 import { LOCAL_COURSES } from "@/lib/localCourses";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 
 const CATEGORIES: {
   value: CourseCategory;
@@ -46,14 +47,6 @@ const CAT_TITLES: Record<string, string> = {
   THPT: "KHÓA HỌC TRUNG HỌC PHỔ THÔNG",
 };
 
-const THUMB_GRADIENTS = [
-  "linear-gradient(135deg,#f5a623,#e65100)",
-  "linear-gradient(135deg,#7b1fa2,#4a148c)",
-  "linear-gradient(135deg,#d32f2f,#b71c1c)",
-  "linear-gradient(135deg,#1565c0,#0d47a1)",
-  "linear-gradient(135deg,#2e7d32,#1b5e20)",
-  "linear-gradient(135deg,#37474f,#263238)",
-];
 
 export default function CoursesPageContent() {
   const searchParams = useSearchParams();
@@ -305,13 +298,10 @@ export default function CoursesPageContent() {
                     scrollSnapType: "x mandatory",
                   }}
                 >
-                  {courses.map((course, i) => (
+                  {courses.map((course) => (
                     <CourseCard
                       key={course.id}
                       course={course}
-                      fallbackGradient={
-                        THUMB_GRADIENTS[i % THUMB_GRADIENTS.length]
-                      }
                     />
                   ))}
                 </div>
@@ -325,15 +315,8 @@ export default function CoursesPageContent() {
   );
 }
 
-function CourseCard({
-  course,
-  fallbackGradient,
-}: {
-  course: any;
-  fallbackGradient: string;
-}) {
+function CourseCard({ course }: { course: any }) {
   const href = `/courses/${course.slug ?? course.id}`;
-  const bg = course.thumbnailGradient ?? fallbackGradient;
 
   return (
     <Link
@@ -360,45 +343,12 @@ function CourseCard({
               style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .2s" }}
             />
           ) : (
-            <div
-              className="c-thumb"
-              style={{
-                width: "100%", height: "100%",
-                background: bg,
-                display: "flex", flexDirection: "column",
-                alignItems: "center", justifyContent: "center",
-                padding: "12px", transition: "transform .2s",
-              }}
-            >
-              {course.thumbnailLabel ? (
-                <div style={{
-                  fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                  fontSize: "1rem", color: "#fff",
-                  textAlign: "center", lineHeight: 1.25,
-                  textTransform: "uppercase", letterSpacing: "1px",
-                  textShadow: "0 2px 8px rgba(0,0,0,.4)",
-                  whiteSpace: "pre-line",
-                }}>
-                  {course.thumbnailLabel}
-                </div>
-              ) : (
-                <>
-                  <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.85)", fontWeight: 600, marginBottom: "6px", letterSpacing: "1px", textTransform: "uppercase" }}>
-                    Chuyên đề
-                  </div>
-                  <div style={{
-                    fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                    fontSize: "1.1rem", color: "#fff", textAlign: "center",
-                    lineHeight: 1.2, textTransform: "uppercase",
-                    letterSpacing: "0.5px", textShadow: "0 2px 8px rgba(0,0,0,.3)",
-                  }}>
-                    {course.name.length > 20
-                      ? course.name.replace(/^(KHOÁ|KHÓA|CHUYÊN ĐỀ)\s*/i, "").slice(0, 18)
-                      : course.name.replace(/^(KHOÁ|KHÓA|CHUYÊN ĐỀ)\s*/i, "")}
-                  </div>
-                </>
-              )}
-            </div>
+            <ImagePlaceholder
+              width="100%"
+              height="100%"
+              desc={"Thumbnail khóa học\n200×150px | JPG/PNG"}
+              style={{ borderRadius: 0 }}
+            />
           )}
         </div>
 
