@@ -8,6 +8,7 @@ import Link from "next/link";
 import api from "@/lib/api";
 import { useSidebar } from "@/lib/SidebarContext";
 import type { ApiResponse, Course } from "@/types";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 
 // ── Carousel slides ──────────────────────────────────────────────
 const SLIDES = [
@@ -17,6 +18,7 @@ const SLIDES = [
     badge: "Kì Thi Đánh Giá Tư Duy 2026",
     tags: ["Tư Duy Toán Học", "Tư Duy Khoa Học", "Tư Duy Đọc Hiểu"],
     bg: "linear-gradient(135deg,#d32f2f 0%,#b71c1c 100%)",
+    imageDesc: "Ảnh banner Ngân Hàng Câu Hỏi\n200×160px | JPG/PNG\nMinh họa đề thi, câu hỏi TSA 2026",
   },
   {
     title: "Luyện Thi\nChuyên Sâu",
@@ -24,6 +26,7 @@ const SLIDES = [
     badge: "Chương Trình Mới 2026",
     tags: ["Toán", "Vật Lý", "Hóa Học"],
     bg: "linear-gradient(135deg,#c62828 0%,#ad1457 100%)",
+    imageDesc: "Ảnh banner Luyện Thi Chuyên Sâu\n200×160px | JPG/PNG\nMinh họa học sinh ôn thi, tài liệu",
   },
   {
     title: "Thi Thử\nOnline",
@@ -31,6 +34,7 @@ const SLIDES = [
     badge: "Xếp Hạng Toàn Quốc",
     tags: ["Đề Mô Phỏng", "Đề Chính Thức"],
     bg: "linear-gradient(135deg,#b71c1c 0%,#880e4f 100%)",
+    imageDesc: "Ảnh banner Thi Thử Online\n200×160px | JPG/PNG\nMinh họa bảng xếp hạng, màn hình thi",
   },
 ];
 
@@ -50,13 +54,6 @@ const SEARCH_TAGS = [
   "Cách đỗ hust từ năm lớp 11","Cách thủ khoa",
 ];
 
-const THUMB_GRADIENTS = [
-  "linear-gradient(135deg,#f5a623,#e65100)",
-  "linear-gradient(135deg,#7b1fa2,#4a148c)",
-  "linear-gradient(135deg,#d32f2f,#b71c1c)",
-  "linear-gradient(135deg,#1565c0,#0d47a1)",
-  "linear-gradient(135deg,#2e7d32,#1b5e20)",
-];
 
 export default function DashboardPage() {
   const [slide, setSlide] = useState(0);
@@ -150,23 +147,12 @@ export default function DashboardPage() {
 
               {/* Right visual */}
               <div className="hero-visual" style={{ flexShrink: 0, zIndex: 2, marginLeft: "32px" }}>
-                <div style={{ position: "relative", width: "160px", height: "120px" }}>
-                  {[0,1,2].map((i) => (
-                    <div key={i} style={{
-                      position: "absolute",
-                      width: "100px", height: "80px",
-                      borderRadius: "12px",
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1.5px solid rgba(255,255,255,0.3)",
-                      top: `${i * 14}px`,
-                      left: `${i * 18}px`,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      backdropFilter: "blur(4px)",
-                    }}>
-                      {i === 2 && <i className="fas fa-image" style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.5rem" }} />}
-                    </div>
-                  ))}
-                </div>
+                <ImagePlaceholder
+                  width="200px"
+                  height="160px"
+                  desc={s.imageDesc}
+                  style={{ borderRadius: "12px" }}
+                />
               </div>
 
               {/* Prev/Next */}
@@ -242,14 +228,12 @@ export default function DashboardPage() {
                     <div style={{ fontSize: "0.78rem", opacity: 0.85, marginTop: "4px" }}>{rank}<br/>{rank}</div>
                   </div>
                 </div>
-                <div style={{
-                  width: "64px", height: "64px", borderRadius: "50%",
-                  background: "rgba(255,255,255,0.2)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "2rem", opacity: 0.7,
-                }}>
-                  <i className="fas fa-user-graduate" />
-                </div>
+                <ImagePlaceholder
+                  width="90px"
+                  height="110px"
+                  desc={"Ảnh học sinh\n(Thủ Khoa / Á Khoa)\n90×110px | JPG/PNG\nẢnh chân dung"}
+                  style={{ borderRadius: "12px" }}
+                />
               </div>
             ))}
           </section>
@@ -277,14 +261,12 @@ export default function DashboardPage() {
                   textAlign: "center", display: "flex", flexDirection: "column",
                   alignItems: "center", gap: "8px",
                 }}>
-                  <div style={{
-                    width: "70px", height: "70px", borderRadius: "50%",
-                    background: "#fdf0f0", border: "2px solid #f0d5d5",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "1.8rem", color: "#d32f2f",
-                  }}>
-                    <i className="fas fa-user-graduate" />
-                  </div>
+                  <ImagePlaceholder
+                    width="70px"
+                    height="70px"
+                    circular
+                    desc={`Ảnh ${c.name}\n70×70px | PNG`}
+                  />
                   <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#d32f2f" }}>
                     {c.name}
                   </div>
@@ -374,24 +356,26 @@ export default function DashboardPage() {
                 gap: "16px",
                 overflow: "hidden",
               }}>
-                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course, i) => (
+                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course) => (
                   <Link key={course.id} href={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                       {/* Thumbnail */}
                       <div style={{
                         width: "100%", aspectRatio: "4/3", borderRadius: "12px",
                         overflow: "hidden",
-                        background: course.thumbnailUrl ? "#000" : THUMB_GRADIENTS[(courseIdx + i) % THUMB_GRADIENTS.length],
+                        background: course.thumbnailUrl ? "#000" : "#fff",
                         display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
                         {course.thumbnailUrl ? (
                           <img src={course.thumbnailUrl} alt={course.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         ) : (
-                          <div style={{ textAlign: "center", color: "#fff", padding: "16px" }}>
-                            <div style={{ fontSize: "0.6rem", letterSpacing: "2px", marginBottom: "6px", opacity: 0.85 }}>NỘI DUNG<br/>KHÓA HỌC</div>
-                            <div style={{ fontSize: "0.55rem", letterSpacing: "1px", opacity: 0.7 }}>LỘ TRÌNH KHÓA HỌC</div>
-                          </div>
+                          <ImagePlaceholder
+                            width="100%"
+                            height="100%"
+                            desc={"Thumbnail khóa học\nTỷ lệ 4:3 | min 400×300px\nJPG/PNG"}
+                            style={{ borderRadius: 0 }}
+                          />
                         )}
                       </div>
                       {/* Info */}
@@ -477,36 +461,13 @@ function RightPanel() {
           KHÓA TỔNG ÔN<br />ĐỢT 2
         </div>
 
-        {/* Plane visual */}
-        <div style={{
-          position: "relative", height: "60px", marginBottom: "14px",
-          display: "flex", alignItems: "center",
-        }}>
-          {/* clouds */}
-          <div style={{
-            position: "absolute", left: "10px", top: "10px",
-            width: "50px", height: "22px", borderRadius: "20px",
-            background: "rgba(255,255,255,0.18)",
-          }} />
-          <div style={{
-            position: "absolute", left: "0", top: "30px",
-            width: "35px", height: "16px", borderRadius: "20px",
-            background: "rgba(255,255,255,0.12)",
-          }} />
-          {/* plane */}
-          <i className="fas fa-plane" style={{
-            position: "absolute", right: "10px", top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "2rem", opacity: 0.9,
-          }} />
-          {/* trail */}
-          <div style={{
-            position: "absolute", left: "60px", right: "55px", top: "50%",
-            height: "3px", borderRadius: "2px",
-            background: "rgba(255,255,255,0.3)",
-            transform: "translateY(-50%)",
-          }} />
-        </div>
+        {/* Promo visual */}
+        <ImagePlaceholder
+          width="100%"
+          height="80px"
+          desc={"Ảnh banner khóa học\n~220×80px | JPG/PNG\nMinh họa Khóa Tổng Ôn Đợt 2"}
+          style={{ borderRadius: "10px", marginBottom: "14px" }}
+        />
 
         {/* Price */}
         <div style={{
@@ -586,14 +547,12 @@ function RightPanel() {
             <div key={i} style={{
               display: "flex", alignItems: "flex-start", gap: "10px",
             }}>
-              <div style={{
-                width: "36px", height: "36px", borderRadius: "8px",
-                background: "#fdf0f0",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0, color: "#d32f2f", fontSize: "0.85rem",
-              }}>
-                <i className="fas fa-newspaper" />
-              </div>
+              <ImagePlaceholder
+                width="36px"
+                height="36px"
+                desc={"Ảnh tin\n36×36px"}
+                style={{ borderRadius: "8px", flexShrink: 0 }}
+              />
               <div>
                 <a href="#" style={{
                   fontSize: "0.8rem", fontWeight: 600, color: "#2c2c2c",

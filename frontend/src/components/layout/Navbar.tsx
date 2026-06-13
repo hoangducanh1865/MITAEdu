@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AvatarDropdown from "./AvatarDropdown";
 import { useSidebar } from "@/lib/SidebarContext";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 
 const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
@@ -31,7 +32,7 @@ export default function Navbar() {
           color: "#d32f2f", display: "flex", alignItems: "center", gap: "6px",
           textDecoration: "none",
         }}>
-          <span style={{ fontSize: "1.5rem" }}>🌙</span>
+          <ImagePlaceholder width="36px" height="36px" desc={"Logo MITA Edu\n36×36px | PNG/SVG\nNền trong suốt"} />
           MITA<span style={{ color: "#b71c1c" }}>Edu</span>
         </Link>
 
