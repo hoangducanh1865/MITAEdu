@@ -66,6 +66,7 @@ export interface Course {
   createdAt: string;
   lessonCount: number;
   lessons?: Lesson[];
+  locked?: boolean;
 }
 
 export interface Lesson {
@@ -76,6 +77,34 @@ export interface Lesson {
   videoUrl?: string;
   pdfPath?: string;
   handwrittenPdfPath?: string;
+  videoMediaId?: string;
+  pdfMediaId?: string;
+  handwrittenMediaId?: string;
+}
+
+export interface CourseEntitlement {
+  id: number;
+  userId: number;
+  userEmail: string;
+  courseId: number;
+  courseName: string;
+  status: "ACTIVE" | "REVOKED";
+  source: "ACTIVATION_CODE" | "ADMIN_GRANT";
+  startsAt: string;
+  expiresAt?: string;
+  createdAt: string;
+}
+
+export interface ActivationCode {
+  id: number;
+  code: string;
+  courseId: number;
+  courseName: string;
+  status: "UNUSED" | "USED" | "REVOKED";
+  expiresAt?: string;
+  usedAt?: string;
+  usedByEmail?: string;
+  createdAt: string;
 }
 
 // ── Exam ─────────────────────────────────────────────────────────

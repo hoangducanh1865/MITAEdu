@@ -1,9 +1,13 @@
 package com.mita.media;
 
 import com.mita.common.exception.ApiException;
+import com.mita.course.repository.CourseRepository;
+import com.mita.entitlement.service.EntitlementService;
 import com.mita.media.dto.MediaUrlDto;
+import com.mita.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -20,18 +24,22 @@ public class MediaService {
     private final MediaAssetRepository mediaAssetRepository;
     private final MediaStorageProperties props;
     private final S3Presigner presigner;
+    private final EntitlementService entitlementService;
+    private final CourseRepository courseRepository;
 
-    /**
-     * Sinh presigned URL ngắn hạn cho một media asset đã biết.
-     * Yêu cầu người dùng đã đăng nhập (gate ở SecurityConfig).
-     *
-     * TODO (giai đoạn sau): khi có bảng activations, kiểm tra user đã kích hoạt
-     * khóa học `asset.getCourseSlug()` chưa trước khi cấp URL.
-     */
     @Transactional(readOnly = true)
-    public MediaUrlDto getUrl(String mediaId) {
+    public MediaUrlDto getUrl(String mediaId, Authentication authentication) {
         MediaAsset asset = mediaAssetRepository.findById(mediaId)
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy media: " + mediaId));
+
+        User user = (User) authentication.getPrincipal();
+        if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
+            Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
+                    .map(c -> c.getId()).orElse(null);
+            if (courseId != null && !entitlementService.hasAccess(user.getId(), courseId)) {
+                throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
+            }
+        }
 
         long ttl = props.getUrlTtlSeconds();
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()

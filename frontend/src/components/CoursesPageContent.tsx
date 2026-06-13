@@ -8,7 +8,6 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import api from "@/lib/api";
 import type { ApiResponse, Course, CourseCategory } from "@/types";
-import { LOCAL_COURSES } from "@/lib/localCourses";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 
 const CATEGORIES: {
@@ -65,27 +64,7 @@ export default function CoursesPageContent() {
       .finally(() => setLoading(false));
   }, [category]);
 
-  const localForCategory = LOCAL_COURSES.filter((c) => c.category === category);
-
-  const courses = [
-    ...localForCategory.map((lc, i) => ({
-      id: lc.id as unknown as number,
-      name: lc.name,
-      slug: lc.id,
-      category: lc.category,
-      teacher: lc.teacher,
-      thumbnailUrl: undefined,
-      thumbnailGradient: lc.thumbnailGradient,
-      thumbnailLabel: lc.thumbnailLabel,
-      description: lc.description,
-      createdAt: "",
-      lessonCount: lc.sessions.reduce((acc, s) => acc + s.lessons.length, 0),
-      isLocal: true,
-    })),
-    ...apiCourses.map((c) => ({ ...c, isLocal: false, thumbnailGradient: undefined, thumbnailLabel: undefined })),
-  ];
-
-  const activeCat = CATEGORIES.find((c) => c.value === category)!;
+  const courses = apiCourses;
 
   return (
     <>

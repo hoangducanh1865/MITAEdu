@@ -3,11 +3,16 @@
 import { useEffect, useState } from "react";
 import { getMediaUrl } from "@/lib/media";
 import { getSavedUser } from "@/lib/auth";
-import type { LocalLesson } from "@/lib/localCourses";
 import type { User } from "@/types";
 
+interface SecureLesson {
+  videoMediaId?: string;
+  pdfMediaId?: string;
+  handwrittenMediaId?: string;
+}
+
 interface Props {
-  lesson: LocalLesson;
+  lesson: SecureLesson;
 }
 
 /**

@@ -9,6 +9,7 @@ import api from "@/lib/api";
 import { useSidebar } from "@/lib/SidebarContext";
 import type { ApiResponse, Course } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import ActivationCodeModal from "@/components/ActivationCodeModal";
 
 // ── Carousel slides ──────────────────────────────────────────────
 const SLIDES = [
@@ -59,8 +60,15 @@ export default function DashboardPage() {
   const [slide, setSlide] = useState(0);
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
+  const [codeModalOpen, setCodeModalOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const { sidebarOpen, toggleSidebar } = useSidebar();
+
+  function handleActivationSuccess(courseName: string) {
+    setToast(`Kích hoạt thành công! Bạn đã mở khóa: ${courseName}`);
+    setTimeout(() => setToast(null), 5000);
+  }
 
   // Auto-advance carousel
   useEffect(() => {
@@ -94,8 +102,25 @@ export default function DashboardPage() {
       />
       <div className="layout-home">
         <Sidebar />
+        {/* Toast notification */}
+        {toast && (
+          <div style={{
+            position: "fixed", top: "80px", right: "20px", zIndex: 9999,
+            background: "#2e7d32", color: "#fff", borderRadius: "14px",
+            padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
+            display: "flex", alignItems: "center", gap: "10px",
+          }}>
+            <i className="fas fa-check-circle" />
+            {toast}
+          </div>
+        )}
+        <ActivationCodeModal
+          open={codeModalOpen}
+          onClose={() => setCodeModalOpen(false)}
+          onSuccess={handleActivationSuccess}
+        />
         <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
-
           {/* ── HERO CAROUSEL ─────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div className="hero-inner" style={{
@@ -340,7 +365,7 @@ export default function DashboardPage() {
           </section>
 
         </main>
-        <RightPanel />
+        <RightPanel onOpenCodeModal={() => setCodeModalOpen(true)} />
       </div>
       <Footer />
     </>
@@ -354,7 +379,7 @@ const NEWS_ITEMS = [
   { title: "Cập nhật đề thi mới nhất",      time: "08:30 - 20/02/2025" },
 ];
 
-function RightPanel() {
+function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
   return (
     <aside className="home-right-panel" style={{
       width: "260px",
@@ -375,7 +400,7 @@ function RightPanel() {
       />
 
       {/* ── Access code button ── */}
-      <button style={{
+      <button onClick={onOpenCodeModal} style={{
         width: "100%",
         background: "#d32f2f",
         color: "#fff",
