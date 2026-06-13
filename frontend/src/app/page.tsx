@@ -99,70 +99,27 @@ export default function DashboardPage() {
           {/* ── HERO CAROUSEL ─────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div className="hero-inner" style={{
-              background: s.bg,
               borderRadius: "20px",
-              padding: "40px 48px",
-              color: "#fff",
               position: "relative",
               overflow: "hidden",
               minHeight: "220px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              transition: "background .6s ease",
             }}>
-              {/* Left content */}
-              <div style={{ flex: 1, zIndex: 2 }}>
-                <h2 className="hero-title" style={{
-                  fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                  fontSize: "2.4rem", lineHeight: 1.15,
-                  marginBottom: "10px", whiteSpace: "pre-line",
-                }}>
-                  {s.title}
-                </h2>
-                <p style={{ fontStyle: "italic", opacity: 0.9, marginBottom: "16px", fontSize: "1rem" }}>
-                  {s.sub}
-                </p>
-                <div style={{
-                  display: "inline-flex", alignItems: "center", gap: "8px",
-                  background: "rgba(255,255,255,0.18)", borderRadius: "20px",
-                  padding: "6px 14px", fontSize: "0.82rem", fontWeight: 600,
-                  marginBottom: "16px",
-                }}>
-                  <i className="fas fa-bullseye" style={{ fontSize: "0.75rem" }} />
-                  {s.badge}
-                </div>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {s.tags.map((tag) => (
-                    <button key={tag} style={{
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1.5px solid rgba(255,255,255,0.4)",
-                      color: "#fff", borderRadius: "20px",
-                      padding: "6px 16px", fontSize: "0.82rem", fontWeight: 600,
-                      cursor: "pointer",
-                    }}>{tag}</button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right visual */}
-              <div className="hero-visual" style={{ flexShrink: 0, zIndex: 2, marginLeft: "32px" }}>
-                <ImagePlaceholder
-                  width="200px"
-                  height="160px"
-                  desc={s.imageDesc}
-                  style={{ borderRadius: "12px" }}
-                />
-              </div>
+              {/* Full-cover placeholder */}
+              <ImagePlaceholder
+                width="100%"
+                height="220px"
+                desc={`Banner slide ${slide + 1}: ${s.title.replace("\n", " ")}\n${s.badge}\nKích thước: ~740×220px | JPG/PNG\nBao gồm: tiêu đề, ảnh minh họa, tag môn học`}
+                style={{ borderRadius: "20px" }}
+              />
 
               {/* Prev/Next */}
               {["prev","next"].map((dir) => (
                 <button key={dir} onClick={() => setSlide((s) => dir === "prev" ? (s - 1 + SLIDES.length) % SLIDES.length : (s + 1) % SLIDES.length)} style={{
                   position: "absolute", top: "50%", transform: "translateY(-50%)",
                   [dir === "prev" ? "left" : "right"]: "16px",
-                  background: "rgba(255,255,255,0.22)", border: "none",
+                  background: "rgba(0,0,0,0.12)", border: "1.5px solid #ccc",
                   borderRadius: "50%", width: "36px", height: "36px",
-                  color: "#fff", cursor: "pointer", zIndex: 3,
+                  color: "#aaa", cursor: "pointer", zIndex: 3,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <i className={`fas fa-chevron-${dir === "prev" ? "left" : "right"}`} style={{ fontSize: "0.85rem" }} />
@@ -171,14 +128,14 @@ export default function DashboardPage() {
 
               {/* Dots */}
               <div style={{
-                position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)",
+                position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)",
                 display: "flex", gap: "8px", zIndex: 3,
               }}>
                 {SLIDES.map((_, i) => (
                   <button key={i} onClick={() => setSlide(i)} style={{
                     width: i === slide ? "28px" : "10px", height: "10px",
                     borderRadius: "5px", border: "none",
-                    background: i === slide ? "#fff" : "rgba(255,255,255,0.45)",
+                    background: i === slide ? "#aaa" : "#ddd",
                     cursor: "pointer", transition: "width .3s, background .3s", padding: 0,
                   }} />
                 ))}
@@ -205,36 +162,16 @@ export default function DashboardPage() {
           {/* ── TOP 2 STUDENTS ────────────────────────────── */}
           <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
-              { rank: "Thủ Khoa", score: "96.10", gold: true },
-              { rank: "Á Khoa",   score: "96.08", gold: false },
-            ].map(({ rank, score, gold }) => (
-              <div key={rank} style={{
-                background: gold ? "linear-gradient(135deg,#d32f2f,#b71c1c)" : "linear-gradient(135deg,#c62828,#a01515)",
-                borderRadius: "16px", padding: "20px 24px",
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                color: "#fff",
-              }}>
-                <div>
-                  <div style={{ fontSize: "0.72rem", opacity: 0.8, marginBottom: "2px" }}>🌙 MITAEdu &nbsp;·&nbsp; HỆ THỐNG MITAEDU</div>
-                  <div style={{ fontStyle: "italic", fontSize: "0.85rem", opacity: 0.9, marginBottom: "4px" }}>Vinh danh Học Sinh</div>
-                  <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2.6rem", lineHeight: 1 }}>{score}</div>
-                  <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "2px" }}>
-                    <span style={{
-                      display: "inline-block", background: gold ? "#f5a623" : "rgba(255,255,255,0.25)",
-                      color: gold ? "#7f3000" : "#fff",
-                      borderRadius: "12px", padding: "2px 10px",
-                      fontSize: "0.72rem", fontWeight: 800, width: "fit-content",
-                    }}>{rank}</span>
-                    <div style={{ fontSize: "0.78rem", opacity: 0.85, marginTop: "4px" }}>{rank}<br/>{rank}</div>
-                  </div>
-                </div>
-                <ImagePlaceholder
-                  width="90px"
-                  height="110px"
-                  desc={"Ảnh học sinh\n(Thủ Khoa / Á Khoa)\n90×110px | JPG/PNG\nẢnh chân dung"}
-                  style={{ borderRadius: "12px" }}
-                />
-              </div>
+              { rank: "Thủ Khoa", score: "96.10" },
+              { rank: "Á Khoa",   score: "96.08" },
+            ].map(({ rank, score }) => (
+              <ImagePlaceholder
+                key={rank}
+                width="100%"
+                height="200px"
+                desc={`Poster ${rank} — ${score} điểm\nTỷ lệ ~2:1 | JPG/PNG\nBao gồm: ảnh chân dung học sinh,\nđiểm số ${score}, danh hiệu ${rank},\nwatermark MITAEdu`}
+                style={{ borderRadius: "16px" }}
+              />
             ))}
           </section>
 
@@ -430,68 +367,12 @@ function RightPanel() {
     }}>
 
       {/* ── Promo card ── */}
-      <div style={{
-        background: "linear-gradient(160deg,#d32f2f 0%,#b71c1c 100%)",
-        borderRadius: "18px",
-        padding: "18px 20px",
-        color: "#fff",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <span style={{ fontSize: "1rem" }}>🌙</span>
-            <span style={{ fontWeight: 800, fontSize: "0.82rem" }}>MITAEdu</span>
-          </div>
-          <div style={{
-            fontSize: "0.62rem", fontWeight: 700, letterSpacing: "1px",
-            opacity: 0.8, textTransform: "uppercase",
-          }}>
-            HỆ THỐNG MITAEDU
-          </div>
-        </div>
-
-        {/* Title */}
-        <div style={{
-          fontFamily: "Nunito, sans-serif", fontWeight: 900,
-          fontSize: "1.3rem", lineHeight: 1.2,
-          marginBottom: "16px", letterSpacing: "0.5px",
-        }}>
-          KHÓA TỔNG ÔN<br />ĐỢT 2
-        </div>
-
-        {/* Promo visual */}
-        <ImagePlaceholder
-          width="100%"
-          height="80px"
-          desc={"Ảnh banner khóa học\n~220×80px | JPG/PNG\nMinh họa Khóa Tổng Ôn Đợt 2"}
-          style={{ borderRadius: "10px", marginBottom: "14px" }}
-        />
-
-        {/* Price */}
-        <div style={{
-          background: "rgba(0,0,0,0.18)", borderRadius: "12px",
-          padding: "14px 16px",
-        }}>
-          <div style={{
-            fontFamily: "Nunito, sans-serif", fontWeight: 900,
-            fontSize: "2rem", color: "#f5a623", lineHeight: 1,
-            marginBottom: "6px",
-          }}>
-            1.600 K
-          </div>
-          <div style={{ fontSize: "0.75rem", opacity: 0.9, marginBottom: "4px" }}>
-            Cho Học sinh lần đầu
-          </div>
-          <div style={{ fontSize: "0.7rem", opacity: 0.7 }}>
-            Giá Học Sinh Cũ <s>800.000 Đ</s>
-          </div>
-          <div style={{ fontSize: "0.7rem", opacity: 0.7 }}>
-            Và Miễn Phí Phòng Luyện
-          </div>
-        </div>
-      </div>
+      <ImagePlaceholder
+        width="100%"
+        height="260px"
+        desc={"Banner quảng cáo khóa học\n260×260px | JPG/PNG\nKhóa Tổng Ôn Đợt 2\nBao gồm: logo MITAEdu, tên khóa,\ngiá 1.600K, ảnh minh họa khóa học"}
+        style={{ borderRadius: "18px" }}
+      />
 
       {/* ── Access code button ── */}
       <button style={{
