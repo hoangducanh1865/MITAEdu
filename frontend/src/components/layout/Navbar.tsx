@@ -90,8 +90,33 @@ export default function Navbar() {
         })}
       </nav>
 
-      {/* Right: Avatar */}
-      <AvatarDropdown />
+      {/* Right: Activation button + Avatar */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <button
+          className="navbar-activation-btn"
+          onClick={() => window.dispatchEvent(new CustomEvent("open-activation-modal"))}
+          style={{
+            display: "flex", alignItems: "center", gap: "6px",
+            padding: "7px 16px", borderRadius: "8px",
+            border: "1.5px solid #d32f2f", background: "transparent",
+            color: "#d32f2f", cursor: "pointer",
+            fontSize: "0.82rem", fontWeight: 700,
+            transition: "all 0.2s", whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#d32f2f";
+            e.currentTarget.style.color = "#fff";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "#d32f2f";
+          }}
+        >
+          <i className="fas fa-key" style={{ fontSize: "0.75rem" }} />
+          Mã kích hoạt
+        </button>
+        <AvatarDropdown />
+      </div>
     </header>
   );
 }

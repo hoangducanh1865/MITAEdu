@@ -58,6 +58,13 @@ export default function DashboardPage() {
     return () => clearInterval(t);
   }, []);
 
+  // Listen for activation modal trigger from Navbar button
+  useEffect(() => {
+    const handler = () => setCodeModalOpen(true);
+    window.addEventListener("open-activation-modal", handler);
+    return () => window.removeEventListener("open-activation-modal", handler);
+  }, []);
+
   // Fetch latest courses
   useEffect(() => {
     api.get<ApiResponse<Course[]>>("/api/courses")
@@ -158,25 +165,31 @@ export default function DashboardPage() {
               fontWeight: 900, fontSize: "1.05rem", letterSpacing: "1px",
               cursor: "pointer",
             }}>
-              <i className="fas fa-award" />
-              VINH DANH THỦ KHOA &amp; Á KHOA
-              <i className="fas fa-award" />
+              <i className="fas fa-trophy" />
+              BẢNG VÀNG THÀNH TÍCH
+              <i className="fas fa-trophy" />
             </div>
           </section>
 
-          {/* ── TOP 2 STUDENTS ────────────────────────────── */}
-          <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-            {[
-              { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-1.jpg" },
-              { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-2.jpg" },
-            ].map(({ rank, src }) => (
-              <img
-                key={rank}
-                src={src}
-                alt={rank}
-                style={{ width: "100%", height: "auto", borderRadius: "16px", display: "block" }}
-              />
-            ))}
+          {/* ── BẢNG VÀNG THÀNH TÍCH ─────────────────────── */}
+          <section className="home-section" style={{ padding: "16px 28px 0" }}>
+            <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+              {[
+                { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-1.jpg" },
+                { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-2.jpg" },
+              ].map(({ rank, src }) => (
+                <img
+                  key={rank}
+                  src={src}
+                  alt={rank}
+                  style={{
+                    height: "260px", width: "auto", maxWidth: "48%",
+                    borderRadius: "16px", display: "block",
+                    objectFit: "contain", flexShrink: 0,
+                  }}
+                />
+              ))}
+            </div>
           </section>
 
           {/* ── BẠN ĐANG TÌM GÌ ───────────────────────────── */}
@@ -340,7 +353,7 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
         letterSpacing: "0.3px",
       }}>
         <i className="fas fa-key" />
-        Nhập mã truy cập
+        Mã kích hoạt
       </button>
 
     </aside>

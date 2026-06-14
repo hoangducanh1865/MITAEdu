@@ -85,12 +85,15 @@ a { text-decoration: none; color: inherit; }
   flex-direction: row;
   min-height: calc(100vh - 62px);
   overflow: hidden;
+  background: #fdf0f0;
 }
 
 .layout-home > main {
   flex: 1;
   min-width: 0; /* ngăn overflow khi sidebar ẩn */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+  box-shadow: 1px 0 0 #f0d5d5, -1px 0 0 #f0d5d5;
 }
 
 /* Sidebar animation wrapper */
@@ -106,8 +109,11 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Responsive / Mobile ────────────────────────────────── */
 @media (max-width: 768px) {
-  /* Navbar: hide center icons on small phones */
+  /* Navbar: hide center icons and activation button on mobile */
   .navbar-center-nav {
+    display: none !important;
+  }
+  .navbar-activation-btn {
     display: none !important;
   }
 
@@ -158,6 +164,16 @@ a { text-decoration: none; color: inherit; }
     display: none !important;
   }
 
+  /* Bảng vàng thành tích: stack on mobile */
+  .thanh-tich-grid {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .thanh-tich-grid img {
+    height: 200px !important;
+    max-width: 100% !important;
+  }
+
   /* Top-2 students: single column */
   .home-top2-grid {
     grid-template-columns: 1fr !important;
@@ -180,6 +196,14 @@ a { text-decoration: none; color: inherit; }
   .footer-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  /* Tablet: thu gọn right panel */
+  .home-right-panel {
+    width: 220px !important;
+    padding-right: 12px !important;
   }
 }
 
