@@ -86,6 +86,8 @@ a { text-decoration: none; color: inherit; }
   min-height: calc(100vh - 62px);
   overflow: hidden;
   background: #fdf0f0;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .layout-home > main {

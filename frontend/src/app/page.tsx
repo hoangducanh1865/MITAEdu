@@ -82,7 +82,7 @@ export default function DashboardPage() {
           onClose={() => setCodeModalOpen(false)}
           onSuccess={handleActivationSuccess}
         />
-        <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0, minWidth: "560px" }}>
+        <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
           {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <img

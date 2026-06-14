@@ -20,9 +20,11 @@ export default function Navbar() {
   return (
     <header style={{
       background: "#fff", borderBottom: "1px solid #f0d5d5",
-      padding: "0 32px", height: "62px", display: "flex",
-      alignItems: "center", justifyContent: "space-between",
-      position: "sticky", top: 0, zIndex: 100,
+      height: "62px", position: "sticky", top: 0, zIndex: 100,
+    }}>
+    <div style={{
+      maxWidth: "1440px", margin: "0 auto", padding: "0 32px",
+      height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
       {/* Left: Logo + Search */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
@@ -117,6 +119,7 @@ export default function Navbar() {
         </button>
         <AvatarDropdown />
       </div>
+    </div>
     </header>
   );
 }
