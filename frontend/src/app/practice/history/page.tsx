@@ -37,7 +37,7 @@ export default function PracticeHistoryPage() {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {submissions.map((s) => (
-            <div key={s.id} style={{ background: "#fff", border: "2px solid #f0d5d5", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "16px" }}>
+            <div key={s.id} style={{ background: "#fff", border: "2px solid #c5ddf0", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "16px" }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#2c2c2c" }}>{s.examTitle}</div>
                 <div style={{ fontSize: "0.78rem", color: "#777", marginTop: "4px" }}>
@@ -55,7 +55,7 @@ export default function PracticeHistoryPage() {
                 <span style={{ fontSize: "0.78rem", color: "#e65100", fontWeight: 600 }}>Chưa nộp</span>
               )}
               {s.completed && (
-                <Link href={`/submissions/${s.id}`} style={{ background: "#fdf0f0", color: "#d32f2f", borderRadius: "10px", padding: "7px 14px", fontSize: "0.8rem", fontWeight: 600 }}>
+                <Link href={`/submissions/${s.id}`} style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "10px", padding: "7px 14px", fontSize: "0.8rem", fontWeight: 600 }}>
                   Xem kết quả
                 </Link>
               )}

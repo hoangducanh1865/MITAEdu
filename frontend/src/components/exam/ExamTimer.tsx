@@ -18,14 +18,14 @@ export default function ExamTimer({ durationMinutes, onExpire }: Props) {
   }, [seconds, onExpire]);
 
   const pct = seconds / (durationMinutes * 60);
-  const color = pct > 0.3 ? "#2e7d32" : pct > 0.1 ? "#e65100" : "#d32f2f";
+  const color = pct > 0.3 ? "#2e7d32" : pct > 0.1 ? "#e65100" : "#1e7ab8";
 
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{ fontSize: "1.8rem", fontFamily: "Nunito, sans-serif", fontWeight: 900, color, letterSpacing: "2px" }}>
         {formatTimer(seconds)}
       </div>
-      <div style={{ height: "4px", background: "#f0d5d5", borderRadius: "2px", marginTop: "6px" }}>
+      <div style={{ height: "4px", background: "#c5ddf0", borderRadius: "2px", marginTop: "6px" }}>
         <div style={{ height: "100%", width: `${pct * 100}%`, background: color, borderRadius: "2px", transition: "width 1s linear" }} />
       </div>
     </div>

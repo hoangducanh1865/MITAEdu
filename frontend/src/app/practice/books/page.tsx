@@ -3,18 +3,18 @@
 import { useState } from "react";
 
 const BOOK_CATEGORIES = [
-  { label: "Tất cả", value: "all", icon: "fa-th-large", color: "#d32f2f" },
+  { label: "Tất cả", value: "all", icon: "fa-th-large", color: "#1e7ab8" },
   { label: "Toán học", value: "math", icon: "fa-square-root-alt", color: "#1565c0" },
   { label: "Vật lý", value: "physics", icon: "fa-atom", color: "#e65100" },
   { label: "Hóa học", value: "chemistry", icon: "fa-flask", color: "#6a1b9a" },
   { label: "Sinh học", value: "biology", icon: "fa-dna", color: "#2e7d32" },
-  { label: "Văn học", value: "literature", icon: "fa-book-open", color: "#c62828" },
+  { label: "Văn học", value: "literature", icon: "fa-book-open", color: "#1970a8" },
   { label: "Tiếng Anh", value: "english", icon: "fa-language", color: "#00796b" },
 ];
 
 const FEATURED_BOOKS = [
   { title: "Toán Tư Duy — Phân tích đề thi TSA 2024", subject: "Toán học", category: "math", publisher: "NXB Đại học Quốc gia", icon: "fa-square-root-alt", color: "#1565c0", bg: "#e3f2fd" },
-  { title: "Đọc hiểu & Lập luận — Luyện kỹ năng TSA", subject: "Ngữ văn", category: "literature", publisher: "NXB Giáo dục", icon: "fa-book-open", color: "#c62828", bg: "#fce4ec" },
+  { title: "Đọc hiểu & Lập luận — Luyện kỹ năng TSA", subject: "Ngữ văn", category: "literature", publisher: "NXB Giáo dục", icon: "fa-book-open", color: "#1970a8", bg: "#e3f2fd" },
   { title: "Khoa học tự nhiên tổng hợp — HSA 2025", subject: "Khoa học", category: "physics", publisher: "NXB ĐHQGHN", icon: "fa-atom", color: "#e65100", bg: "#fff3e0" },
   { title: "Grammar & Vocabulary for HUST", subject: "Tiếng Anh", category: "english", publisher: "Oxford University Press", icon: "fa-language", color: "#00796b", bg: "#e0f2f1" },
   { title: "Hóa học đại cương — Ôn thi HSA", subject: "Hóa học", category: "chemistry", publisher: "NXB KHKT", icon: "fa-flask", color: "#6a1b9a", bg: "#f3e5f5" },
@@ -54,15 +54,15 @@ export default function BooksPage() {
 
       {/* Search bar */}
       <div style={{
-        background: "#fff", border: "2px solid #f0d5d5", borderRadius: "16px", padding: "18px 22px",
+        background: "#fff", border: "2px solid #c5ddf0", borderRadius: "16px", padding: "18px 22px",
       }}>
         <div style={{ display: "flex", gap: "10px" }}>
           <div style={{
             flex: 1, display: "flex", alignItems: "center", gap: "10px",
-            background: "#fdf0f0", border: "1.5px solid #f0d5d5", borderRadius: "10px",
+            background: "#f0f7fd", border: "1.5px solid #c5ddf0", borderRadius: "10px",
             padding: "10px 14px",
           }}>
-            <i className="fas fa-search" style={{ color: "#d32f2f", fontSize: "0.9rem" }} />
+            <i className="fas fa-search" style={{ color: "#1e7ab8", fontSize: "0.9rem" }} />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -79,7 +79,7 @@ export default function BooksPage() {
             )}
           </div>
           <button style={{
-            background: "#d32f2f", color: "#fff", border: "none", borderRadius: "10px",
+            background: "#1e7ab8", color: "#fff", border: "none", borderRadius: "10px",
             padding: "0 20px", cursor: "pointer", fontWeight: 600, fontSize: "0.875rem",
             display: "flex", alignItems: "center", gap: "6px",
           }}>
@@ -99,7 +99,7 @@ export default function BooksPage() {
               style={{
                 display: "flex", alignItems: "center", gap: "6px",
                 padding: "7px 14px", borderRadius: "20px", border: "2px solid",
-                borderColor: active ? cat.color : "#f0d5d5",
+                borderColor: active ? cat.color : "#c5ddf0",
                 background: active ? cat.color : "#fff",
                 color: active ? "#fff" : cat.color,
                 fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
@@ -117,7 +117,7 @@ export default function BooksPage() {
       {filtered.length === 0 ? (
         <div style={{
           textAlign: "center", padding: "60px", color: "#777",
-          background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5",
+          background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
         }}>
           <i className="fas fa-search" style={{ fontSize: "2.5rem", marginBottom: "14px", display: "block", opacity: 0.3 }} />
           <p>Không tìm thấy sách phù hợp</p>
@@ -126,7 +126,7 @@ export default function BooksPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "14px" }}>
           {filtered.map((book, i) => (
             <div key={i} style={{
-              background: "#fff", border: "2px solid #f0d5d5", borderRadius: "16px",
+              background: "#fff", border: "2px solid #c5ddf0", borderRadius: "16px",
               padding: "18px 20px", display: "flex", flexDirection: "column", gap: "12px",
               transition: "box-shadow .15s",
               cursor: "pointer",

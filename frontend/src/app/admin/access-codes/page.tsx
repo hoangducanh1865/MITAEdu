@@ -93,11 +93,11 @@ export default function AccessCodesPage() {
           </div>
 
           <button onClick={handleGenerate} disabled={generating || !selectedCourseId}
-            style={{ padding: "10px 20px", background: "#d32f2f", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer" }}>
+            style={{ padding: "10px 20px", background: "#1e7ab8", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer" }}>
             {generating ? <><i className="fas fa-spinner fa-spin" /> Đang tạo...</> : <><i className="fas fa-plus" /> Tạo mã</>}
           </button>
         </div>
-        {error && <p style={{ marginTop: "10px", color: "#d32f2f", fontSize: "0.82rem" }}>{error}</p>}
+        {error && <p style={{ marginTop: "10px", color: "#1e7ab8", fontSize: "0.82rem" }}>{error}</p>}
 
         {generatedCodes && (
           <div style={{ marginTop: "16px", background: "#f5fff5", border: "1px solid #c8e6c9", borderRadius: "10px", padding: "14px" }}>
@@ -126,7 +126,7 @@ export default function AccessCodesPage() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #f0d5d5" }}>
+                <tr style={{ borderBottom: "2px solid #c5ddf0" }}>
                   <Th>Mã</Th>
                   <Th>Trạng thái</Th>
                   <Th>Hạn kích hoạt</Th>
@@ -167,7 +167,7 @@ function StatusBadge({ status, expiresAt }: { status: string; expiresAt?: string
   const map: Record<string, { bg: string; color: string; label: string }> = {
     UNUSED: { bg: "#e8f5e9", color: "#2e7d32", label: "Chưa dùng" },
     USED:   { bg: "#e3f2fd", color: "#1565c0", label: "Đã dùng" },
-    REVOKED:{ bg: "#fdf0f0", color: "#d32f2f", label: "Thu hồi" },
+    REVOKED:{ bg: "#f0f7fd", color: "#1e7ab8", label: "Thu hồi" },
   };
   const s = map[status] ?? { bg: "#f5f5f5", color: "#777", label: status };
   return <span style={{ background: s.bg, color: s.color, borderRadius: "6px", padding: "3px 10px", fontSize: "0.75rem", fontWeight: 700 }}>{s.label}</span>;

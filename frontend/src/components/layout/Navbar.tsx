@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <header style={{
-      background: "#fff", borderBottom: "1px solid #f0d5d5",
+      background: "#f0f7fd", borderBottom: "1px solid #c5ddf0",
       height: "62px", position: "sticky", top: 0, zIndex: 100,
     }}>
     <div style={{
@@ -37,19 +37,19 @@ export default function Navbar() {
           onClick={toggleSidebar}
           title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
-            background: "none", border: "1px solid #f0d5d5",
+            background: "none", border: "1px solid #c5ddf0",
             width: "36px", height: "36px", borderRadius: "8px",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", color: "#d32f2f", fontSize: "1rem",
+            cursor: "pointer", color: "#1e7ab8", fontSize: "1rem",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#fdf0f0";
-            e.currentTarget.style.borderColor = "#d32f2f";
+            e.currentTarget.style.background = "#f0f7fd";
+            e.currentTarget.style.borderColor = "#1e7ab8";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = "none";
-            e.currentTarget.style.borderColor = "#f0d5d5";
+            e.currentTarget.style.borderColor = "#c5ddf0";
           }}
         >
           <i className="fas fa-bars" />
@@ -68,15 +68,15 @@ export default function Navbar() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "36px", height: "36px", borderRadius: "8px",
-                background: isActive ? "#fdf0f0" : "transparent",
-                color: isActive ? "#d32f2f" : "#777",
+                background: isActive ? "#f0f7fd" : "transparent",
+                color: isActive ? "#1e7ab8" : "#777",
                 fontSize: "1rem", transition: "all 0.2s",
                 textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  (e.currentTarget as HTMLElement).style.background = "#fdf0f0";
-                  (e.currentTarget as HTMLElement).style.color = "#d32f2f";
+                  (e.currentTarget as HTMLElement).style.background = "#f0f7fd";
+                  (e.currentTarget as HTMLElement).style.color = "#1e7ab8";
                 }
               }}
               onMouseLeave={(e) => {
@@ -100,18 +100,18 @@ export default function Navbar() {
           style={{
             display: "flex", alignItems: "center", gap: "6px",
             padding: "7px 16px", borderRadius: "8px",
-            border: "1.5px solid #d32f2f", background: "transparent",
-            color: "#d32f2f", cursor: "pointer",
+            border: "1.5px solid #1e7ab8", background: "transparent",
+            color: "#1e7ab8", cursor: "pointer",
             fontSize: "0.82rem", fontWeight: 700,
             transition: "all 0.2s", whiteSpace: "nowrap",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#d32f2f";
+            e.currentTarget.style.background = "#1e7ab8";
             e.currentTarget.style.color = "#fff";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#d32f2f";
+            e.currentTarget.style.color = "#1e7ab8";
           }}
         >
           <i className="fas fa-key" style={{ fontSize: "0.75rem" }} />

@@ -32,7 +32,7 @@ export default function CoursesCategorySidebar() {
                 display: "flex", alignItems: "center", gap: "12px",
                 padding: "12px 14px", borderRadius: "10px",
                 background: isActive ? "#fff3e0" : "transparent",
-                borderLeft: isActive ? "4px solid #d32f2f" : "4px solid transparent",
+                borderLeft: isActive ? "4px solid #1e7ab8" : "4px solid transparent",
                 textDecoration: "none", cursor: "pointer",
                 transition: "all 0.15s",
               }}

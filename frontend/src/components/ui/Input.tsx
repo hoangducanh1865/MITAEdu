@@ -21,8 +21,8 @@ export default function Input({ label, error, leftIcon, className, ...props }: I
         )}
         <input
           className={cn(
-            "w-full rounded-xl border border-[#f0d5d5] bg-[#fdf0f0] px-4 py-2.5 text-sm outline-none",
-            "focus:border-[#d32f2f] focus:ring-2 focus:ring-[#d32f2f]/20 transition-all",
+            "w-full rounded-xl border border-[#c5ddf0] bg-[#f0f7fd] px-4 py-2.5 text-sm outline-none",
+            "focus:border-[#1e7ab8] focus:ring-2 focus:ring-[#1e7ab8]/20 transition-all",
             "placeholder:text-[#aaa]",
             leftIcon && "pl-10",
             error && "border-red-500",

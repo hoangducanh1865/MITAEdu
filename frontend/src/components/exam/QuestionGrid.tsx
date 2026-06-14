@@ -19,8 +19,8 @@ export default function QuestionGrid({ total, answers, currentIndex, onJump }: P
             onClick={() => onJump(i)}
             style={{
               width: "36px", height: "36px", borderRadius: "8px", border: "2px solid",
-              borderColor: current ? "#d32f2f" : answered ? "#4caf50" : "#f0d5d5",
-              background: current ? "#d32f2f" : answered ? "#e8f5e9" : "#fff",
+              borderColor: current ? "#1e7ab8" : answered ? "#4caf50" : "#c5ddf0",
+              background: current ? "#1e7ab8" : answered ? "#e8f5e9" : "#fff",
               color: current ? "#fff" : answered ? "#2e7d32" : "#777",
               fontWeight: 700, fontSize: "0.78rem", cursor: "pointer",
               transition: "all .15s",

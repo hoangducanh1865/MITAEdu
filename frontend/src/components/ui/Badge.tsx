@@ -12,7 +12,7 @@ const VARIANTS: Record<string, string> = {
   thpt: "bg-[#fff3e0] text-[#e65100]",
   published: "bg-[#e8f5e9] text-[#2e7d32]",
   draft: "bg-gray-100 text-gray-500",
-  default: "bg-[#fdf0f0] text-[#d32f2f]",
+  default: "bg-[#f0f7fd] text-[#1e7ab8]",
 };
 
 export default function Badge({ children, variant = "default", className }: BadgeProps) {

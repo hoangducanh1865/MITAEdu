@@ -36,7 +36,7 @@ export default function PracticeSidebar() {
         {/* Home */}
         <Link href="/practice" className={`pnav-item ${isActive("/practice") && !pathname.includes("/practice/") ? "active" : ""}`} style={{
           padding: "12px 16px", display: "flex", alignItems: "center", gap: "12px",
-          color: isActive("/practice") && !pathname.includes("/practice/") ? "#d32f2f" : "#555",
+          color: isActive("/practice") && !pathname.includes("/practice/") ? "#1e7ab8" : "#555",
           fontWeight: 600, fontSize: "0.9rem", textDecoration: "none",
           background: isActive("/practice") && !pathname.includes("/practice/") ? "#ffe0e0" : "transparent",
         }}>
@@ -71,7 +71,7 @@ export default function PracticeSidebar() {
               <Link href="/practice/tsa/luyen-tung-phan" style={{
                 display: "flex", alignItems: "center", gap: "10px", padding: "10px 32px",
                 fontSize: "0.85rem", color: "#666", textDecoration: "none",
-                borderLeft: isActive("/practice/tsa/luyen-tung-phan") ? "3px solid #d32f2f" : "3px solid transparent",
+                borderLeft: isActive("/practice/tsa/luyen-tung-phan") ? "3px solid #1e7ab8" : "3px solid transparent",
               }}>
                 <i className="fas fa-book-open" /> Luyện từng phần
               </Link>
@@ -235,7 +235,7 @@ export default function PracticeSidebar() {
       <div style={{ borderTop: "1px solid #e0e0e0", padding: "16px" }}>
         <Link href="/" style={{
           display: "block", padding: "8px 12px", textAlign: "center",
-          background: "#d32f2f", color: "#fff", borderRadius: "8px",
+          background: "#1e7ab8", color: "#fff", borderRadius: "8px",
           fontSize: "0.85rem", fontWeight: 600, textDecoration: "none", marginBottom: "8px",
         }}>
           Thoát

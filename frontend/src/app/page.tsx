@@ -83,7 +83,7 @@ export default function DashboardPage() {
       <div className="home-page-wrapper">
         <div className="layout-home">
           <Sidebar />
-          <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
+          <main style={{ minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
           {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <img
@@ -96,7 +96,7 @@ export default function DashboardPage() {
           {/* ── VINH DANH BANNER ──────────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
-              background: "#d32f2f", borderRadius: "12px",
+              background: "#1e7ab8", borderRadius: "12px",
               padding: "14px 24px", color: "#fff",
               display: "flex", alignItems: "center", justifyContent: "center",
               gap: "14px", fontFamily: "Nunito, sans-serif",
@@ -136,11 +136,12 @@ export default function DashboardPage() {
           {/* ── BẠN ĐANG TÌM GÌ ───────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{
-              border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
+              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
             }}>
               <div style={{ marginBottom: "16px" }}>
                 <span style={{
-                  display: "inline-block", background: "#d32f2f", color: "#fff",
+                  display: "inline-block", background: "#1e7ab8", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -157,7 +158,7 @@ export default function DashboardPage() {
                     cursor: "pointer", transition: "border-color .15s",
                     fontWeight: 500,
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#d32f2f"}
+                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1e7ab8"}
                   onMouseLeave={(e) => e.currentTarget.style.borderColor = "#e0e0e0"}
                   >
                     {tag}
@@ -170,11 +171,12 @@ export default function DashboardPage() {
           {/* ── KHÓA HỌC MỚI NHẤT ─────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 28px" }}>
             <div style={{
-              border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
+              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
             }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
                 <span style={{
-                  display: "inline-block", background: "#d32f2f", color: "#fff",
+                  display: "inline-block", background: "#1e7ab8", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -279,7 +281,7 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
       {/* ── Access code button ── */}
       <button onClick={onOpenCodeModal} style={{
         width: "100%",
-        background: "#d32f2f",
+        background: "#1e7ab8",
         color: "#fff",
         border: "none",
         borderRadius: "14px",

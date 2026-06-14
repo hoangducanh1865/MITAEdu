@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Course } from "@/types";
 
 const categoryColors: Record<string, { bg: string; color: string }> = {
-  TSA: { bg: "#fce4ec", color: "#c62828" },
+  TSA: { bg: "#e3f2fd", color: "#1970a8" },
   HSA: { bg: "#e3f2fd", color: "#1565c0" },
   THPT: { bg: "#fff3e0", color: "#ff6f00" },
 };
@@ -16,7 +16,7 @@ export default function CourseCard({ course }: { course: Course }) {
     <Link href={`/courses/${course.id}`}>
       <div style={{
         background: "#fff",
-        border: "2px solid #f0d5d5",
+        border: "2px solid #c5ddf0",
         borderRadius: "12px",
         padding: "20px",
         display: "flex",

@@ -56,20 +56,20 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
           autoFocus
           style={{
             width: "100%", padding: "12px 16px",
-            border: "2px solid #f0d5d5", borderRadius: "12px",
+            border: "2px solid #c5ddf0", borderRadius: "12px",
             fontSize: "1.1rem", fontFamily: "monospace", fontWeight: 700,
             letterSpacing: "2px", textAlign: "center", color: "#2c2c2c",
             outline: "none", boxSizing: "border-box",
           }}
-          onFocus={(e) => e.target.style.borderColor = "#d32f2f"}
-          onBlur={(e) => e.target.style.borderColor = "#f0d5d5"}
+          onFocus={(e) => e.target.style.borderColor = "#1e7ab8"}
+          onBlur={(e) => e.target.style.borderColor = "#c5ddf0"}
         />
 
         {error && (
           <div style={{
-            background: "#fff5f5", border: "1px solid #f0d5d5",
+            background: "#fff5f5", border: "1px solid #c5ddf0",
             borderRadius: "10px", padding: "10px 14px",
-            fontSize: "0.82rem", color: "#d32f2f",
+            fontSize: "0.82rem", color: "#1e7ab8",
           }}>
             <i className="fas fa-exclamation-circle" style={{ marginRight: "6px" }} />
             {error}
@@ -80,7 +80,7 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
           type="submit"
           disabled={loading || code.length < 14}
           style={{
-            width: "100%", background: loading || code.length < 14 ? "#e0e0e0" : "#d32f2f",
+            width: "100%", background: loading || code.length < 14 ? "#e0e0e0" : "#1e7ab8",
             color: loading || code.length < 14 ? "#999" : "#fff",
             border: "none", borderRadius: "12px",
             padding: "13px", fontFamily: "Nunito, sans-serif",

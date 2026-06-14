@@ -66,7 +66,7 @@ export default function HsaDeAdminPage() {
         ) : packages.length === 0 ? (
           <div style={{
             textAlign: "center", padding: "60px", color: "#777",
-            background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5",
+            background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
           }}>
             <i className="fas fa-user-shield" style={{ fontSize: "2.5rem", color: "#2e7d32", marginBottom: "14px", display: "block", opacity: 0.5 }} />
             <p style={{ fontSize: "0.95rem" }}>Chưa có bộ đề nào được Admin tạo</p>
@@ -80,7 +80,7 @@ export default function HsaDeAdminPage() {
 
               return (
                 <div key={pkg.id} style={{
-                  background: "#fff", border: `2px solid ${isOpen ? "#2e7d32" : "#f0d5d5"}`,
+                  background: "#fff", border: `2px solid ${isOpen ? "#2e7d32" : "#c5ddf0"}`,
                   borderRadius: "14px", overflow: "hidden", transition: "border-color .2s",
                 }}>
                   <button
@@ -122,7 +122,7 @@ export default function HsaDeAdminPage() {
                   </button>
 
                   {isOpen && (
-                    <div style={{ borderTop: "2px solid #f0d5d5", padding: "12px 16px", background: "#f9fdf9" }}>
+                    <div style={{ borderTop: "2px solid #c5ddf0", padding: "12px 16px", background: "#f9fdf9" }}>
                       {isLoadingThis ? (
                         <div style={{ textAlign: "center", padding: "20px", color: "#2e7d32" }}>
                           <i className="fas fa-spinner fa-spin" />

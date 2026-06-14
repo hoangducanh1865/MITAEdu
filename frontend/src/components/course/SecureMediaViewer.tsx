@@ -58,9 +58,9 @@ export default function SecureMediaViewer({ lesson }: Props) {
                   onClick={() => setActivePdf(p.id)}
                   style={{
                     display: "inline-flex", alignItems: "center", gap: "8px",
-                    background: active ? "#d32f2f" : "#fdf0f0",
-                    border: `2px solid ${active ? "#d32f2f" : "#f0d5d5"}`,
-                    color: active ? "#fff" : "#d32f2f",
+                    background: active ? "#1e7ab8" : "#f0f7fd",
+                    border: `2px solid ${active ? "#1e7ab8" : "#c5ddf0"}`,
+                    color: active ? "#fff" : "#1e7ab8",
                     borderRadius: "10px", padding: "9px 18px",
                     fontSize: "0.85rem", fontWeight: 700, cursor: "pointer",
                   }}
@@ -107,7 +107,7 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
     <div
       style={{
         position: "relative", borderRadius: "16px", overflow: "hidden",
-        background: "#000", aspectRatio: "16/9", border: "2px solid #f0d5d5",
+        background: "#000", aspectRatio: "16/9", border: "2px solid #c5ddf0",
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
@@ -169,7 +169,7 @@ function SecurePdf({ mediaId, watermark }: { mediaId: string; watermark: string 
     <div
       style={{
         position: "relative", borderRadius: "16px", overflow: "hidden",
-        border: "2px solid #f0d5d5", background: "#fff", minHeight: "600px",
+        border: "2px solid #c5ddf0", background: "#fff", minHeight: "600px",
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
@@ -182,7 +182,7 @@ function SecurePdf({ mediaId, watermark }: { mediaId: string; watermark: string 
         />
       )}
       {status === "loading" && (
-        <div style={{ padding: "60px", textAlign: "center", color: "#d32f2f" }}>
+        <div style={{ padding: "60px", textAlign: "center", color: "#1e7ab8" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.6rem" }} />
         </div>
       )}

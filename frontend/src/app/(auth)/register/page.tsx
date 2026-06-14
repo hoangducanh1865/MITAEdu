@@ -34,11 +34,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fdf0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 40px rgba(211,47,47,.14)", padding: "44px 48px", width: "480px" }}>
+    <div style={{ minHeight: "100vh", background: "#f0f7fd", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 40px rgba(30,122,184,.14)", padding: "44px 48px", width: "480px" }}>
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f" }}>
-            🌙 MITA<span style={{ color: "#b71c1c" }}>Edu</span>
+          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
+            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
           </div>
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             {registeredEmail ? "Kiểm tra email của bạn" : "Tạo tài khoản mới"}
@@ -61,7 +61,7 @@ export default function RegisterPage() {
             </h2>
             <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.65, marginBottom: "8px" }}>
               Chúng tôi đã gửi email xác minh đến<br />
-              <strong style={{ color: "#d32f2f" }}>{registeredEmail}</strong>
+              <strong style={{ color: "#1e7ab8" }}>{registeredEmail}</strong>
             </p>
             <p style={{ fontSize: "0.82rem", color: "#888", lineHeight: 1.6, marginBottom: "28px" }}>
               Vui lòng nhấn vào link trong email để kích hoạt tài khoản.
@@ -69,7 +69,7 @@ export default function RegisterPage() {
               (Kiểm tra cả thư mục Spam nếu không thấy.)
             </p>
             <Link href="/login" style={{
-              display: "inline-block", background: "#d32f2f", color: "#fff",
+              display: "inline-block", background: "#1e7ab8", color: "#fff",
               borderRadius: "10px", padding: "12px 32px",
               fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
             }}>
@@ -87,7 +87,7 @@ export default function RegisterPage() {
               <Input label="Tỉnh/Thành phố (tuỳ chọn)" placeholder="Hà Nội" value={form.city} onChange={(e) => set("city", e.target.value)} leftIcon={<i className="fas fa-map-marker-alt" />} />
 
               {error && (
-                <div style={{ background: "#ffebee", border: "1px solid #f44336", borderRadius: "10px", padding: "10px 14px", fontSize: "0.875rem", color: "#c62828" }}>
+                <div style={{ background: "#e3f2fd", border: "1px solid #2196f3", borderRadius: "10px", padding: "10px 14px", fontSize: "0.875rem", color: "#1970a8" }}>
                   <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }} />{error}
                 </div>
               )}
@@ -99,7 +99,7 @@ export default function RegisterPage() {
 
             <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
               Đã có tài khoản?{" "}
-              <Link href="/login" prefetch={false} style={{ color: "#d32f2f", fontWeight: 600 }}>Đăng nhập</Link>
+              <Link href="/login" prefetch={false} style={{ color: "#1e7ab8", fontWeight: 600 }}>Đăng nhập</Link>
             </p>
           </>
         )}

@@ -16,7 +16,7 @@ export default function QuestionCard({ question, questionNumber, selectedAnswer,
   return (
     <div>
       <div style={{ marginBottom: "20px" }}>
-        <span style={{ display: "inline-block", background: "#d32f2f", color: "#fff", borderRadius: "8px", padding: "4px 12px", fontSize: "0.82rem", fontWeight: 700, marginBottom: "12px" }}>
+        <span style={{ display: "inline-block", background: "#1e7ab8", color: "#fff", borderRadius: "8px", padding: "4px 12px", fontSize: "0.82rem", fontWeight: 700, marginBottom: "12px" }}>
           Câu {questionNumber}
         </span>
         <div
@@ -37,15 +37,15 @@ export default function QuestionCard({ question, questionNumber, selectedAnswer,
               style={{
                 width: "100%", textAlign: "left", padding: "14px 16px",
                 borderRadius: "12px", border: "2px solid",
-                borderColor: selected ? "#d32f2f" : "#f0d5d5",
-                background: selected ? "#fdf0f0" : "#fff",
+                borderColor: selected ? "#1e7ab8" : "#c5ddf0",
+                background: selected ? "#f0f7fd" : "#fff",
                 cursor: "pointer", display: "flex", alignItems: "flex-start", gap: "12px",
                 transition: "all .15s",
               }}
             >
               <span style={{
                 width: "28px", height: "28px", borderRadius: "50%", flexShrink: 0,
-                background: selected ? "#d32f2f" : "#f0d5d5",
+                background: selected ? "#1e7ab8" : "#c5ddf0",
                 color: selected ? "#fff" : "#777",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontWeight: 700, fontSize: "0.85rem",

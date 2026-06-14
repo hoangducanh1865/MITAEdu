@@ -35,10 +35,10 @@ export default function Modal({ open, onClose, title, children, className }: Mod
       >
         {title && (
           <div className="flex items-center justify-between mb-5">
-            <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#d32f2f" }}>
+            <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#1e7ab8" }}>
               {title}
             </h3>
-            <button onClick={onClose} className="text-[#777] hover:text-[#d32f2f] transition-colors">
+            <button onClick={onClose} className="text-[#777] hover:text-[#1e7ab8] transition-colors">
               <i className="fas fa-times" />
             </button>
           </div>

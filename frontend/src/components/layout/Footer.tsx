@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="footer-root" style={{
-      background: "#b71c1c",
+      background: "#155f8f",
       borderTop: "none",
       padding: "40px 60px 0",
       marginTop: "auto",

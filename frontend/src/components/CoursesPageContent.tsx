@@ -21,8 +21,8 @@ const CATEGORIES: {
     value: "TSA",
     label: "Khóa Trại hè Đánh thức tư duy ĐGNL",
     short: "TSA",
-    color: "#d32f2f",
-    gradient: "linear-gradient(135deg,#d32f2f,#b71c1c)",
+    color: "#1e7ab8",
+    gradient: "linear-gradient(135deg,#1e7ab8,#155f8f)",
   },
   {
     value: "HSA",
@@ -74,7 +74,7 @@ export default function CoursesPageContent() {
         <main
           style={{
             padding: "0",
-            background: "#fdf0f0",
+            background: "#f0f7fd",
             minHeight: "calc(100vh - 62px)",
           }}
         >
@@ -86,10 +86,10 @@ export default function CoursesPageContent() {
               gap: "8px",
               fontSize: "0.82rem",
               color: "#777",
-              background: "#fdf0f0",
+              background: "#f0f7fd",
             }}
           >
-            <Link href="/" style={{ color: "#d32f2f" }}>
+            <Link href="/" style={{ color: "#1e7ab8" }}>
               <i className="fas fa-home" />
             </Link>
             <span style={{ color: "#ccc" }}>›</span>
@@ -243,7 +243,7 @@ export default function CoursesPageContent() {
               </p>
 
               {loading ? (
-                <div style={{ textAlign: "center", padding: "40px", color: "#d32f2f" }}>
+                <div style={{ textAlign: "center", padding: "40px", color: "#1e7ab8" }}>
                   <i className="fas fa-spinner fa-spin" />
                 </div>
               ) : courses.length === 0 ? (

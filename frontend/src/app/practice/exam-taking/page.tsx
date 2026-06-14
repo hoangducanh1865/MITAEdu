@@ -122,7 +122,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
             background: "#fff", padding: "24px", borderRadius: "10px", marginBottom: "16px",
             boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
           }}>
-            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#d32f2f", marginBottom: "12px" }}>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#1e7ab8", marginBottom: "12px" }}>
               Câu {currentQ + 1}
             </div>
             <div style={{
@@ -142,7 +142,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
                     onClick={() => handleAnswer(idx)}
                     style={{
                       padding: "12px 14px", borderRadius: "8px", cursor: "pointer",
-                      border: isChosen ? "2px solid #d32f2f" : "2px solid #e0e0e0",
+                      border: isChosen ? "2px solid #1e7ab8" : "2px solid #e0e0e0",
                       background: isChosen ? "#fff3e0" : "#fff",
                       display: "flex", alignItems: "center", gap: "10px",
                       transition: "all 0.15s",
@@ -150,9 +150,9 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
                   >
                     <div style={{
                       width: "24px", height: "24px", borderRadius: "4px",
-                      border: isChosen ? "2px solid #d32f2f" : "2px solid #999",
+                      border: isChosen ? "2px solid #1e7ab8" : "2px solid #999",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      background: isChosen ? "#d32f2f" : "#fff",
+                      background: isChosen ? "#1e7ab8" : "#fff",
                       color: isChosen ? "#fff" : "#999",
                       fontSize: "0.75rem", fontWeight: 700,
                     }}>
@@ -169,7 +169,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
               marginTop: "16px", fontSize: "0.75rem", color: "#999",
               textAlign: "center",
             }}>
-              Thời gian làm câu hiện tại <span style={{ fontWeight: 700, color: "#d32f2f" }}>{formatTime(perQTime)}</span>
+              Thời gian làm câu hiện tại <span style={{ fontWeight: 700, color: "#1e7ab8" }}>{formatTime(perQTime)}</span>
             </div>
           </div>
 
@@ -181,8 +181,8 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
               onClick={handlePrev}
               disabled={currentQ === 0}
               style={{
-                padding: "10px 16px", borderRadius: "8px", border: "1px solid #d32f2f",
-                background: currentQ === 0 ? "#f5f5f5" : "#fff", color: "#d32f2f",
+                padding: "10px 16px", borderRadius: "8px", border: "1px solid #1e7ab8",
+                background: currentQ === 0 ? "#f5f5f5" : "#fff", color: "#1e7ab8",
                 fontWeight: 600, cursor: currentQ === 0 ? "not-allowed" : "pointer",
                 opacity: currentQ === 0 ? 0.5 : 1,
               }}
@@ -193,9 +193,9 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
               onClick={handleNext}
               disabled={currentQ === questions.length - 1}
               style={{
-                padding: "10px 16px", borderRadius: "8px", border: "1px solid #d32f2f",
+                padding: "10px 16px", borderRadius: "8px", border: "1px solid #1e7ab8",
                 background: currentQ === questions.length - 1 ? "#f5f5f5" : "#fff",
-                color: "#d32f2f", fontWeight: 600,
+                color: "#1e7ab8", fontWeight: 600,
                 cursor: currentQ === questions.length - 1 ? "not-allowed" : "pointer",
                 opacity: currentQ === questions.length - 1 ? 0.5 : 1,
               }}
@@ -226,7 +226,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
           }}>
             <div style={{ fontSize: "0.75rem", fontWeight: 600, color: "#666", marginBottom: "4px" }}>Thời gian còn lại</div>
             <div style={{
-              fontSize: "1.4rem", fontWeight: 900, color: timeLeft < 300 ? "#ff9800" : "#d32f2f",
+              fontSize: "1.4rem", fontWeight: 900, color: timeLeft < 300 ? "#ff9800" : "#1e7ab8",
               fontFamily: "monospace",
             }}>
               {formatTime(timeLeft)}
@@ -238,7 +238,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
             onClick={() => setShowSubmitModal(true)}
             style={{
               padding: "10px 12px", borderRadius: "8px", border: "none",
-              background: "#d32f2f", color: "#fff", fontWeight: 600, fontSize: "0.85rem",
+              background: "#1e7ab8", color: "#fff", fontWeight: 600, fontSize: "0.85rem",
               cursor: "pointer",
             }}
           >
@@ -282,7 +282,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
                   onClick={() => setCurrentQ(idx)}
                   style={{
                     width: "100%", aspectRatio: "1", borderRadius: "4px", border: "none",
-                    background: currentQ === idx ? "#d32f2f" : answers[question.id] !== undefined ? "#4caf50" : "#e0e0e0",
+                    background: currentQ === idx ? "#1e7ab8" : answers[question.id] !== undefined ? "#4caf50" : "#e0e0e0",
                     color: currentQ === idx || answers[question.id] !== undefined ? "#fff" : "#999",
                     fontWeight: 600, fontSize: "0.7rem", cursor: "pointer",
                   }}
@@ -349,7 +349,7 @@ export default function ExamTakingPage({ searchParams }: { searchParams: Promise
                 onClick={submitExam}
                 style={{
                   flex: 1, padding: "10px", borderRadius: "8px", border: "none",
-                  background: "#d32f2f", color: "#fff", fontWeight: 600, cursor: "pointer",
+                  background: "#1e7ab8", color: "#fff", fontWeight: 600, cursor: "pointer",
                 }}
               >
                 Nộp bài ngay

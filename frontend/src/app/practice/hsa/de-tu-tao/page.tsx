@@ -82,7 +82,7 @@ export default function HsaDeTuTaoPage() {
         </div>
 
         {/* Recent history */}
-        <div style={{ background: "#fff", border: "2px solid #f0d5d5", borderRadius: "16px", padding: "20px 24px" }}>
+        <div style={{ background: "#fff", border: "2px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
             <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
               <i className="fas fa-history" style={{ marginRight: "8px", color: "#2e7d32" }} />
@@ -118,7 +118,7 @@ export default function HsaDeTuTaoPage() {
                   {s.completed ? (
                     <>
                       <div style={{ textAlign: "right" }}>
-                        <div style={{ fontWeight: 800, fontSize: "1rem", color: (s.percentage ?? 0) >= 70 ? "#2e7d32" : "#d32f2f" }}>
+                        <div style={{ fontWeight: 800, fontSize: "1rem", color: (s.percentage ?? 0) >= 70 ? "#2e7d32" : "#1e7ab8" }}>
                           {s.score}/{s.totalQuestions}
                         </div>
                         <div style={{ fontSize: "0.7rem", color: "#777" }}>{s.percentage}%</div>
@@ -168,7 +168,7 @@ export default function HsaDeTuTaoPage() {
 
             <div style={{ marginBottom: "20px" }}>
               <label style={{ fontSize: "0.85rem", fontWeight: 700, color: "#2c2c2c", marginBottom: "8px", display: "block" }}>
-                Chọn đề thi <span style={{ color: "#d32f2f" }}>*</span>
+                Chọn đề thi <span style={{ color: "#1e7ab8" }}>*</span>
               </label>
               <select
                 value={selectedExamId}
