@@ -35,8 +35,8 @@ const CATEGORIES: {
     value: "THPT",
     label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
     short: "THPT",
-    color: "#e65100",
-    gradient: "linear-gradient(135deg,#e65100,#bf360c)",
+    color: "#0e6fa3",
+    gradient: "linear-gradient(135deg,#0e6fa3,#0a4f78)",
   },
 ];
 
@@ -158,7 +158,7 @@ export default function CoursesPageContent() {
                     }}
                     onMouseEnter={(e) => {
                       if (!active)
-                        e.currentTarget.style.background = "#fff8f8";
+                        e.currentTarget.style.background = "#f0f7fd";
                     }}
                     onMouseLeave={(e) => {
                       if (!active)
