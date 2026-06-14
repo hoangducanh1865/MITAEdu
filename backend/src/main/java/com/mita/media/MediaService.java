@@ -2,6 +2,8 @@ package com.mita.media;
 
 import com.mita.common.exception.ApiException;
 import com.mita.course.repository.CourseRepository;
+import com.mita.course.repository.LessonRepository;
+import com.mita.course.service.TrialAccessPolicy;
 import com.mita.entitlement.service.EntitlementService;
 import com.mita.media.dto.MediaUrlDto;
 import com.mita.user.entity.User;
@@ -26,6 +28,7 @@ public class MediaService {
     private final S3Presigner presigner;
     private final EntitlementService entitlementService;
     private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
 
     @Transactional(readOnly = true)
     public MediaUrlDto getUrl(String mediaId, Authentication authentication) {
@@ -36,7 +39,9 @@ public class MediaService {
         if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
             Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
                     .map(c -> c.getId()).orElse(null);
-            if (courseId != null && !entitlementService.hasAccess(user.getId(), courseId)) {
+            if (courseId != null
+                    && !entitlementService.hasAccess(user.getId(), courseId)
+                    && !isTrialMedia(asset.getId())) {
                 throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
             }
         }
@@ -60,5 +65,12 @@ public class MediaService {
                 .title(asset.getTitle())
                 .expiresInSeconds(ttl)
                 .build();
+    }
+
+    private boolean isTrialMedia(String mediaId) {
+        return lessonRepository.countTrialMediaLinks(
+                TrialAccessPolicy.COURSE_SLUG,
+                TrialAccessPolicy.LESSON_SORT_ORDERS,
+                mediaId) > 0;
     }
 }

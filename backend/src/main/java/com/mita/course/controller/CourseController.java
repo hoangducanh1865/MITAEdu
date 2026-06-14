@@ -29,6 +29,12 @@ public class CourseController {
         return ResponseEntity.ok(ApiResponse.ok(courseService.getAll(category, authentication)));
     }
 
+    @GetMapping("/trial")
+    @Operation(summary = "Khóa học thử", description = "Chỉ trả về buổi học thử được mở cho mọi tài khoản đăng nhập")
+    public ResponseEntity<ApiResponse<CourseDto>> getTrialCourse() {
+        return ResponseEntity.ok(ApiResponse.ok(courseService.getTrialCourse()));
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "Chi tiết khóa học (kèm danh sách bài học nếu có quyền)")
     public ResponseEntity<ApiResponse<CourseDto>> getOne(

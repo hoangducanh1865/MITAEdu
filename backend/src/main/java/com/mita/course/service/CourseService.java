@@ -4,6 +4,7 @@ import com.mita.common.exception.ApiException;
 import com.mita.course.dto.CourseDto;
 import com.mita.course.dto.LessonDto;
 import com.mita.course.entity.Course;
+import com.mita.course.entity.Lesson;
 import com.mita.course.repository.CourseRepository;
 import com.mita.course.repository.LessonRepository;
 import com.mita.entitlement.service.EntitlementService;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -55,6 +57,23 @@ public class CourseService {
             dto.setLocked(true);
             return dto;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public CourseDto getTrialCourse() {
+        Course course = courseRepository.findBySlug(TrialAccessPolicy.COURSE_SLUG)
+                .orElseThrow(() -> ApiException.notFound("Khóa học thử không tồn tại"));
+        List<LessonDto> lessons = course.getLessons().stream()
+                .filter(TrialAccessPolicy::isTrialLesson)
+                .sorted(Comparator.comparing(Lesson::getSortOrder))
+                .map(LessonDto::from)
+                .toList();
+
+        CourseDto dto = CourseDto.from(course);
+        dto.setLocked(false);
+        dto.setLessonCount(lessons.size());
+        dto.setLessons(lessons);
+        return dto;
     }
 
     @Transactional(readOnly = true)
