@@ -12,6 +12,15 @@ export function middleware(request: NextRequest) {
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  // Admin route protection — role cookie set by auth.ts at login
+  if (pathname.startsWith("/admin")) {
+    const role = request.cookies.get("mita_role")?.value;
+    if (role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 

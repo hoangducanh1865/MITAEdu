@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +29,18 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Chi tiết khóa học (kèm danh sách bài học)")
-    public ResponseEntity<ApiResponse<CourseDto>> getOne(@PathVariable Long id) {
-        return ResponseEntity.ok(ApiResponse.ok(courseService.getById(id)));
+    @Operation(summary = "Chi tiết khóa học (kèm danh sách bài học nếu có quyền)")
+    public ResponseEntity<ApiResponse<CourseDto>> getOne(
+            @PathVariable Long id,
+            Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.ok(courseService.getById(id, authentication)));
     }
 
     @GetMapping("/{id}/lessons")
-    @Operation(summary = "Danh sách bài học của khóa học")
-    public ResponseEntity<ApiResponse<List<LessonDto>>> getLessons(@PathVariable Long id) {
-        return ResponseEntity.ok(ApiResponse.ok(courseService.getLessons(id)));
+    @Operation(summary = "Danh sách bài học của khóa học (yêu cầu quyền truy cập)")
+    public ResponseEntity<ApiResponse<List<LessonDto>>> getLessons(
+            @PathVariable Long id,
+            Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.ok(courseService.getLessons(id, authentication)));
     }
 }

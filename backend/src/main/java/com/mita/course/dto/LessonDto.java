@@ -18,6 +18,9 @@ public class LessonDto {
     private String videoUrl;
     private String pdfPath;
     private String handwrittenPdfPath;
+    private String videoMediaId;
+    private String pdfMediaId;
+    private String handwrittenMediaId;
 
     public static LessonDto from(Lesson lesson) {
         return LessonDto.builder()
@@ -28,6 +31,9 @@ public class LessonDto {
                 .videoUrl(lesson.getVideoUrl())
                 .pdfPath(lesson.getPdfPath())
                 .handwrittenPdfPath(lesson.getHandwrittenPdfPath())
+                .videoMediaId(lesson.getVideoMediaId())
+                .pdfMediaId(lesson.getPdfMediaId())
+                .handwrittenMediaId(lesson.getHandwrittenMediaId())
                 .build();
     }
 }

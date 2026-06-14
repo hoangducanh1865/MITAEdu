@@ -24,6 +24,7 @@ public class CourseDto {
     private LocalDateTime createdAt;
     private int lessonCount;
     private List<LessonDto> lessons;
+    private boolean locked;
 
     public static CourseDto from(Course course) {
         return CourseDto.builder()
@@ -36,6 +37,7 @@ public class CourseDto {
                 .description(course.getDescription())
                 .createdAt(course.getCreatedAt())
                 .lessonCount(course.getLessons().size())
+                .locked(true)
                 .build();
     }
 

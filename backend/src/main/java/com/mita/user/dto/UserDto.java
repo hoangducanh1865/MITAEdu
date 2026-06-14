@@ -21,6 +21,7 @@ public class UserDto {
     private String city;
     private Integer birthYear;
     private LocalDateTime createdAt;
+    private boolean emailVerified;
 
     public static UserDto from(User user) {
         return UserDto.builder()
@@ -32,6 +33,7 @@ public class UserDto {
                 .city(user.getCity())
                 .birthYear(user.getBirthYear())
                 .createdAt(user.getCreatedAt())
+                .emailVerified(user.isEmailVerified())
                 .build();
     }
 }

@@ -37,4 +37,13 @@ public class Lesson {
 
     @Column(name = "handwritten_pdf_path")
     private String handwrittenPdfPath;
+
+    @Column(name = "video_media_id", length = 100)
+    private String videoMediaId;
+
+    @Column(name = "pdf_media_id", length = 100)
+    private String pdfMediaId;
+
+    @Column(name = "handwritten_media_id", length = 100)
+    private String handwrittenMediaId;
 }

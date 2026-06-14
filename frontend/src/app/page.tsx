@@ -8,6 +8,8 @@ import Link from "next/link";
 import api from "@/lib/api";
 import { useSidebar } from "@/lib/SidebarContext";
 import type { ApiResponse, Course } from "@/types";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import ActivationCodeModal from "@/components/ActivationCodeModal";
 
 // ── Carousel slides ──────────────────────────────────────────────
 const SLIDES = [
@@ -17,6 +19,7 @@ const SLIDES = [
     badge: "Kì Thi Đánh Giá Tư Duy 2026",
     tags: ["Tư Duy Toán Học", "Tư Duy Khoa Học", "Tư Duy Đọc Hiểu"],
     bg: "linear-gradient(135deg,#d32f2f 0%,#b71c1c 100%)",
+    banner: "/banner-slide-1.png",
   },
   {
     title: "Luyện Thi\nChuyên Sâu",
@@ -24,6 +27,7 @@ const SLIDES = [
     badge: "Chương Trình Mới 2026",
     tags: ["Toán", "Vật Lý", "Hóa Học"],
     bg: "linear-gradient(135deg,#c62828 0%,#ad1457 100%)",
+    banner: "/banner-slide-2.png",
   },
   {
     title: "Thi Thử\nOnline",
@@ -31,6 +35,7 @@ const SLIDES = [
     badge: "Xếp Hạng Toàn Quốc",
     tags: ["Đề Mô Phỏng", "Đề Chính Thức"],
     bg: "linear-gradient(135deg,#b71c1c 0%,#880e4f 100%)",
+    banner: "/banner-slide-3.png",
   },
 ];
 
@@ -50,20 +55,20 @@ const SEARCH_TAGS = [
   "Cách đỗ hust từ năm lớp 11","Cách thủ khoa",
 ];
 
-const THUMB_GRADIENTS = [
-  "linear-gradient(135deg,#f5a623,#e65100)",
-  "linear-gradient(135deg,#7b1fa2,#4a148c)",
-  "linear-gradient(135deg,#d32f2f,#b71c1c)",
-  "linear-gradient(135deg,#1565c0,#0d47a1)",
-  "linear-gradient(135deg,#2e7d32,#1b5e20)",
-];
 
 export default function DashboardPage() {
   const [slide, setSlide] = useState(0);
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
+  const [codeModalOpen, setCodeModalOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const { sidebarOpen, toggleSidebar } = useSidebar();
+
+  function handleActivationSuccess(courseName: string) {
+    setToast(`Kích hoạt thành công! Bạn đã mở khóa: ${courseName}`);
+    setTimeout(() => setToast(null), 5000);
+  }
 
   // Auto-advance carousel
   useEffect(() => {
@@ -97,86 +102,47 @@ export default function DashboardPage() {
       />
       <div className="layout-home">
         <Sidebar />
+        {/* Toast notification */}
+        {toast && (
+          <div style={{
+            position: "fixed", top: "80px", right: "20px", zIndex: 9999,
+            background: "#2e7d32", color: "#fff", borderRadius: "14px",
+            padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
+            display: "flex", alignItems: "center", gap: "10px",
+          }}>
+            <i className="fas fa-check-circle" />
+            {toast}
+          </div>
+        )}
+        <ActivationCodeModal
+          open={codeModalOpen}
+          onClose={() => setCodeModalOpen(false)}
+          onSuccess={handleActivationSuccess}
+        />
         <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
-
           {/* ── HERO CAROUSEL ─────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div className="hero-inner" style={{
-              background: s.bg,
               borderRadius: "20px",
-              padding: "40px 48px",
-              color: "#fff",
               position: "relative",
               overflow: "hidden",
               minHeight: "220px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              transition: "background .6s ease",
             }}>
-              {/* Left content */}
-              <div style={{ flex: 1, zIndex: 2 }}>
-                <h2 className="hero-title" style={{
-                  fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                  fontSize: "2.4rem", lineHeight: 1.15,
-                  marginBottom: "10px", whiteSpace: "pre-line",
-                }}>
-                  {s.title}
-                </h2>
-                <p style={{ fontStyle: "italic", opacity: 0.9, marginBottom: "16px", fontSize: "1rem" }}>
-                  {s.sub}
-                </p>
-                <div style={{
-                  display: "inline-flex", alignItems: "center", gap: "8px",
-                  background: "rgba(255,255,255,0.18)", borderRadius: "20px",
-                  padding: "6px 14px", fontSize: "0.82rem", fontWeight: 600,
-                  marginBottom: "16px",
-                }}>
-                  <i className="fas fa-bullseye" style={{ fontSize: "0.75rem" }} />
-                  {s.badge}
-                </div>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {s.tags.map((tag) => (
-                    <button key={tag} style={{
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1.5px solid rgba(255,255,255,0.4)",
-                      color: "#fff", borderRadius: "20px",
-                      padding: "6px 16px", fontSize: "0.82rem", fontWeight: 600,
-                      cursor: "pointer",
-                    }}>{tag}</button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right visual */}
-              <div className="hero-visual" style={{ flexShrink: 0, zIndex: 2, marginLeft: "32px" }}>
-                <div style={{ position: "relative", width: "160px", height: "120px" }}>
-                  {[0,1,2].map((i) => (
-                    <div key={i} style={{
-                      position: "absolute",
-                      width: "100px", height: "80px",
-                      borderRadius: "12px",
-                      background: "rgba(255,255,255,0.18)",
-                      border: "1.5px solid rgba(255,255,255,0.3)",
-                      top: `${i * 14}px`,
-                      left: `${i * 18}px`,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      backdropFilter: "blur(4px)",
-                    }}>
-                      {i === 2 && <i className="fas fa-image" style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.5rem" }} />}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <img
+                src={s.banner}
+                alt={s.title.replace("\n", " ")}
+                style={{ width: "100%", height: "220px", objectFit: "cover", borderRadius: "20px", display: "block" }}
+              />
 
               {/* Prev/Next */}
               {["prev","next"].map((dir) => (
                 <button key={dir} onClick={() => setSlide((s) => dir === "prev" ? (s - 1 + SLIDES.length) % SLIDES.length : (s + 1) % SLIDES.length)} style={{
                   position: "absolute", top: "50%", transform: "translateY(-50%)",
                   [dir === "prev" ? "left" : "right"]: "16px",
-                  background: "rgba(255,255,255,0.22)", border: "none",
+                  background: "rgba(0,0,0,0.12)", border: "1.5px solid #ccc",
                   borderRadius: "50%", width: "36px", height: "36px",
-                  color: "#fff", cursor: "pointer", zIndex: 3,
+                  color: "#aaa", cursor: "pointer", zIndex: 3,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <i className={`fas fa-chevron-${dir === "prev" ? "left" : "right"}`} style={{ fontSize: "0.85rem" }} />
@@ -185,14 +151,14 @@ export default function DashboardPage() {
 
               {/* Dots */}
               <div style={{
-                position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)",
+                position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)",
                 display: "flex", gap: "8px", zIndex: 3,
               }}>
                 {SLIDES.map((_, i) => (
                   <button key={i} onClick={() => setSlide(i)} style={{
                     width: i === slide ? "28px" : "10px", height: "10px",
                     borderRadius: "5px", border: "none",
-                    background: i === slide ? "#fff" : "rgba(255,255,255,0.45)",
+                    background: i === slide ? "#aaa" : "#ddd",
                     cursor: "pointer", transition: "width .3s, background .3s", padding: 0,
                   }} />
                 ))}
@@ -219,38 +185,15 @@ export default function DashboardPage() {
           {/* ── TOP 2 STUDENTS ────────────────────────────── */}
           <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
-              { rank: "Thủ Khoa", score: "96.10", gold: true },
-              { rank: "Á Khoa",   score: "96.08", gold: false },
-            ].map(({ rank, score, gold }) => (
-              <div key={rank} style={{
-                background: gold ? "linear-gradient(135deg,#d32f2f,#b71c1c)" : "linear-gradient(135deg,#c62828,#a01515)",
-                borderRadius: "16px", padding: "20px 24px",
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                color: "#fff",
-              }}>
-                <div>
-                  <div style={{ fontSize: "0.72rem", opacity: 0.8, marginBottom: "2px" }}>🌙 MITAEdu &nbsp;·&nbsp; HỆ THỐNG MITAEDU</div>
-                  <div style={{ fontStyle: "italic", fontSize: "0.85rem", opacity: 0.9, marginBottom: "4px" }}>Vinh danh Học Sinh</div>
-                  <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2.6rem", lineHeight: 1 }}>{score}</div>
-                  <div style={{ marginTop: "8px", display: "flex", flexDirection: "column", gap: "2px" }}>
-                    <span style={{
-                      display: "inline-block", background: gold ? "#f5a623" : "rgba(255,255,255,0.25)",
-                      color: gold ? "#7f3000" : "#fff",
-                      borderRadius: "12px", padding: "2px 10px",
-                      fontSize: "0.72rem", fontWeight: 800, width: "fit-content",
-                    }}>{rank}</span>
-                    <div style={{ fontSize: "0.78rem", opacity: 0.85, marginTop: "4px" }}>{rank}<br/>{rank}</div>
-                  </div>
-                </div>
-                <div style={{
-                  width: "64px", height: "64px", borderRadius: "50%",
-                  background: "rgba(255,255,255,0.2)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "2rem", opacity: 0.7,
-                }}>
-                  <i className="fas fa-user-graduate" />
-                </div>
-              </div>
+              { rank: "Thủ Khoa", score: "96.10", src: "/poster-thu-khoa.png" },
+              { rank: "Á Khoa",   score: "96.08", src: "/poster-a-khoa.png" },
+            ].map(({ rank, score, src }) => (
+              <img
+                key={rank}
+                src={src}
+                alt={`${rank} — ${score} điểm`}
+                style={{ width: "100%", height: "auto", borderRadius: "16px", display: "block" }}
+              />
             ))}
           </section>
 
@@ -277,14 +220,12 @@ export default function DashboardPage() {
                   textAlign: "center", display: "flex", flexDirection: "column",
                   alignItems: "center", gap: "8px",
                 }}>
-                  <div style={{
-                    width: "70px", height: "70px", borderRadius: "50%",
-                    background: "#fdf0f0", border: "2px solid #f0d5d5",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "1.8rem", color: "#d32f2f",
-                  }}>
-                    <i className="fas fa-user-graduate" />
-                  </div>
+                  <ImagePlaceholder
+                    width="70px"
+                    height="70px"
+                    circular
+                    desc={`Ảnh ${c.name}\n70×70px | PNG`}
+                  />
                   <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#d32f2f" }}>
                     {c.name}
                   </div>
@@ -374,24 +315,26 @@ export default function DashboardPage() {
                 gap: "16px",
                 overflow: "hidden",
               }}>
-                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course, i) => (
+                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course) => (
                   <Link key={course.id} href={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                       {/* Thumbnail */}
                       <div style={{
                         width: "100%", aspectRatio: "4/3", borderRadius: "12px",
                         overflow: "hidden",
-                        background: course.thumbnailUrl ? "#000" : THUMB_GRADIENTS[(courseIdx + i) % THUMB_GRADIENTS.length],
+                        background: course.thumbnailUrl ? "#000" : "#fff",
                         display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
                         {course.thumbnailUrl ? (
                           <img src={course.thumbnailUrl} alt={course.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         ) : (
-                          <div style={{ textAlign: "center", color: "#fff", padding: "16px" }}>
-                            <div style={{ fontSize: "0.6rem", letterSpacing: "2px", marginBottom: "6px", opacity: 0.85 }}>NỘI DUNG<br/>KHÓA HỌC</div>
-                            <div style={{ fontSize: "0.55rem", letterSpacing: "1px", opacity: 0.7 }}>LỘ TRÌNH KHÓA HỌC</div>
-                          </div>
+                          <ImagePlaceholder
+                            width="100%"
+                            height="100%"
+                            desc={"Thumbnail khóa học\nTỷ lệ 4:3 | min 400×300px\nJPG/PNG"}
+                            style={{ borderRadius: 0 }}
+                          />
                         )}
                       </div>
                       {/* Info */}
@@ -419,7 +362,7 @@ export default function DashboardPage() {
           </section>
 
         </main>
-        <RightPanel />
+        <RightPanel onOpenCodeModal={() => setCodeModalOpen(true)} />
       </div>
       <Footer />
     </>
@@ -433,7 +376,7 @@ const NEWS_ITEMS = [
   { title: "Cập nhật đề thi mới nhất",      time: "08:30 - 20/02/2025" },
 ];
 
-function RightPanel() {
+function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
   return (
     <aside className="home-right-panel" style={{
       width: "260px",
@@ -446,94 +389,14 @@ function RightPanel() {
     }}>
 
       {/* ── Promo card ── */}
-      <div style={{
-        background: "linear-gradient(160deg,#d32f2f 0%,#b71c1c 100%)",
-        borderRadius: "18px",
-        padding: "18px 20px",
-        color: "#fff",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <span style={{ fontSize: "1rem" }}>🌙</span>
-            <span style={{ fontWeight: 800, fontSize: "0.82rem" }}>MITAEdu</span>
-          </div>
-          <div style={{
-            fontSize: "0.62rem", fontWeight: 700, letterSpacing: "1px",
-            opacity: 0.8, textTransform: "uppercase",
-          }}>
-            HỆ THỐNG MITAEDU
-          </div>
-        </div>
-
-        {/* Title */}
-        <div style={{
-          fontFamily: "Nunito, sans-serif", fontWeight: 900,
-          fontSize: "1.3rem", lineHeight: 1.2,
-          marginBottom: "16px", letterSpacing: "0.5px",
-        }}>
-          KHÓA TỔNG ÔN<br />ĐỢT 2
-        </div>
-
-        {/* Plane visual */}
-        <div style={{
-          position: "relative", height: "60px", marginBottom: "14px",
-          display: "flex", alignItems: "center",
-        }}>
-          {/* clouds */}
-          <div style={{
-            position: "absolute", left: "10px", top: "10px",
-            width: "50px", height: "22px", borderRadius: "20px",
-            background: "rgba(255,255,255,0.18)",
-          }} />
-          <div style={{
-            position: "absolute", left: "0", top: "30px",
-            width: "35px", height: "16px", borderRadius: "20px",
-            background: "rgba(255,255,255,0.12)",
-          }} />
-          {/* plane */}
-          <i className="fas fa-plane" style={{
-            position: "absolute", right: "10px", top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "2rem", opacity: 0.9,
-          }} />
-          {/* trail */}
-          <div style={{
-            position: "absolute", left: "60px", right: "55px", top: "50%",
-            height: "3px", borderRadius: "2px",
-            background: "rgba(255,255,255,0.3)",
-            transform: "translateY(-50%)",
-          }} />
-        </div>
-
-        {/* Price */}
-        <div style={{
-          background: "rgba(0,0,0,0.18)", borderRadius: "12px",
-          padding: "14px 16px",
-        }}>
-          <div style={{
-            fontFamily: "Nunito, sans-serif", fontWeight: 900,
-            fontSize: "2rem", color: "#f5a623", lineHeight: 1,
-            marginBottom: "6px",
-          }}>
-            1.600 K
-          </div>
-          <div style={{ fontSize: "0.75rem", opacity: 0.9, marginBottom: "4px" }}>
-            Cho Học sinh lần đầu
-          </div>
-          <div style={{ fontSize: "0.7rem", opacity: 0.7 }}>
-            Giá Học Sinh Cũ <s>800.000 Đ</s>
-          </div>
-          <div style={{ fontSize: "0.7rem", opacity: 0.7 }}>
-            Và Miễn Phí Phòng Luyện
-          </div>
-        </div>
-      </div>
+      <img
+        src="/banner-promo.png"
+        alt="Khóa Tổng Ôn Đợt 2 — MITAEdu"
+        style={{ width: "100%", height: "auto", borderRadius: "18px", display: "block" }}
+      />
 
       {/* ── Access code button ── */}
-      <button style={{
+      <button onClick={onOpenCodeModal} style={{
         width: "100%",
         background: "#d32f2f",
         color: "#fff",
@@ -586,14 +449,12 @@ function RightPanel() {
             <div key={i} style={{
               display: "flex", alignItems: "flex-start", gap: "10px",
             }}>
-              <div style={{
-                width: "36px", height: "36px", borderRadius: "8px",
-                background: "#fdf0f0",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0, color: "#d32f2f", fontSize: "0.85rem",
-              }}>
-                <i className="fas fa-newspaper" />
-              </div>
+              <ImagePlaceholder
+                width="36px"
+                height="36px"
+                desc={"Ảnh tin\n36×36px"}
+                style={{ borderRadius: "8px", flexShrink: 0 }}
+              />
               <div>
                 <a href="#" style={{
                   fontSize: "0.8rem", fontWeight: 600, color: "#2c2c2c",
