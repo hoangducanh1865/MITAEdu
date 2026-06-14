@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: "fas fa-tachometer-alt", exact: true },
   { href: "/admin/access-codes", label: "Mã kích hoạt", icon: "fas fa-key" },
-  { href: "/admin/entitlements", label: "Phân quyền", icon: "fas fa-user-check" },
   { href: "/admin/users", label: "Người dùng", icon: "fas fa-users" },
 ];
 
