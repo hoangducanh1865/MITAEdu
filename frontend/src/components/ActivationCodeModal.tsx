@@ -15,12 +15,17 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const normalizedCode = normalizeActivationCode(code);
+  const canSubmit = normalizedCode.length === 14;
 
   function formatCode(raw: string) {
     const clean = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
-    if (clean.length <= 4) return clean;
-    if (clean.length <= 8) return `${clean.slice(0, 4)}-${clean.slice(4)}`;
-    return `MITA-${clean.slice(0, 4)}-${clean.slice(4, 8)}`;
+    if (clean.length < 4 && "MITA".startsWith(clean)) return clean;
+
+    const body = getCodeBody(clean);
+    if (body.length === 0) return clean === "MITA" ? "MITA" : "";
+    if (body.length <= 4) return clean.startsWith("MITA") ? `MITA-${body}` : body;
+    return `MITA-${body.slice(0, 4)}-${body.slice(4)}`;
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -28,7 +33,7 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
     setError(null);
     setLoading(true);
     try {
-      const res = await api.post<ApiResponse<CourseEntitlement>>("/api/access-codes/activate", { code });
+      const res = await api.post<ApiResponse<CourseEntitlement>>("/api/access-codes/activate", { code: normalizedCode });
       onSuccess(res.data.data.courseName);
       setCode("");
       onClose();
@@ -78,14 +83,14 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
 
         <button
           type="submit"
-          disabled={loading || code.length < 14}
+          disabled={loading || !canSubmit}
           style={{
-            width: "100%", background: loading || code.length < 14 ? "#e0e0e0" : "#1e7ab8",
-            color: loading || code.length < 14 ? "#999" : "#fff",
+            width: "100%", background: loading || !canSubmit ? "#e0e0e0" : "#1e7ab8",
+            color: loading || !canSubmit ? "#999" : "#fff",
             border: "none", borderRadius: "12px",
             padding: "13px", fontFamily: "Nunito, sans-serif",
             fontWeight: 800, fontSize: "0.95rem",
-            cursor: loading || code.length < 14 ? "not-allowed" : "pointer",
+            cursor: loading || !canSubmit ? "not-allowed" : "pointer",
             transition: "background .15s",
           }}
         >
@@ -97,4 +102,18 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
       </form>
     </Modal>
   );
+}
+
+function normalizeActivationCode(raw: string) {
+  const clean = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const body = getCodeBody(clean);
+  return body.length === 8 ? `MITA-${body.slice(0, 4)}-${body.slice(4)}` : "";
+}
+
+function getCodeBody(cleanCode: string) {
+  let body = cleanCode;
+  while (body.startsWith("MITA")) {
+    body = body.slice(4);
+  }
+  return body.slice(0, 8);
 }

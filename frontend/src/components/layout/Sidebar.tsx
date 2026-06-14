@@ -63,6 +63,9 @@ export default function Sidebar() {
         {false && <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>}
         {false && <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>}
         <SidebarItem href="/schedule" icon="fa-calendar-alt" color="#e65100" bg="#fff3e0">Lịch học</SidebarItem>
+        {user?.role === "ADMIN" && (
+          <SidebarItem href="/admin/access-codes" icon="fa-key" color="#1565c0" bg="#e3f2fd">Tạo mã kích hoạt</SidebarItem>
+        )}
       </nav>
 
       <hr style={{ borderColor: "#c5ddf0", margin: "8px 0", minWidth: "208px" }} />

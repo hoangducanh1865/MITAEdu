@@ -66,7 +66,7 @@ public class ActivationCodeService {
 
     @Transactional
     public CourseEntitlementDto activateCode(String rawCode, Long userId) {
-        String code = rawCode.trim().toUpperCase();
+        String code = normalizeCode(rawCode);
 
         ActivationCode ac = activationCodeRepository.findByCodeIgnoreCase(code)
                 .orElseThrow(() -> ApiException.badRequest("Mã kích hoạt không hợp lệ"));
@@ -93,6 +93,21 @@ public class ActivationCodeService {
                 CourseEntitlement.Source.ACTIVATION_CODE, null);
 
         return CourseEntitlementDto.from(entitlement);
+    }
+
+    private String normalizeCode(String rawCode) {
+        if (rawCode == null || rawCode.isBlank()) {
+            throw ApiException.badRequest("Mã kích hoạt không hợp lệ");
+        }
+
+        String body = rawCode.toUpperCase().replaceAll("[^A-Z0-9]", "");
+        while (body.startsWith("MITA")) {
+            body = body.substring(4);
+        }
+        if (body.length() != 8) {
+            throw ApiException.badRequest("Mã kích hoạt không hợp lệ");
+        }
+        return "MITA-" + body.substring(0, 4) + "-" + body.substring(4);
     }
 
     @Transactional(readOnly = true)
