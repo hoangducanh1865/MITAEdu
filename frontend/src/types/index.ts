@@ -80,6 +80,7 @@ export interface Lesson {
   videoMediaId?: string;
   pdfMediaId?: string;
   handwrittenMediaId?: string;
+  description?: string;
 }
 
 export interface CourseEntitlement {

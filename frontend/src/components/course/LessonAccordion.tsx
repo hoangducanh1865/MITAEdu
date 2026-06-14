@@ -39,10 +39,15 @@ export default function LessonAccordion({ lessons, onSelect, activeId }: Props) 
               <div style={{ fontWeight: 600, fontSize: "0.875rem", color: active ? "#1e7ab8" : "#2c2c2c", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {lesson.title}
               </div>
-              <div style={{ display: "flex", gap: "12px", marginTop: "4px" }}>
-                {lesson.videoUrl && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fab fa-youtube" style={{ color: "#ff0000", marginRight: "4px" }} />Video</span>}
-                {lesson.pdfPath && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fas fa-file-pdf" style={{ color: "#1e7ab8", marginRight: "4px" }} />Đề</span>}
-                {lesson.handwrittenPdfPath && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fas fa-pen" style={{ color: "#777", marginRight: "4px" }} />Viết tay</span>}
+              {lesson.description && (
+                <div style={{ fontSize: "0.72rem", color: active ? "#1e7ab8" : "#999", marginTop: "2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", opacity: 0.85 }}>
+                  {lesson.description.split(" | ")[0]}
+                </div>
+              )}
+              <div style={{ display: "flex", gap: "10px", marginTop: "4px" }}>
+                {(lesson.videoUrl || lesson.videoMediaId) && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fas fa-video" style={{ color: "#1e7ab8", marginRight: "3px" }} />Video</span>}
+                {(lesson.pdfPath || lesson.pdfMediaId) && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fas fa-file-pdf" style={{ color: "#e53935", marginRight: "3px" }} />Đề</span>}
+                {(lesson.handwrittenPdfPath || lesson.handwrittenMediaId) && <span style={{ fontSize: "0.72rem", color: "#777" }}><i className="fas fa-pen" style={{ color: "#777", marginRight: "3px" }} />Viết tay</span>}
               </div>
             </div>
             {active && <i className="fas fa-play" style={{ color: "#1e7ab8", fontSize: "0.8rem" }} />}

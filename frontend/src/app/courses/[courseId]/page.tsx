@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
@@ -13,13 +13,26 @@ import api from "@/lib/api";
 import type { ApiResponse, Course, Lesson } from "@/types";
 import Badge from "@/components/ui/Badge";
 
+const SUBJECT_ICONS: Record<string, { icon: string; color: string; bg: string }> = {
+  "Toán":       { icon: "fas fa-calculator", color: "#1565c0", bg: "#e3f2fd" },
+  "Tiếng Việt": { icon: "fas fa-book-open",  color: "#6a1b9a", bg: "#f3e5f5" },
+  "Tiếng Anh":  { icon: "fas fa-language",   color: "#0277bd", bg: "#e1f5fe" },
+  "Hóa":        { icon: "fas fa-flask",       color: "#2e7d32", bg: "#e8f5e9" },
+  "Sinh học":   { icon: "fas fa-dna",         color: "#00695c", bg: "#e0f2f1" },
+  "Sử":         { icon: "fas fa-landmark",    color: "#bf360c", bg: "#fbe9e7" },
+  "Địa":        { icon: "fas fa-globe-asia",  color: "#33691e", bg: "#f1f8e9" },
+  "Lí":         { icon: "fas fa-atom",        color: "#4527a0", bg: "#ede7f6" },
+};
+
 export default function CourseDetailPage() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const courseId = params.courseId as string;
-  return <ApiCourseDetail courseId={courseId} />;
+  const subject = searchParams.get("subject") ?? "";
+  return <ApiCourseDetail courseId={courseId} subject={subject} />;
 }
 
-function ApiCourseDetail({ courseId }: { courseId: string }) {
+function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: string }) {
   const [course, setCourse] = useState<Course | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +44,11 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
     api.get<ApiResponse<Course>>(`/api/courses/${courseId}`)
       .then((r) => {
         setCourse(r.data.data);
-        if (r.data.data.lessons?.length) setActiveLesson(r.data.data.lessons[0]);
+        const lessons = r.data.data.lessons ?? [];
+        const filtered = subject
+          ? lessons.filter((l: Lesson) => l.title.startsWith(subject + " ·"))
+          : lessons;
+        if (filtered.length) setActiveLesson(filtered[0]);
       })
       .catch(() => setCourse(null))
       .finally(() => setLoading(false));
@@ -97,6 +114,11 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
   );
 
   const catLower = course.category.toLowerCase() as "tsa" | "hsa" | "thpt";
+  const allLessons = course.lessons ?? [];
+  const visibleLessons = subject
+    ? allLessons.filter((l) => l.title.startsWith(subject + " ·"))
+    : allLessons;
+  const subjectInfo = subject ? SUBJECT_ICONS[subject] : null;
 
   return (
     <>
@@ -112,8 +134,42 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
               {" › "}
               <a href="/courses" style={{ color: "#777" }}>Khóa học</a>
               {" › "}
-              <span style={{ color: "#1e7ab8", fontWeight: 600 }}>{course.name}</span>
+              <a href={`/courses?category=${course.category}`} style={{ color: "#777" }}>{course.name}</a>
+              {subject && (
+                <>
+                  {" › "}
+                  <span style={{ color: "#1e7ab8", fontWeight: 600 }}>{subject}</span>
+                </>
+              )}
             </nav>
+
+            {/* Subject header when filtered */}
+            {subject && subjectInfo && (
+              <div style={{
+                background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
+                padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px",
+              }}>
+                <div style={{
+                  width: "48px", height: "48px", borderRadius: "12px",
+                  background: subjectInfo.bg, display: "flex", alignItems: "center",
+                  justifyContent: "center", fontSize: "1.4rem", color: subjectInfo.color, flexShrink: 0,
+                }}>
+                  <i className={subjectInfo.icon} />
+                </div>
+                <div>
+                  <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: subjectInfo.color }}>
+                    {subject}
+                  </div>
+                  <div style={{ fontSize: "0.78rem", color: "#999" }}>{visibleLessons.length} bài học</div>
+                </div>
+                <a
+                  href={`/courses/${courseId}`}
+                  style={{ marginLeft: "auto", fontSize: "0.78rem", color: "#1e7ab8", textDecoration: "none", fontWeight: 600 }}
+                >
+                  <i className="fas fa-th" style={{ marginRight: "4px" }} />Tất cả môn
+                </a>
+              </div>
+            )}
 
             {/* Course header */}
             <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
@@ -140,9 +196,19 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
             {/* Media player */}
             {activeLesson && (
               <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
-                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "16px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: activeLesson.description ? "6px" : "16px" }}>
                   {activeLesson.title}
                 </h2>
+                {activeLesson.description && (
+                  <div style={{ fontSize: "0.8rem", color: "#777", lineHeight: 1.5, marginBottom: "16px" }}>
+                    {activeLesson.description.split(" | ").map((item, i) => (
+                      <div key={i} style={{ display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "2px" }}>
+                        <span style={{ color: "#1e7ab8", fontWeight: 700, flexShrink: 0 }}>·</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {activeLesson.videoMediaId || activeLesson.pdfMediaId || activeLesson.handwrittenMediaId
                   ? <SecureMediaViewer lesson={activeLesson} />
                   : <VideoPlayer lesson={activeLesson} />
@@ -155,11 +221,11 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
           <div className="course-lesson-panel" style={{ width: "320px", flexShrink: 0 }}>
             <div className="course-lesson-sticky" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "16px", position: "sticky", top: "80px" }}>
               <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#1e7ab8", marginBottom: "14px" }}>
-                Danh sách bài học
+                {subject ? `Bài học · ${subject}` : "Danh sách bài học"}
               </h3>
-              {course.lessons && (
+              {visibleLessons.length > 0 && (
                 <LessonAccordion
-                  lessons={course.lessons}
+                  lessons={visibleLessons}
                   onSelect={setActiveLesson}
                   activeId={activeLesson?.id}
                 />

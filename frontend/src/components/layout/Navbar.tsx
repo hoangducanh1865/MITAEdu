@@ -9,8 +9,6 @@ const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
   { href: "/courses", icon: "fa-bookmark", title: "Khóa học" },
   { href: "/practice", icon: "fa-flask", title: "Phòng luyện", hidden: true },
-  { href: "/documents", icon: "fa-file-alt", title: "Tài liệu" },
-  { href: "/library", icon: "fa-book-open", title: "Thư viện" },
 ];
 
 export default function Navbar() {
@@ -29,7 +27,7 @@ export default function Navbar() {
       {/* Left: Logo + Search */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo-mita.png" width={48} height={48} alt="MITA Edu" style={{ objectFit: "contain" }} />
+          <img src="/logo-mita-2.png" alt="MITA Edu" style={{ height: "48px", objectFit: "contain" }} />
         </Link>
 
         {/* Toggle Sidebar Button */}

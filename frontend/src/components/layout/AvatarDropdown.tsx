@@ -29,6 +29,34 @@ export default function AvatarDropdown() {
     router.push("/login");
   }
 
+  if (!user) {
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <Link
+          href="/login"
+          style={{
+            fontSize: "0.875rem", fontWeight: 600, color: "#1e7ab8",
+            padding: "6px 14px", borderRadius: "8px", border: "1.5px solid #1e7ab8",
+            textDecoration: "none", transition: "background .15s",
+          }}
+        >
+          Đăng nhập
+        </Link>
+        <Link
+          href="/register"
+          style={{
+            fontSize: "0.875rem", fontWeight: 600, color: "#fff",
+            padding: "6px 14px", borderRadius: "8px",
+            background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
+            textDecoration: "none", transition: "opacity .15s",
+          }}
+        >
+          Đăng ký
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div ref={ref} style={{ position: "relative" }}>
       <button
@@ -39,7 +67,7 @@ export default function AvatarDropdown() {
         }}
       >
         <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#2c2c2c" }}>
-          {user?.name ?? "Người dùng"}
+          {user.name ?? "Người dùng"}
         </span>
         <div
           style={{

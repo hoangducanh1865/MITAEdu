@@ -21,6 +21,7 @@ public class LessonDto {
     private String videoMediaId;
     private String pdfMediaId;
     private String handwrittenMediaId;
+    private String description;
 
     public static LessonDto from(Lesson lesson) {
         return LessonDto.builder()
@@ -34,6 +35,7 @@ public class LessonDto {
                 .videoMediaId(lesson.getVideoMediaId())
                 .pdfMediaId(lesson.getPdfMediaId())
                 .handwrittenMediaId(lesson.getHandwrittenMediaId())
+                .description(lesson.getDescription())
                 .build();
     }
 }

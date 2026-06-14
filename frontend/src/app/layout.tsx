@@ -5,6 +5,10 @@ import ClientProviders from "@/lib/ClientProviders";
 export const metadata: Metadata = {
   title: "MITA — Nền Tảng Học Tập",
   description: "Hệ thống luyện thi TSA, HSA, THPTQG của MITA Education",
+  icons: {
+    icon: "/logo-mita.png",
+    apple: "/logo-mita.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
