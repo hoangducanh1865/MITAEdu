@@ -65,6 +65,7 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               title={item.title}
+              prefetch={false}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "36px", height: "36px", borderRadius: "8px",

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { setToken, saveUser } from "@/lib/auth";
 import type { ApiResponse, AuthResponse, User } from "@/types";
@@ -10,7 +9,6 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [form, setForm] = useState({ email: "admin@mita.edu.vn", password: "admin123" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +32,8 @@ export default function LoginPage() {
       } catch {
         saveUser({ ...rest, id: userId });
       }
-      router.push("/");
+      // Hard navigation clears Next.js router cache (prevents stale auth redirects)
+      window.location.href = "/";
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status;
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;

@@ -83,7 +83,7 @@ function SidebarItem({ href, icon, color, bg, children }: {
   href: string; icon: string; color: string; bg: string; children: React.ReactNode;
 }) {
   return (
-    <Link href={href} style={{
+    <Link href={href} prefetch={false} style={{
       display: "flex", alignItems: "center", gap: "12px",
       padding: "10px 12px", borderRadius: "10px", fontSize: "0.9rem", fontWeight: 500,
       color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",
