@@ -19,7 +19,7 @@ const SLIDES = [
     badge: "Kì Thi Đánh Giá Tư Duy 2026",
     tags: ["Tư Duy Toán Học", "Tư Duy Khoa Học", "Tư Duy Đọc Hiểu"],
     bg: "linear-gradient(135deg,#d32f2f 0%,#b71c1c 100%)",
-    imageDesc: "Ảnh banner Ngân Hàng Câu Hỏi\n200×160px | JPG/PNG\nMinh họa đề thi, câu hỏi TSA 2026",
+    banner: "/banner-slide-1.png",
   },
   {
     title: "Luyện Thi\nChuyên Sâu",
@@ -27,7 +27,7 @@ const SLIDES = [
     badge: "Chương Trình Mới 2026",
     tags: ["Toán", "Vật Lý", "Hóa Học"],
     bg: "linear-gradient(135deg,#c62828 0%,#ad1457 100%)",
-    imageDesc: "Ảnh banner Luyện Thi Chuyên Sâu\n200×160px | JPG/PNG\nMinh họa học sinh ôn thi, tài liệu",
+    banner: "/banner-slide-2.png",
   },
   {
     title: "Thi Thử\nOnline",
@@ -35,7 +35,7 @@ const SLIDES = [
     badge: "Xếp Hạng Toàn Quốc",
     tags: ["Đề Mô Phỏng", "Đề Chính Thức"],
     bg: "linear-gradient(135deg,#b71c1c 0%,#880e4f 100%)",
-    imageDesc: "Ảnh banner Thi Thử Online\n200×160px | JPG/PNG\nMinh họa bảng xếp hạng, màn hình thi",
+    banner: "/banner-slide-3.png",
   },
 ];
 
@@ -129,12 +129,10 @@ export default function DashboardPage() {
               overflow: "hidden",
               minHeight: "220px",
             }}>
-              {/* Full-cover placeholder */}
-              <ImagePlaceholder
-                width="100%"
-                height="220px"
-                desc={`Banner slide ${slide + 1}: ${s.title.replace("\n", " ")}\n${s.badge}\nKích thước: ~740×220px | JPG/PNG\nBao gồm: tiêu đề, ảnh minh họa, tag môn học`}
-                style={{ borderRadius: "20px" }}
+              <img
+                src={s.banner}
+                alt={s.title.replace("\n", " ")}
+                style={{ width: "100%", height: "220px", objectFit: "cover", borderRadius: "20px", display: "block" }}
               />
 
               {/* Prev/Next */}
@@ -187,15 +185,14 @@ export default function DashboardPage() {
           {/* ── TOP 2 STUDENTS ────────────────────────────── */}
           <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
-              { rank: "Thủ Khoa", score: "96.10" },
-              { rank: "Á Khoa",   score: "96.08" },
-            ].map(({ rank, score }) => (
-              <ImagePlaceholder
+              { rank: "Thủ Khoa", score: "96.10", src: "/poster-thu-khoa.png" },
+              { rank: "Á Khoa",   score: "96.08", src: "/poster-a-khoa.png" },
+            ].map(({ rank, score, src }) => (
+              <img
                 key={rank}
-                width="100%"
-                height="200px"
-                desc={`Poster ${rank} — ${score} điểm\nTỷ lệ ~2:1 | JPG/PNG\nBao gồm: ảnh chân dung học sinh,\nđiểm số ${score}, danh hiệu ${rank},\nwatermark MITAEdu`}
-                style={{ borderRadius: "16px" }}
+                src={src}
+                alt={`${rank} — ${score} điểm`}
+                style={{ width: "100%", height: "auto", borderRadius: "16px", display: "block" }}
               />
             ))}
           </section>
@@ -392,11 +389,10 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
     }}>
 
       {/* ── Promo card ── */}
-      <ImagePlaceholder
-        width="100%"
-        height="260px"
-        desc={"Banner quảng cáo khóa học\n260×260px | JPG/PNG\nKhóa Tổng Ôn Đợt 2\nBao gồm: logo MITAEdu, tên khóa,\ngiá 1.600K, ảnh minh họa khóa học"}
-        style={{ borderRadius: "18px" }}
+      <img
+        src="/banner-promo.png"
+        alt="Khóa Tổng Ôn Đợt 2 — MITAEdu"
+        style={{ width: "100%", height: "auto", borderRadius: "18px", display: "block" }}
       />
 
       {/* ── Access code button ── */}
