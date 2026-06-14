@@ -26,13 +26,8 @@ export default function Navbar() {
     }}>
       {/* Left: Logo + Search */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <Link href="/" style={{
-          fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.2rem",
-          color: "#d32f2f", display: "flex", alignItems: "center", gap: "6px",
-          textDecoration: "none",
-        }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <img src="/logo-mita.png" width={36} height={36} alt="MITA Edu" style={{ objectFit: "contain" }} />
-          MITA<span style={{ color: "#b71c1c" }}>Edu</span>
         </Link>
 
         {/* Toggle Sidebar Button */}
