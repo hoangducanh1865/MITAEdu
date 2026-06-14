@@ -39,6 +39,7 @@ export default function SecureMediaViewer({ lesson }: Props) {
   ].filter(Boolean) as { id: string; label: string; icon: string }[];
 
   const [activePdf, setActivePdf] = useState<string | null>(pdfs[0]?.id ?? null);
+  const activePdfMeta = pdfs.find((p) => p.id === activePdf) ?? null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -70,7 +71,7 @@ export default function SecureMediaViewer({ lesson }: Props) {
               );
             })}
           </div>
-          {activePdf && <SecurePdf mediaId={activePdf} watermark={watermark} />}
+          {activePdfMeta && <SecurePdf mediaId={activePdfMeta.id} label={activePdfMeta.label} watermark={watermark} />}
         </div>
       )}
     </div>
@@ -152,9 +153,10 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
 }
 
 /* ── PDF bảo mật ─────────────────────────────────── */
-function SecurePdf({ mediaId, watermark }: { mediaId: string; watermark: string }) {
+function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: string; watermark: string }) {
   const [url, setUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -165,6 +167,23 @@ function SecurePdf({ mediaId, watermark }: { mediaId: string; watermark: string 
     return () => { alive = false; };
   }, [mediaId]);
 
+  async function handleDownload() {
+    setDownloading(true);
+    try {
+      const media = await getMediaUrl(mediaId, { download: true });
+      const link = document.createElement("a");
+      link.href = media.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.download = "";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
   return (
     <div
       style={{
@@ -173,6 +192,33 @@ function SecurePdf({ mediaId, watermark }: { mediaId: string; watermark: string 
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
+      {status === "ready" && (
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          gap: "12px", padding: "10px 12px", borderBottom: "1px solid #c5ddf0",
+          background: "#f8fbfe",
+        }}>
+          <span style={{ fontSize: "0.82rem", color: "#555", fontWeight: 700 }}>
+            <i className="fas fa-file-pdf" style={{ color: "#e53935", marginRight: "6px" }} />
+            {label}
+          </span>
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={downloading}
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "7px",
+              border: "1px solid #c5ddf0", borderRadius: "9px", background: "#fff",
+              color: "#1e7ab8", padding: "8px 12px", fontSize: "0.8rem",
+              fontWeight: 800, cursor: downloading ? "not-allowed" : "pointer",
+              opacity: downloading ? 0.7 : 1,
+            }}
+          >
+            <i className={downloading ? "fas fa-spinner fa-spin" : "fas fa-download"} />
+            Tải PDF
+          </button>
+        </div>
+      )}
       {status === "ready" && url && (
         <iframe
           className="pdf-iframe"

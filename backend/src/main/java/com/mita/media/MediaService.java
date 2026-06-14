@@ -32,6 +32,11 @@ public class MediaService {
 
     @Transactional(readOnly = true)
     public MediaUrlDto getUrl(String mediaId, Authentication authentication) {
+        return getUrl(mediaId, authentication, false);
+    }
+
+    @Transactional(readOnly = true)
+    public MediaUrlDto getUrl(String mediaId, Authentication authentication, boolean download) {
         MediaAsset asset = mediaAssetRepository.findById(mediaId)
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy media: " + mediaId));
 
@@ -47,10 +52,19 @@ public class MediaService {
         }
 
         long ttl = props.getUrlTtlSeconds();
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+        GetObjectRequest.Builder getObjectRequestBuilder = GetObjectRequest.builder()
                 .bucket(props.getBucket())
-                .key(asset.getObjectKey())
-                .build();
+                .key(asset.getObjectKey());
+
+        if (download) {
+            getObjectRequestBuilder.responseContentDisposition(
+                    "attachment; filename=\"" + buildDownloadFileName(asset) + "\"");
+            if (asset.getContentType() != null && !asset.getContentType().isBlank()) {
+                getObjectRequestBuilder.responseContentType(asset.getContentType());
+            }
+        }
+
+        GetObjectRequest getObjectRequest = getObjectRequestBuilder.build();
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
                 .signatureDuration(Duration.ofSeconds(ttl))
@@ -72,5 +86,14 @@ public class MediaService {
                 TrialAccessPolicy.COURSE_SLUG,
                 TrialAccessPolicy.LESSON_SORT_ORDERS,
                 mediaId) > 0;
+    }
+
+    private String buildDownloadFileName(MediaAsset asset) {
+        String source = asset.getId() != null ? asset.getId() : "mita-document";
+        String fileName = source.replaceAll("[^A-Za-z0-9._-]", "-");
+        if (!fileName.toLowerCase().endsWith(".pdf") && "application/pdf".equalsIgnoreCase(asset.getContentType())) {
+            fileName += ".pdf";
+        }
+        return fileName;
     }
 }
