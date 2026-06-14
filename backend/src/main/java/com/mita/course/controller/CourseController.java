@@ -24,8 +24,9 @@ public class CourseController {
     @GetMapping
     @Operation(summary = "Danh sách khóa học", description = "?category=TSA|HSA|THPT")
     public ResponseEntity<ApiResponse<List<CourseDto>>> list(
-            @RequestParam(required = false) String category) {
-        return ResponseEntity.ok(ApiResponse.ok(courseService.getAll(category)));
+            @RequestParam(required = false) String category,
+            Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.ok(courseService.getAll(category, authentication)));
     }
 
     @GetMapping("/{id}")

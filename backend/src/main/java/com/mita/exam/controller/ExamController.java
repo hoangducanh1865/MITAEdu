@@ -7,6 +7,7 @@ import com.mita.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +24,17 @@ public class ExamController {
     @GetMapping("/api/exam-packages")
     @Operation(summary = "Danh sách bộ đề", description = "?tag=TSA|HSA")
     public ResponseEntity<ApiResponse<List<ExamPackageDto>>> getPackages(
-            @RequestParam(required = false) String tag) {
-        return ResponseEntity.ok(ApiResponse.ok(examService.getPackages(tag)));
+            @RequestParam(required = false) String tag,
+            Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.ok(examService.getPackages(tag, authentication)));
     }
 
     @GetMapping("/api/exam-packages/{id}")
     @Operation(summary = "Chi tiết bộ đề")
-    public ResponseEntity<ApiResponse<ExamPackageDto>> getPackage(@PathVariable Long id) {
-        return ResponseEntity.ok(ApiResponse.ok(examService.getPackageById(id)));
+    public ResponseEntity<ApiResponse<ExamPackageDto>> getPackage(
+            @PathVariable Long id,
+            Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.ok(examService.getPackageById(id, authentication)));
     }
 
     @GetMapping("/api/exams")

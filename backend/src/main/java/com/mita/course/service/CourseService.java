@@ -24,19 +24,27 @@ public class CourseService {
     private final EntitlementService entitlementService;
 
     @Transactional(readOnly = true)
-    public List<CourseDto> getAll(String category) {
+    public List<CourseDto> getAll(String category, Authentication authentication) {
         List<Course> courses = (category != null && !category.isBlank())
                 ? courseRepository.findByCategory(Course.Category.valueOf(category.toUpperCase()))
                 : courseRepository.findAll();
-        return courses.stream().map(CourseDto::from).toList();
+        boolean isAdmin = isAdmin(authentication);
+        return courses.stream()
+                .map(course -> {
+                    CourseDto dto = CourseDto.from(course);
+                    if (isAdmin) {
+                        dto.setLocked(false);
+                    }
+                    return dto;
+                })
+                .toList();
     }
 
     @Transactional(readOnly = true)
     public CourseDto getById(Long id, Authentication authentication) {
         Course course = findById(id);
         User user = (User) authentication.getPrincipal();
-        boolean isAdmin = user.getRole() == User.Role.ADMIN;
-        boolean hasAccess = isAdmin || entitlementService.hasAccess(user.getId(), id);
+        boolean hasAccess = entitlementService.hasAccess(user.getId(), id);
 
         if (hasAccess) {
             CourseDto dto = CourseDto.withLessons(course);
@@ -53,12 +61,17 @@ public class CourseService {
     public List<LessonDto> getLessons(Long courseId, Authentication authentication) {
         Course course = findById(courseId);
         User user = (User) authentication.getPrincipal();
-        boolean isAdmin = user.getRole() == User.Role.ADMIN;
-        if (!isAdmin && !entitlementService.hasAccess(user.getId(), courseId)) {
+        if (!entitlementService.hasAccess(user.getId(), courseId)) {
             throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
         }
         return lessonRepository.findByCourseIdOrderBySortOrderAsc(courseId)
                 .stream().map(LessonDto::from).toList();
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication != null
+                && authentication.getPrincipal() instanceof User user
+                && user.getRole() == User.Role.ADMIN;
     }
 
     private Course findById(Long id) {
