@@ -62,27 +62,28 @@ export default function DashboardPage() {
         className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
         onClick={toggleSidebar}
       />
-      <div className="layout-home">
-        <Sidebar />
-        {/* Toast notification */}
-        {toast && (
-          <div style={{
-            position: "fixed", top: "80px", right: "20px", zIndex: 9999,
-            background: "#2e7d32", color: "#fff", borderRadius: "14px",
-            padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
-            display: "flex", alignItems: "center", gap: "10px",
-          }}>
-            <i className="fas fa-check-circle" />
-            {toast}
-          </div>
-        )}
-        <ActivationCodeModal
-          open={codeModalOpen}
-          onClose={() => setCodeModalOpen(false)}
-          onSuccess={handleActivationSuccess}
-        />
-        <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
+      {/* Toast notification */}
+      {toast && (
+        <div style={{
+          position: "fixed", top: "80px", right: "20px", zIndex: 9999,
+          background: "#2e7d32", color: "#fff", borderRadius: "14px",
+          padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
+          display: "flex", alignItems: "center", gap: "10px",
+        }}>
+          <i className="fas fa-check-circle" />
+          {toast}
+        </div>
+      )}
+      <ActivationCodeModal
+        open={codeModalOpen}
+        onClose={() => setCodeModalOpen(false)}
+        onSuccess={handleActivationSuccess}
+      />
+      <div className="home-page-wrapper">
+        <div className="layout-home">
+          <Sidebar />
+          <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
           {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <img
@@ -246,7 +247,8 @@ export default function DashboardPage() {
             </div>
           </section>
 
-        </main>
+          </main>
+        </div>
         <RightPanel onOpenCodeModal={() => setCodeModalOpen(true)} />
       </div>
       <Footer />

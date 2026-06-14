@@ -78,17 +78,25 @@ a { text-decoration: none; color: inherit; }
 }
 /* Thêm vào cuối frontend/src/styles/globals.css */
 
-/* 3-column layout cho trang chủ: sidebar + main + right panel */
-/* Dùng flexbox thay grid để sidebar có thể collapse mượt mà */
+/* Outer page wrapper: constrains max-width, controls right-panel position */
+.home-page-wrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: calc(100vh - 62px);
+  background: #fdf0f0;
+}
+
+/* Inner layout: sidebar + main */
 .layout-home {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
   min-height: calc(100vh - 62px);
   overflow: hidden;
   background: #fdf0f0;
-  max-width: 1440px;
-  margin: 0 auto;
 }
 
 .layout-home > main {
@@ -144,7 +152,10 @@ a { text-decoration: none; color: inherit; }
     cursor: pointer;
   }
 
-  /* Right panel: move below main on mobile */
+  /* Mobile: stack right panel below */
+  .home-page-wrapper {
+    flex-direction: column !important;
+  }
   .home-right-panel {
     display: flex !important;
     width: 100% !important;
@@ -153,7 +164,6 @@ a { text-decoration: none; color: inherit; }
     flex-direction: row !important;
     align-items: center !important;
     gap: 14px !important;
-    order: 3 !important;
   }
   .home-right-panel > img {
     width: auto !important;
@@ -217,7 +227,10 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
-  /* Tablet: right panel moves below main */
+  /* Tablet: stack right panel below layout-home */
+  .home-page-wrapper {
+    flex-direction: column !important;
+  }
   .home-right-panel {
     width: 100% !important;
     min-height: unset !important;
@@ -225,7 +238,6 @@ a { text-decoration: none; color: inherit; }
     flex-direction: row !important;
     align-items: center !important;
     gap: 16px !important;
-    order: 3 !important;
   }
   .home-right-panel > img {
     width: auto !important;
