@@ -11,18 +11,22 @@ import type { ApiResponse, Course } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
 
-const BANNER_SRC = "/real/banner-slide-1.jpg";
-
-const FEEDBACK_IMAGES = [
-  "/real/feedback_hoc_vien/nguyen-truong-huy-1.jpg",
-  "/real/feedback_hoc_vien/nguyen-truong-huy-2.jpg",
-  "/real/feedback_hoc_vien/nguyen-truong-huy-3.jpg",
+const SLIDE_INTERVAL_MS = 8000;
+const BANNER_IMAGES = [
+  "/real/banner-slide-1.jpg",
 ];
+
+const FEEDBACK_IMAGES = Array.from(
+  { length: 25 },
+  (_, i) => `/real/feedback_hoc_vien/${i + 1}.jpg`,
+);
 
 
 export default function DashboardPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
+  const [bannerIdx, setBannerIdx] = useState(0);
+  const [feedbackPage, setFeedbackPage] = useState(0);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -47,11 +51,41 @@ export default function DashboardPage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (BANNER_IMAGES.length <= 1) return;
+    const timer = window.setInterval(() => {
+      setBannerIdx((idx) => (idx + 1) % BANNER_IMAGES.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const VISIBLE = 3;
   const maxIdx = Math.max(0, courses.length - VISIBLE);
+  const FEEDBACK_VISIBLE = 3;
+  const feedbackPageCount = Math.ceil(FEEDBACK_IMAGES.length / FEEDBACK_VISIBLE);
+  const visibleFeedbackImages = FEEDBACK_IMAGES.slice(
+    feedbackPage * FEEDBACK_VISIBLE,
+    feedbackPage * FEEDBACK_VISIBLE + FEEDBACK_VISIBLE,
+  );
+
+  useEffect(() => {
+    if (feedbackPageCount <= 1) return;
+    const timer = window.setInterval(() => {
+      setFeedbackPage((page) => (page + 1) % feedbackPageCount);
+    }, SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(timer);
+  }, [feedbackPageCount]);
 
   function scrollCourses(dir: 1 | -1) {
     setCourseIdx((i) => Math.max(0, Math.min(maxIdx, i + dir)));
+  }
+
+  function scrollBanner(dir: 1 | -1) {
+    setBannerIdx((idx) => wrapIndex(idx + dir, BANNER_IMAGES.length));
+  }
+
+  function scrollFeedback(dir: 1 | -1) {
+    setFeedbackPage((page) => wrapIndex(page + dir, feedbackPageCount));
   }
 
   return (
@@ -86,11 +120,26 @@ export default function DashboardPage() {
           <main style={{ minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
           {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
-            <img
-              src={BANNER_SRC}
-              alt="MITAEdu Banner"
-              style={{ width: "100%", height: "auto", display: "block", borderRadius: "20px" }}
-            />
+            <div style={{ position: "relative" }}>
+              <img
+                key={BANNER_IMAGES[bannerIdx]}
+                src={BANNER_IMAGES[bannerIdx]}
+                alt={`MITAEdu Banner ${bannerIdx + 1}`}
+                style={{ width: "100%", height: "auto", display: "block", borderRadius: "20px" }}
+              />
+              {BANNER_IMAGES.length > 1 && (
+                <>
+                  <SlideArrow direction="prev" onClick={() => scrollBanner(-1)} />
+                  <SlideArrow direction="next" onClick={() => scrollBanner(1)} />
+                  <SlideDots
+                    total={BANNER_IMAGES.length}
+                    active={bannerIdx}
+                    onSelect={setBannerIdx}
+                    bottom={14}
+                  />
+                </>
+              )}
+            </div>
           </section>
 
           {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ──────────────────────────── */}
@@ -139,7 +188,7 @@ export default function DashboardPage() {
               background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
               boxShadow: "0 2px 8px rgba(30,122,184,.07)",
             }}>
-              <div style={{ marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", marginBottom: "16px" }}>
                 <span style={{
                   display: "inline-block", background: "#1e7ab8", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
@@ -148,13 +197,17 @@ export default function DashboardPage() {
                 }}>
                   FEEDBACK CỦA HỌC VIÊN
                 </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <RoundIconButton icon="fa-arrow-left" onClick={() => scrollFeedback(-1)} />
+                  <RoundIconButton icon="fa-arrow-right" onClick={() => scrollFeedback(1)} />
+                </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-                {FEEDBACK_IMAGES.map((src, i) => (
+                {visibleFeedbackImages.map((src, i) => (
                   <img
-                    key={i}
+                    key={src}
                     src={src}
-                    alt={`Feedback học viên ${i + 1}`}
+                    alt={`Feedback học viên ${feedbackPage * FEEDBACK_VISIBLE + i + 1}`}
                     style={{
                       width: "100%", borderRadius: "10px",
                       objectFit: "cover", display: "block",
@@ -163,6 +216,13 @@ export default function DashboardPage() {
                   />
                 ))}
               </div>
+              <SlideDots
+                total={feedbackPageCount}
+                active={feedbackPage}
+                onSelect={setFeedbackPage}
+                bottom={0}
+                inline
+              />
             </div>
           </section>
 
@@ -256,6 +316,87 @@ export default function DashboardPage() {
   );
 }
 
+function wrapIndex(index: number, total: number) {
+  if (total <= 0) return 0;
+  return (index + total) % total;
+}
+
+function RoundIconButton({ icon, onClick }: { icon: string; onClick: () => void }) {
+  return (
+    <button onClick={onClick} style={{
+      width: "36px", height: "36px", borderRadius: "50%",
+      border: "1.5px solid #e0e0e0", background: "#fff",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      cursor: "pointer", color: "#555",
+    }}>
+      <i className={`fas ${icon}`} style={{ fontSize: "0.8rem" }} />
+    </button>
+  );
+}
+
+function SlideArrow({ direction, onClick }: { direction: "prev" | "next"; onClick: () => void }) {
+  const isPrev = direction === "prev";
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: "absolute", top: "50%", [isPrev ? "left" : "right"]: "14px",
+        transform: "translateY(-50%)",
+        width: "38px", height: "38px", borderRadius: "50%",
+        border: "1px solid rgba(255,255,255,0.55)",
+        background: "rgba(0,0,0,0.25)", color: "#fff",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer",
+      }}
+      aria-label={isPrev ? "Banner trước" : "Banner tiếp theo"}
+    >
+      <i className={`fas ${isPrev ? "fa-chevron-left" : "fa-chevron-right"}`} />
+    </button>
+  );
+}
+
+function SlideDots({
+  total,
+  active,
+  onSelect,
+  bottom,
+  inline = false,
+}: {
+  total: number;
+  active: number;
+  onSelect: (index: number) => void;
+  bottom: number;
+  inline?: boolean;
+}) {
+  if (total <= 1) return null;
+
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
+      ...(inline
+        ? { marginTop: "14px" }
+        : { position: "absolute" as const, left: 0, right: 0, bottom }),
+    }}>
+      {Array.from({ length: total }, (_, index) => (
+        <button
+          key={index}
+          onClick={() => onSelect(index)}
+          aria-label={`Chuyển tới trang ${index + 1}`}
+          style={{
+            width: active === index ? "18px" : "8px",
+            height: "8px",
+            borderRadius: "999px",
+            border: "none",
+            background: active === index ? "#1e7ab8" : "#c5ddf0",
+            cursor: "pointer",
+            transition: "width .15s, background .15s",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ── Right Panel ──────────────────────────────────────────────────
 function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
   return (
@@ -301,4 +442,3 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
     </aside>
   );
 }
-
