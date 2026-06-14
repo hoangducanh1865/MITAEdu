@@ -9,8 +9,6 @@ const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
   { href: "/courses", icon: "fa-bookmark", title: "Khóa học" },
   { href: "/practice", icon: "fa-flask", title: "Phòng luyện", hidden: true },
-  { href: "/documents", icon: "fa-file-alt", title: "Tài liệu" },
-  { href: "/library", icon: "fa-book-open", title: "Thư viện" },
 ];
 
 export default function Navbar() {
