@@ -172,23 +172,14 @@ export default function CoursesPageContent() {
                         borderRadius: "10px",
                         background: active
                           ? "rgba(255,255,255,0.22)"
-                          : cat.gradient,
+                          : "#e8f4fd",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
                       }}
                     >
-                      <span
-                        style={{
-                          color: "#fff",
-                          fontWeight: 900,
-                          fontSize: "0.68rem",
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {cat.short}
-                      </span>
+                      <img src="/logo-mita.png" alt="MITA" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
                     </div>
 
                     <div style={{ flex: 1, minWidth: 0 }}>

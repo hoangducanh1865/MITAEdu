@@ -15,8 +15,8 @@ export default function Footer() {
           <p style={colText}><i className="fas fa-envelope" style={{ marginRight: 8, opacity: 0.7 }} />mita.education.official@gmail.com</p>
           <p style={colText}><i className="fas fa-phone" style={{ marginRight: 8, opacity: 0.7 }} />0123456789</p>
           <div style={{ display: "flex", gap: "12px", marginTop: "14px" }}>
-            <SocialIcon href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook" />
-            <SocialIcon href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook-messenger" />
+            <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" />
+            <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" />
             <SocialIcon href="https://www.youtube.com/@%C4%90%E1%BB%A9cAnhHo%C3%A0ng-j6v" icon="fab fa-youtube" />
           </div>
         </div>

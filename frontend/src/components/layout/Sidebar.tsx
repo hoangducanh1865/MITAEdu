@@ -71,9 +71,9 @@ export default function Sidebar() {
         Liên kết
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
-        <SocialLink href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
-        <SocialLink href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
-        <SocialLink href="https://www.youtube.com/@%C4%90%E1%BB%A9cAnhHo%C3%A0ng-j6v" icon="fab fa-youtube" color="#ff0000" label="Youtube" />
+        <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
+        <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
+        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
       </div>
     </aside>
   );
