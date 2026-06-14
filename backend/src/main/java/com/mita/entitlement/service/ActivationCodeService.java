@@ -33,25 +33,33 @@ public class ActivationCodeService {
     private final EntitlementService entitlementService;
 
     @Transactional
-    public List<String> generateCodes(Long courseId, int count, Long adminId, LocalDateTime expiresAt) {
-        if (count < 1 || count > 500) {
-            throw ApiException.badRequest("Số lượng mã phải từ 1 đến 500");
+    public List<ActivationCodeDto> generateCodes(List<Long> courseIds, int count, Long adminId, LocalDateTime expiresAt) {
+        if (courseIds == null || courseIds.isEmpty()) {
+            throw ApiException.badRequest("Vui lòng chọn ít nhất một khóa học");
         }
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> ApiException.notFound("Không tìm thấy khóa học"));
+        if (count < 1 || count > 10000) {
+            throw ApiException.badRequest("Số lượng mã phải từ 1 đến 10000 cho mỗi khóa");
+        }
+
+        List<Course> courses = courseIds.stream()
+                .distinct()
+                .map(courseId -> courseRepository.findById(courseId)
+                        .orElseThrow(() -> ApiException.notFound("Không tìm thấy khóa học: " + courseId)))
+                .toList();
         User admin = (adminId != null) ? userRepository.findById(adminId).orElse(null) : null;
 
-        List<String> generated = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            String code = generateUniqueCode();
-            ActivationCode ac = ActivationCode.builder()
-                    .code(code)
-                    .course(course)
-                    .createdBy(admin)
-                    .expiresAt(expiresAt)
-                    .build();
-            activationCodeRepository.save(ac);
-            generated.add(code);
+        List<ActivationCodeDto> generated = new ArrayList<>();
+        for (Course course : courses) {
+            for (int i = 0; i < count; i++) {
+                String code = generateUniqueCode();
+                ActivationCode ac = ActivationCode.builder()
+                        .code(code)
+                        .course(course)
+                        .createdBy(admin)
+                        .expiresAt(expiresAt)
+                        .build();
+                generated.add(ActivationCodeDto.from(activationCodeRepository.save(ac)));
+            }
         }
         return generated;
     }
@@ -88,8 +96,11 @@ public class ActivationCodeService {
     }
 
     @Transactional(readOnly = true)
-    public List<ActivationCodeDto> getCodesForCourse(Long courseId) {
-        return activationCodeRepository.findByCourseId(courseId).stream()
+    public List<ActivationCodeDto> getCodes(Long courseId) {
+        List<ActivationCode> codes = courseId != null
+                ? activationCodeRepository.findByCourseIdOrderByCreatedAtDesc(courseId)
+                : activationCodeRepository.findAllByOrderByCreatedAtDesc();
+        return codes.stream()
                 .map(ActivationCodeDto::from)
                 .toList();
     }

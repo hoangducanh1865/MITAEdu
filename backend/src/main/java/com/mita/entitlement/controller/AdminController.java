@@ -39,19 +39,22 @@ public class AdminController {
 
     @PostMapping("/access-codes/generate")
     @Operation(summary = "Tạo mã kích hoạt hàng loạt")
-    public ResponseEntity<ApiResponse<List<String>>> generateCodes(
+    public ResponseEntity<ApiResponse<List<ActivationCodeDto>>> generateCodes(
             @RequestBody GenerateCodesRequest request,
             Authentication authentication) {
         User admin = (User) authentication.getPrincipal();
-        List<String> codes = activationCodeService.generateCodes(
-                request.getCourseId(), request.getCount(), admin.getId(), request.getExpiresAt());
+        List<Long> courseIds = request.getCourseIds() != null && !request.getCourseIds().isEmpty()
+                ? request.getCourseIds()
+                : request.getCourseId() != null ? List.of(request.getCourseId()) : List.of();
+        List<ActivationCodeDto> codes = activationCodeService.generateCodes(
+                courseIds, request.getCount(), admin.getId(), request.getExpiresAt());
         return ResponseEntity.ok(ApiResponse.ok(codes));
     }
 
     @GetMapping("/access-codes")
     @Operation(summary = "Danh sách mã kích hoạt theo khóa học")
     public ResponseEntity<ApiResponse<List<ActivationCodeDto>>> listCodes(
-            @RequestParam Long courseId) {
-        return ResponseEntity.ok(ApiResponse.ok(activationCodeService.getCodesForCourse(courseId)));
+            @RequestParam(required = false) Long courseId) {
+        return ResponseEntity.ok(ApiResponse.ok(activationCodeService.getCodes(courseId)));
     }
 }
