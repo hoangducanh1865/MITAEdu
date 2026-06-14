@@ -13,10 +13,10 @@ import ActivationCodeModal from "@/components/ActivationCodeModal";
 
 const BANNER_SRC = "/real/banner-slide-1.jpg";
 
-const SEARCH_TAGS = [
-  "Labteam","Khóa học","Mentor","TSA","HSA",
-  "Cách đăng kí khóa học","Cách ôn thi",
-  "Cách đỗ hust từ năm lớp 11","Cách thủ khoa",
+const FEEDBACK_IMAGES = [
+  "/real/feedback_hoc_vien/nguyen-truong-huy-1.jpg",
+  "/real/feedback_hoc_vien/nguyen-truong-huy-2.jpg",
+  "/real/feedback_hoc_vien/nguyen-truong-huy-3.jpg",
 ];
 
 
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          {/* ── BẠN ĐANG TÌM GÌ ───────────────────────────── */}
+          {/* ── FEEDBACK HỌC VIÊN ─────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{
               background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
@@ -146,23 +146,21 @@ export default function DashboardPage() {
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
                 }}>
-                  BẠN ĐANG TÌM KIẾM GÌ?
+                  FEEDBACK CỦA HỌC VIÊN
                 </span>
               </div>
-              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                {SEARCH_TAGS.map((tag) => (
-                  <button key={tag} style={{
-                    background: "#fff", border: "1.5px solid #e0e0e0",
-                    borderRadius: "20px", padding: "7px 16px",
-                    fontSize: "0.82rem", color: "#444",
-                    cursor: "pointer", transition: "border-color .15s",
-                    fontWeight: 500,
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1e7ab8"}
-                  onMouseLeave={(e) => e.currentTarget.style.borderColor = "#e0e0e0"}
-                  >
-                    {tag}
-                  </button>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+                {FEEDBACK_IMAGES.map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`Feedback học viên ${i + 1}`}
+                    style={{
+                      width: "100%", borderRadius: "10px",
+                      objectFit: "cover", display: "block",
+                      border: "1px solid #e8f0f7",
+                    }}
+                  />
                 ))}
               </div>
             </div>
