@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"; // useRef kept for course slider
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
@@ -11,25 +11,7 @@ import type { ApiResponse, Course } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
 
-// ── Carousel slides ──────────────────────────────────────────────
-const SLIDES = [
-  {
-    title: "Ngân Hàng\nCâu Hỏi",
-    sub: "Phong phú đa dạng",
-    badge: "Kì Thi Đánh Giá Tư Duy 2026",
-    tags: ["Tư Duy Toán Học", "Tư Duy Khoa Học", "Tư Duy Đọc Hiểu"],
-    bg: "linear-gradient(135deg,#d32f2f 0%,#b71c1c 100%)",
-    banner: "/real/banner-slide-1.jpg",
-  },
-  {
-    title: "Luyện Thi\nChuyên Sâu",
-    sub: "Đạt điểm cao trong kì thi",
-    badge: "Chương Trình Mới 2026",
-    tags: ["Toán", "Vật Lý", "Hóa Học"],
-    bg: "linear-gradient(135deg,#c62828 0%,#ad1457 100%)",
-    banner: "/real/banner-slide-2.jpg",
-  },
-];
+const BANNER_SRC = "/real/banner-slide-1.jpg";
 
 const SEARCH_TAGS = [
   "Labteam","Khóa học","Mentor","TSA","HSA",
@@ -39,7 +21,6 @@ const SEARCH_TAGS = [
 
 
 export default function DashboardPage() {
-  const [slide, setSlide] = useState(0);
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
@@ -51,12 +32,6 @@ export default function DashboardPage() {
     setToast(`Kích hoạt thành công! Bạn đã mở khóa: ${courseName}`);
     setTimeout(() => setToast(null), 5000);
   }
-
-  // Auto-advance carousel
-  useEffect(() => {
-    const t = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 4500);
-    return () => clearInterval(t);
-  }, []);
 
   // Listen for activation modal trigger from Navbar button
   useEffect(() => {
@@ -78,8 +53,6 @@ export default function DashboardPage() {
   function scrollCourses(dir: 1 | -1) {
     setCourseIdx((i) => Math.max(0, Math.min(maxIdx, i + dir)));
   }
-
-  const s = SLIDES[slide];
 
   return (
     <>
@@ -110,49 +83,13 @@ export default function DashboardPage() {
           onSuccess={handleActivationSuccess}
         />
         <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0, minWidth: "560px" }}>
-          {/* ── HERO CAROUSEL ─────────────────────────────── */}
+          {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
-            <div className="hero-inner" style={{
-              borderRadius: "20px",
-              position: "relative",
-              overflow: "hidden",
-              minHeight: "200px",
-            }}>
-              <img
-                src={s.banner}
-                alt={s.title.replace("\n", " ")}
-                style={{ width: "100%", height: "auto", display: "block", borderRadius: "20px" }}
-              />
-
-              {/* Prev/Next */}
-              {["prev","next"].map((dir) => (
-                <button key={dir} onClick={() => setSlide((s) => dir === "prev" ? (s - 1 + SLIDES.length) % SLIDES.length : (s + 1) % SLIDES.length)} style={{
-                  position: "absolute", top: "50%", transform: "translateY(-50%)",
-                  [dir === "prev" ? "left" : "right"]: "16px",
-                  background: "rgba(0,0,0,0.12)", border: "1.5px solid #ccc",
-                  borderRadius: "50%", width: "36px", height: "36px",
-                  color: "#aaa", cursor: "pointer", zIndex: 3,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <i className={`fas fa-chevron-${dir === "prev" ? "left" : "right"}`} style={{ fontSize: "0.85rem" }} />
-                </button>
-              ))}
-
-              {/* Dots */}
-              <div style={{
-                position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)",
-                display: "flex", gap: "8px", zIndex: 3,
-              }}>
-                {SLIDES.map((_, i) => (
-                  <button key={i} onClick={() => setSlide(i)} style={{
-                    width: i === slide ? "28px" : "10px", height: "10px",
-                    borderRadius: "5px", border: "none",
-                    background: i === slide ? "#aaa" : "#ddd",
-                    cursor: "pointer", transition: "width .3s, background .3s", padding: 0,
-                  }} />
-                ))}
-              </div>
-            </div>
+            <img
+              src={BANNER_SRC}
+              alt="MITAEdu Banner"
+              style={{ width: "100%", height: "auto", display: "block", borderRadius: "20px" }}
+            />
           </section>
 
           {/* ── VINH DANH BANNER ──────────────────────────── */}
@@ -173,7 +110,7 @@ export default function DashboardPage() {
 
           {/* ── BẢNG VÀNG THÀNH TÍCH ─────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
-            <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+            <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px" }}>
               {[
                 { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-1.jpg" },
                 { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-2.jpg" },
@@ -183,9 +120,12 @@ export default function DashboardPage() {
                   src={src}
                   alt={rank}
                   style={{
-                    height: "260px", width: "auto", maxWidth: "48%",
-                    borderRadius: "16px", display: "block",
-                    objectFit: "contain", flexShrink: 0,
+                    flex: 1,
+                    minWidth: 0,
+                    width: "calc(50% - 8px)",
+                    height: "auto",
+                    borderRadius: "16px",
+                    display: "block",
                   }}
                 />
               ))}

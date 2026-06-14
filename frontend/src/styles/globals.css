@@ -167,11 +167,9 @@ a { text-decoration: none; color: inherit; }
   /* Bảng vàng thành tích: stack on mobile */
   .thanh-tich-grid {
     flex-direction: column !important;
-    align-items: center !important;
   }
   .thanh-tich-grid img {
-    height: 200px !important;
-    max-width: 100% !important;
+    width: 100% !important;
   }
 
   /* Top-2 students: single column */
