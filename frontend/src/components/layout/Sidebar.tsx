@@ -60,6 +60,7 @@ export default function Sidebar() {
       {/* Nav items */}
       <nav style={{ display: "flex", flexDirection: "column", gap: "4px", minWidth: "208px" }}>
         <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#f0f7fd">Khóa học</SidebarItem>
+        <SidebarItem href="/trial" icon="fa-play-circle" color="#2e7d32" bg="#e8f5e9">Học thử</SidebarItem>
         {false && <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>}
         {false && <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>}
         <SidebarItem href="/schedule" icon="fa-calendar-alt" color="#e65100" bg="#fff3e0">Lịch học</SidebarItem>
