@@ -13,4 +13,8 @@ public interface ActivationCodeRepository extends JpaRepository<ActivationCode, 
     boolean existsByCode(String code);
 
     List<ActivationCode> findByCourseId(Long courseId);
+
+    List<ActivationCode> findByCourseIdOrderByCreatedAtDesc(Long courseId);
+
+    List<ActivationCode> findAllByOrderByCreatedAtDesc();
 }
