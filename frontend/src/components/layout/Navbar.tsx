@@ -8,7 +8,7 @@ import { useSidebar } from "@/lib/SidebarContext";
 const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
   { href: "/courses", icon: "fa-bookmark", title: "Khóa học" },
-  { href: "/practice", icon: "fa-flask", title: "Phòng luyện" },
+  { href: "/practice", icon: "fa-flask", title: "Phòng luyện", hidden: true },
   { href: "/documents", icon: "fa-file-alt", title: "Tài liệu" },
   { href: "/library", icon: "fa-book-open", title: "Thư viện" },
 ];
@@ -27,7 +27,7 @@ export default function Navbar() {
       {/* Left: Logo + Search */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo-mita.png" width={36} height={36} alt="MITA Edu" style={{ objectFit: "contain" }} />
+          <img src="/logo-mita.png" width={48} height={48} alt="MITA Edu" style={{ objectFit: "contain" }} />
         </Link>
 
         {/* Toggle Sidebar Button */}
@@ -56,7 +56,7 @@ export default function Navbar() {
 
       {/* Center: Navigation */}
       <nav className="navbar-center-nav" style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-        {NAV_ITEMS.map((item) => {
+        {NAV_ITEMS.filter((item) => !item.hidden).map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
