@@ -7,6 +7,7 @@ import com.mita.exam.repository.*;
 import com.mita.user.entity.User;
 import com.mita.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,16 +24,19 @@ public class ExamService {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<ExamPackageDto> getPackages(String tag) {
+    public List<ExamPackageDto> getPackages(String tag, Authentication authentication) {
         List<ExamPackage> packages = (tag != null && !tag.isBlank())
                 ? packageRepository.findByTag(ExamPackage.Tag.valueOf(tag.toUpperCase()))
                 : packageRepository.findAll();
-        return packages.stream().map(ExamPackageDto::from).toList();
+        boolean isAdmin = isAdmin(authentication);
+        return packages.stream()
+                .map(pkg -> toDto(pkg, isAdmin))
+                .toList();
     }
 
     @Transactional(readOnly = true)
-    public ExamPackageDto getPackageById(Long id) {
-        return ExamPackageDto.from(findPackage(id));
+    public ExamPackageDto getPackageById(Long id, Authentication authentication) {
+        return toDto(findPackage(id), isAdmin(authentication));
     }
 
     @Transactional(readOnly = true)
@@ -93,5 +97,19 @@ public class ExamService {
     private Exam findExam(Long id) {
         return examRepository.findById(id)
                 .orElseThrow(() -> ApiException.notFound("Bài thi không tồn tại"));
+    }
+
+    private ExamPackageDto toDto(ExamPackage pkg, boolean isAdmin) {
+        ExamPackageDto dto = ExamPackageDto.from(pkg);
+        if (isAdmin) {
+            dto.setIsLocked(false);
+        }
+        return dto;
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication != null
+                && authentication.getPrincipal() instanceof User user
+                && user.getRole() == User.Role.ADMIN;
     }
 }

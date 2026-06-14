@@ -27,6 +27,12 @@ public class EntitlementService {
     private final UserRepository userRepository;
 
     public boolean hasAccess(Long userId, Long courseId) {
+        boolean isAdmin = userRepository.findById(userId)
+                .map(user -> user.getRole() == User.Role.ADMIN)
+                .orElse(false);
+        if (isAdmin) {
+            return true;
+        }
         return entitlementRepository.existsActiveEntitlement(userId, courseId, LocalDateTime.now());
     }
 
