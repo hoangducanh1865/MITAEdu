@@ -59,25 +59,4 @@ public class EntitlementService {
                 .build());
     }
 
-    @Transactional(readOnly = true)
-    public List<CourseEntitlementDto> getUserEntitlements(Long userId) {
-        return entitlementRepository.findByUserId(userId).stream()
-                .map(CourseEntitlementDto::from)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<CourseEntitlementDto> getAllEntitlements() {
-        return entitlementRepository.findAll().stream()
-                .map(CourseEntitlementDto::from)
-                .toList();
-    }
-
-    @Transactional
-    public void revokeEntitlement(Long entitlementId) {
-        CourseEntitlement e = entitlementRepository.findById(entitlementId)
-                .orElseThrow(() -> ApiException.notFound("Không tìm thấy quyền truy cập"));
-        e.setStatus(Status.REVOKED);
-        entitlementRepository.save(e);
-    }
 }

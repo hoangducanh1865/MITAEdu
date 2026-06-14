@@ -16,8 +16,8 @@ export default function Sidebar() {
     <aside
       className="home-left-sidebar"
       style={{
-        background: "#fff",
-        borderRight: "2px solid #f0d5d5",
+        background: "#f0f7fd",
+        borderRight: "1px solid #c5ddf0",
         display: "flex",
         flexDirection: "column",
         gap: "8px",
@@ -37,7 +37,7 @@ export default function Sidebar() {
       {/* Profile card */}
       <div
         style={{
-          background: "linear-gradient(135deg,#d32f2f,#b71c1c)",
+          background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
           borderRadius: "14px", padding: "16px", color: "#fff",
           display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px",
           minWidth: "208px", /* giữ nội dung không bị vỡ khi co lại */
@@ -59,21 +59,21 @@ export default function Sidebar() {
 
       {/* Nav items */}
       <nav style={{ display: "flex", flexDirection: "column", gap: "4px", minWidth: "208px" }}>
-        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#d32f2f" bg="#fdf0f0">Khóa học</SidebarItem>
-        <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>
-        <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>
+        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#f0f7fd">Khóa học</SidebarItem>
+        {false && <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>}
+        {false && <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>}
         <SidebarItem href="/schedule" icon="fa-calendar-alt" color="#e65100" bg="#fff3e0">Lịch học</SidebarItem>
       </nav>
 
-      <hr style={{ borderColor: "#f0d5d5", margin: "8px 0", minWidth: "208px" }} />
+      <hr style={{ borderColor: "#c5ddf0", margin: "8px 0", minWidth: "208px" }} />
 
       <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#777", letterSpacing: "0.5px", textTransform: "uppercase", padding: "0 4px", minWidth: "208px" }}>
         Liên kết
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
-        <SocialLink href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
-        <SocialLink href="https://www.facebook.com/hoangducanh1865" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
-        <SocialLink href="https://www.youtube.com/@%C4%90%E1%BB%A9cAnhHo%C3%A0ng-j6v" icon="fab fa-youtube" color="#ff0000" label="Youtube" />
+        <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
+        <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
+        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
       </div>
     </aside>
   );
@@ -83,7 +83,7 @@ function SidebarItem({ href, icon, color, bg, children }: {
   href: string; icon: string; color: string; bg: string; children: React.ReactNode;
 }) {
   return (
-    <Link href={href} style={{
+    <Link href={href} prefetch={false} style={{
       display: "flex", alignItems: "center", gap: "12px",
       padding: "10px 12px", borderRadius: "10px", fontSize: "0.9rem", fontWeight: 500,
       color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",

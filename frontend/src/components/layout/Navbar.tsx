@@ -8,7 +8,7 @@ import { useSidebar } from "@/lib/SidebarContext";
 const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
   { href: "/courses", icon: "fa-bookmark", title: "Khóa học" },
-  { href: "/practice", icon: "fa-flask", title: "Phòng luyện" },
+  { href: "/practice", icon: "fa-flask", title: "Phòng luyện", hidden: true },
   { href: "/documents", icon: "fa-file-alt", title: "Tài liệu" },
   { href: "/library", icon: "fa-book-open", title: "Thư viện" },
 ];
@@ -19,15 +19,17 @@ export default function Navbar() {
 
   return (
     <header style={{
-      background: "#fff", borderBottom: "1px solid #f0d5d5",
-      padding: "0 32px", height: "62px", display: "flex",
-      alignItems: "center", justifyContent: "space-between",
-      position: "sticky", top: 0, zIndex: 100,
+      background: "#f0f7fd", borderBottom: "1px solid #c5ddf0",
+      height: "62px", position: "sticky", top: 0, zIndex: 100,
+    }}>
+    <div style={{
+      maxWidth: "1440px", margin: "0 auto", padding: "0 32px",
+      height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
       {/* Left: Logo + Search */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo-mita.png" width={36} height={36} alt="MITA Edu" style={{ objectFit: "contain" }} />
+          <img src="/logo-mita.png" width={48} height={48} alt="MITA Edu" style={{ objectFit: "contain" }} />
         </Link>
 
         {/* Toggle Sidebar Button */}
@@ -35,19 +37,19 @@ export default function Navbar() {
           onClick={toggleSidebar}
           title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
-            background: "none", border: "1px solid #f0d5d5",
+            background: "none", border: "1px solid #c5ddf0",
             width: "36px", height: "36px", borderRadius: "8px",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", color: "#d32f2f", fontSize: "1rem",
+            cursor: "pointer", color: "#1e7ab8", fontSize: "1rem",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#fdf0f0";
-            e.currentTarget.style.borderColor = "#d32f2f";
+            e.currentTarget.style.background = "#f0f7fd";
+            e.currentTarget.style.borderColor = "#1e7ab8";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = "none";
-            e.currentTarget.style.borderColor = "#f0d5d5";
+            e.currentTarget.style.borderColor = "#c5ddf0";
           }}
         >
           <i className="fas fa-bars" />
@@ -56,25 +58,26 @@ export default function Navbar() {
 
       {/* Center: Navigation */}
       <nav className="navbar-center-nav" style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-        {NAV_ITEMS.map((item) => {
+        {NAV_ITEMS.filter((item) => !item.hidden).map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
               title={item.title}
+              prefetch={false}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "36px", height: "36px", borderRadius: "8px",
-                background: isActive ? "#fdf0f0" : "transparent",
-                color: isActive ? "#d32f2f" : "#777",
+                background: isActive ? "#f0f7fd" : "transparent",
+                color: isActive ? "#1e7ab8" : "#777",
                 fontSize: "1rem", transition: "all 0.2s",
                 textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  (e.currentTarget as HTMLElement).style.background = "#fdf0f0";
-                  (e.currentTarget as HTMLElement).style.color = "#d32f2f";
+                  (e.currentTarget as HTMLElement).style.background = "#f0f7fd";
+                  (e.currentTarget as HTMLElement).style.color = "#1e7ab8";
                 }
               }}
               onMouseLeave={(e) => {
@@ -90,8 +93,34 @@ export default function Navbar() {
         })}
       </nav>
 
-      {/* Right: Avatar */}
-      <AvatarDropdown />
+      {/* Right: Activation button + Avatar */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <button
+          className="navbar-activation-btn"
+          onClick={() => window.dispatchEvent(new CustomEvent("open-activation-modal"))}
+          style={{
+            display: "flex", alignItems: "center", gap: "6px",
+            padding: "7px 16px", borderRadius: "8px",
+            border: "1.5px solid #1e7ab8", background: "transparent",
+            color: "#1e7ab8", cursor: "pointer",
+            fontSize: "0.82rem", fontWeight: 700,
+            transition: "all 0.2s", whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#1e7ab8";
+            e.currentTarget.style.color = "#fff";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "#1e7ab8";
+          }}
+        >
+          <i className="fas fa-key" style={{ fontSize: "0.75rem" }} />
+          Mã kích hoạt
+        </button>
+        <AvatarDropdown />
+      </div>
+    </div>
     </header>
   );
 }

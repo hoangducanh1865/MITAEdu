@@ -19,21 +19,21 @@ const CATEGORIES: {
 }[] = [
   {
     value: "TSA",
-    label: "Đánh giá tư duy",
+    label: "Khóa Trại hè Đánh thức tư duy ĐGNL",
     short: "TSA",
-    color: "#d32f2f",
-    gradient: "linear-gradient(135deg,#d32f2f,#b71c1c)",
+    color: "#1e7ab8",
+    gradient: "linear-gradient(135deg,#1e7ab8,#155f8f)",
   },
   {
     value: "HSA",
-    label: "Đánh giá năng lực",
+    label: "Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
     short: "HSA",
     color: "#1565c0",
     gradient: "linear-gradient(135deg,#1565c0,#0d47a1)",
   },
   {
     value: "THPT",
-    label: "Trung học phổ thông quốc gia",
+    label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
     short: "THPT",
     color: "#e65100",
     gradient: "linear-gradient(135deg,#e65100,#bf360c)",
@@ -41,9 +41,9 @@ const CATEGORIES: {
 ];
 
 const CAT_TITLES: Record<string, string> = {
-  TSA: "KHÓA HỌC ĐÁNH GIÁ TƯ DUY",
-  HSA: "KHÓA HỌC ĐÁNH GIÁ NĂNG LỰC",
-  THPT: "KHÓA HỌC TRUNG HỌC PHỔ THÔNG",
+  TSA: "KHÓA TRẠI HÈ ĐÁNH THỨC TƯ DUY ĐGNL",
+  HSA: "KHÓA NỀN TẢNG V-ACT 2027",
+  THPT: "KHÓA LUYỆN ĐỀ V-ACT 2027",
 };
 
 
@@ -74,7 +74,7 @@ export default function CoursesPageContent() {
         <main
           style={{
             padding: "0",
-            background: "#fdf0f0",
+            background: "#f0f7fd",
             minHeight: "calc(100vh - 62px)",
           }}
         >
@@ -86,10 +86,10 @@ export default function CoursesPageContent() {
               gap: "8px",
               fontSize: "0.82rem",
               color: "#777",
-              background: "#fdf0f0",
+              background: "#f0f7fd",
             }}
           >
-            <Link href="/" style={{ color: "#d32f2f" }}>
+            <Link href="/" style={{ color: "#1e7ab8" }}>
               <i className="fas fa-home" />
             </Link>
             <span style={{ color: "#ccc" }}>›</span>
@@ -108,7 +108,7 @@ export default function CoursesPageContent() {
             <div
               className="courses-cat-sidebar"
               style={{
-                width: "230px",
+                width: "290px",
                 flexShrink: 0,
                 display: "flex",
                 flexDirection: "column",
@@ -172,30 +172,21 @@ export default function CoursesPageContent() {
                         borderRadius: "10px",
                         background: active
                           ? "rgba(255,255,255,0.22)"
-                          : cat.gradient,
+                          : "#e8f4fd",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
                       }}
                     >
-                      <span
-                        style={{
-                          color: "#fff",
-                          fontWeight: 900,
-                          fontSize: "0.68rem",
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {cat.short}
-                      </span>
+                      <img src="/logo-mita.png" alt="MITA" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
                     </div>
 
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div
                         style={{
                           fontWeight: 700,
-                          fontSize: "0.875rem",
+                          fontSize: "0.8rem",
                           color: active ? "#fff" : "#2c2c2c",
                           lineHeight: 1.3,
                         }}
@@ -243,7 +234,7 @@ export default function CoursesPageContent() {
               </p>
 
               {loading ? (
-                <div style={{ textAlign: "center", padding: "40px", color: "#d32f2f" }}>
+                <div style={{ textAlign: "center", padding: "40px", color: "#1e7ab8" }}>
                   <i className="fas fa-spinner fa-spin" />
                 </div>
               ) : courses.length === 0 ? (

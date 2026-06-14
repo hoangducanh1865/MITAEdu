@@ -38,14 +38,14 @@ function VerifyEmailContent() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#fdf0f0",
+      minHeight: "100vh", background: "#f0f7fd",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: "24px",
     }}>
       <div style={{
         background: "#fff", borderRadius: "20px",
         padding: "48px 40px", maxWidth: "460px", width: "100%",
-        boxShadow: "0 8px 32px rgba(211,47,47,.12)",
+        boxShadow: "0 8px 32px rgba(30,122,184,.12)",
         textAlign: "center",
       }}>
         {/* Logo */}
@@ -53,7 +53,7 @@ function VerifyEmailContent() {
           <span style={{ fontSize: "2.5rem" }}>🌙</span>
           <div style={{
             fontFamily: "Nunito, sans-serif", fontWeight: 900,
-            fontSize: "1.3rem", color: "#d32f2f", marginTop: "4px",
+            fontSize: "1.3rem", color: "#1e7ab8", marginTop: "4px",
           }}>
             MITAEdu
           </div>
@@ -61,7 +61,7 @@ function VerifyEmailContent() {
 
         {status === "loading" && (
           <>
-            <div style={{ color: "#d32f2f", fontSize: "2rem", marginBottom: "16px" }}>
+            <div style={{ color: "#1e7ab8", fontSize: "2rem", marginBottom: "16px" }}>
               <i className="fas fa-spinner fa-spin" />
             </div>
             <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#2c2c2c", marginBottom: "8px" }}>
@@ -88,7 +88,7 @@ function VerifyEmailContent() {
               Email của bạn đã được xác minh. Bây giờ bạn có thể đăng nhập vào MITAEdu.
             </p>
             <Link href="/login" style={{
-              display: "inline-block", background: "#d32f2f", color: "#fff",
+              display: "inline-block", background: "#1e7ab8", color: "#fff",
               borderRadius: "10px", padding: "12px 32px",
               fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
             }}>
@@ -115,14 +115,14 @@ function VerifyEmailContent() {
             </p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
               <Link href="/" style={{
-                display: "inline-block", background: "#fff", color: "#d32f2f",
-                border: "1.5px solid #d32f2f", borderRadius: "10px",
+                display: "inline-block", background: "#fff", color: "#1e7ab8",
+                border: "1.5px solid #1e7ab8", borderRadius: "10px",
                 padding: "11px 24px", fontWeight: 700, fontSize: "0.875rem", textDecoration: "none",
               }}>
                 Về trang chủ
               </Link>
               <Link href="/login" style={{
-                display: "inline-block", background: "#d32f2f", color: "#fff",
+                display: "inline-block", background: "#1e7ab8", color: "#fff",
                 borderRadius: "10px", padding: "12px 24px",
                 fontWeight: 700, fontSize: "0.875rem", textDecoration: "none",
               }}>
@@ -139,8 +139,8 @@ function VerifyEmailContent() {
 export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
-      <div style={{ minHeight: "100vh", background: "#fdf0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem", color: "#d32f2f" }} />
+      <div style={{ minHeight: "100vh", background: "#f0f7fd", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem", color: "#1e7ab8" }} />
       </div>
     }>
       <VerifyEmailContent />

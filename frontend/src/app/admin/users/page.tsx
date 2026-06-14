@@ -30,7 +30,7 @@ export default function UsersPage() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #f0d5d5" }}>
+                <tr style={{ borderBottom: "2px solid #c5ddf0" }}>
                   <Th>ID</Th><Th>Tên</Th><Th>Email</Th><Th>Role</Th><Th>Đã xác thực</Th><Th>Ngày tạo</Th>
                 </tr>
               </thead>
@@ -42,8 +42,8 @@ export default function UsersPage() {
                     <Td>{u.email}</Td>
                     <Td>
                       <span style={{
-                        background: u.role === "ADMIN" ? "#fdf0f0" : "#f5f5f5",
-                        color: u.role === "ADMIN" ? "#d32f2f" : "#555",
+                        background: u.role === "ADMIN" ? "#f0f7fd" : "#f5f5f5",
+                        color: u.role === "ADMIN" ? "#1e7ab8" : "#555",
                         borderRadius: "6px", padding: "3px 10px", fontSize: "0.75rem", fontWeight: 700,
                       }}>
                         {u.role}
@@ -52,7 +52,7 @@ export default function UsersPage() {
                     <Td>
                       {u.emailVerified
                         ? <i className="fas fa-check-circle" style={{ color: "#2e7d32" }} />
-                        : <i className="fas fa-times-circle" style={{ color: "#d32f2f" }} />
+                        : <i className="fas fa-times-circle" style={{ color: "#1e7ab8" }} />
                       }
                     </Td>
                     <Td>{new Date(u.createdAt).toLocaleDateString("vi-VN")}</Td>

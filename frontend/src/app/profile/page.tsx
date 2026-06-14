@@ -63,16 +63,16 @@ export default function ProfilePage() {
       <div className="layout">
         <Sidebar />
         <main style={{ padding: "28px 32px" }}>
-          <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#d32f2f", marginBottom: "24px" }}>
+          <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "24px" }}>
             <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />Hồ sơ cá nhân
           </h1>
 
           <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "24px" }}>
             {/* Avatar card */}
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", padding: "28px 20px", textAlign: "center" }}>
+            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 20px", textAlign: "center" }}>
               <div style={{
                 width: "80px", height: "80px", borderRadius: "50%",
-                background: "linear-gradient(135deg,#d32f2f,#b71c1c)",
+                background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 margin: "0 auto 16px", color: "#fff", fontSize: "2rem",
               }}>
@@ -81,7 +81,7 @@ export default function ProfilePage() {
               <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#2c2c2c" }}>{user?.name}</div>
               <div style={{ fontSize: "0.8rem", color: "#777", marginTop: "4px" }}>{user?.email}</div>
               <div style={{ marginTop: "12px" }}>
-                <span style={{ background: "#fdf0f0", color: "#d32f2f", borderRadius: "20px", padding: "4px 14px", fontSize: "0.78rem", fontWeight: 700 }}>
+                <span style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "20px", padding: "4px 14px", fontSize: "0.78rem", fontWeight: 700 }}>
                   {user?.role === "ADMIN" ? "Quản trị viên" : "Học viên"}
                 </span>
               </div>
@@ -91,7 +91,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Edit form */}
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", padding: "28px 32px" }}>
+            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 32px" }}>
               <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "20px" }}>
                 Chỉnh sửa thông tin
               </h2>

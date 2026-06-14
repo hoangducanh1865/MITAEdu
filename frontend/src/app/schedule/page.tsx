@@ -47,7 +47,7 @@ export default function SchedulePage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "28px 32px", background: "#fdf0f0", minHeight: "calc(100vh - 62px)" }}>
+        <main style={{ padding: "28px 32px", background: "#f0f7fd", minHeight: "calc(100vh - 62px)" }}>
 
           {/* Hero banner */}
           <div style={{
@@ -57,16 +57,16 @@ export default function SchedulePage() {
             marginBottom: "24px",
             position: "relative",
             overflow: "hidden",
-            border: "2px solid #f0d5d5",
+            border: "2px solid #c5ddf0",
           }}>
             {/* Decorative elements */}
             <div style={{
               position: "absolute", left: "32px", top: "50%", transform: "translateY(-50%)",
-              width: "80px", height: "40px", background: "#fce4ec", borderRadius: "50%", opacity: 0.8,
+              width: "80px", height: "40px", background: "#e3f2fd", borderRadius: "50%", opacity: 0.8,
             }} />
             <div style={{
               position: "absolute", right: "60px", top: "50%", transform: "translateY(-50%)",
-              fontSize: "2.5rem", color: "#f0d5d5", fontWeight: 900, letterSpacing: "-2px",
+              fontSize: "2.5rem", color: "#c5ddf0", fontWeight: 900, letterSpacing: "-2px",
             }}>
               ✳
             </div>
@@ -74,7 +74,7 @@ export default function SchedulePage() {
             <div style={{ textAlign: "center", position: "relative" }}>
               <h1 style={{
                 fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                fontSize: "2rem", color: "#d32f2f",
+                fontSize: "2rem", color: "#1e7ab8",
                 letterSpacing: "3px", textTransform: "uppercase", marginBottom: "8px",
               }}>
                 THỜI KHÓA BIỂU
@@ -92,12 +92,12 @@ export default function SchedulePage() {
           <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
             <div style={{
               background: "#fff", borderRadius: "30px", padding: "4px",
-              display: "flex", gap: "2px", border: "2px solid #f0d5d5",
+              display: "flex", gap: "2px", border: "2px solid #c5ddf0",
             }}>
-              <TabBtn active={activeTab === "personal"} onClick={() => setActiveTab("personal")} color="#d32f2f">
+              <TabBtn active={activeTab === "personal"} onClick={() => setActiveTab("personal")} color="#1e7ab8">
                 Thời khóa biểu cá nhân
               </TabBtn>
-              <TabBtn active={activeTab === "general"} onClick={() => setActiveTab("general")} color="#d32f2f">
+              <TabBtn active={activeTab === "general"} onClick={() => setActiveTab("general")} color="#1e7ab8">
                 Thời khóa biểu chung
               </TabBtn>
             </div>
@@ -105,13 +105,13 @@ export default function SchedulePage() {
 
           {/* Content */}
           {loading ? (
-            <div style={{ textAlign: "center", padding: "80px", color: "#d32f2f" }}>
+            <div style={{ textAlign: "center", padding: "80px", color: "#1e7ab8" }}>
               <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
             </div>
           ) : activeTab === "personal" ? (
             /* Personal tab — empty state */
             <div style={{
-              background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5",
+              background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
               padding: "80px 40px", textAlign: "center",
             }}>
               <div style={{ fontSize: "4rem", marginBottom: "16px", opacity: 0.3 }}>📋</div>
@@ -121,7 +121,7 @@ export default function SchedulePage() {
             </div>
           ) : (
             /* General timetable */
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5", overflow: "hidden" }}>
+            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", overflow: "hidden" }}>
               {/* Header row */}
               <div style={{
                 display: "grid",
@@ -132,7 +132,7 @@ export default function SchedulePage() {
                   const isToday = DAY_KEYS[i] === todayKey;
                   return (
                     <div key={label} style={{
-                      background: isToday ? "#f5a623" : "#d32f2f",
+                      background: isToday ? "#f5a623" : "#1e7ab8",
                       color: "#fff",
                       padding: "14px 8px",
                       textAlign: "center",
@@ -152,12 +152,12 @@ export default function SchedulePage() {
                 <div key={period.key} style={{
                   display: "grid",
                   gridTemplateColumns: "80px repeat(7, 1fr)",
-                  borderTop: "2px solid #f0d5d5",
+                  borderTop: "2px solid #c5ddf0",
                   minHeight: "120px",
                 }}>
                   {/* Period label */}
                   <div style={{
-                    background: "#d32f2f",
+                    background: "#1e7ab8",
                     color: "#fff",
                     display: "flex",
                     alignItems: "center",
@@ -180,7 +180,7 @@ export default function SchedulePage() {
                     return (
                       <div key={di} style={{
                         padding: "8px 6px",
-                        borderLeft: "1px solid #f0d5d5",
+                        borderLeft: "1px solid #c5ddf0",
                         background: isToday ? "#fffbf0" : "#fff",
                         display: "flex",
                         flexDirection: "column",
@@ -191,7 +191,7 @@ export default function SchedulePage() {
                           /* Empty cell placeholder */
                           <div style={{
                             height: "32px", borderRadius: "8px",
-                            background: "#fdf0f0", opacity: 0.5,
+                            background: "#f0f7fd", opacity: 0.5,
                           }} />
                         ) : (
                           items.map((s) => (
@@ -215,14 +215,14 @@ export default function SchedulePage() {
 function ScheduleItem({ schedule, isToday }: { schedule: Schedule; isToday: boolean }) {
   return (
     <div style={{
-      background: isToday ? "#fff8f0" : "#fdf0f0",
-      border: isToday ? "1.5px solid #f5a623" : "1.5px solid #f0d5d5",
+      background: isToday ? "#fff8f0" : "#f0f7fd",
+      border: isToday ? "1.5px solid #f5a623" : "1.5px solid #c5ddf0",
       borderRadius: "8px",
       padding: "8px 10px",
     }}>
       <div style={{
         fontSize: "0.75rem", fontWeight: 700,
-        color: isToday ? "#e65100" : "#d32f2f",
+        color: isToday ? "#e65100" : "#1e7ab8",
         lineHeight: 1.3, marginBottom: "3px",
       }}>
         {schedule.lessonTitle}

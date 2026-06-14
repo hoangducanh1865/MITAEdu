@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"; // useRef kept for course slider
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
@@ -11,43 +11,7 @@ import type { ApiResponse, Course } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
 
-// ── Carousel slides ──────────────────────────────────────────────
-const SLIDES = [
-  {
-    title: "Ngân Hàng\nCâu Hỏi",
-    sub: "Phong phú đa dạng",
-    badge: "Kì Thi Đánh Giá Tư Duy 2026",
-    tags: ["Tư Duy Toán Học", "Tư Duy Khoa Học", "Tư Duy Đọc Hiểu"],
-    bg: "linear-gradient(135deg,#d32f2f 0%,#b71c1c 100%)",
-    banner: "/banner-slide-1.png",
-  },
-  {
-    title: "Luyện Thi\nChuyên Sâu",
-    sub: "Đạt điểm cao trong kì thi",
-    badge: "Chương Trình Mới 2026",
-    tags: ["Toán", "Vật Lý", "Hóa Học"],
-    bg: "linear-gradient(135deg,#c62828 0%,#ad1457 100%)",
-    banner: "/banner-slide-2.png",
-  },
-  {
-    title: "Thi Thử\nOnline",
-    sub: "Miễn phí — Mọi lúc mọi nơi",
-    badge: "Xếp Hạng Toàn Quốc",
-    tags: ["Đề Mô Phỏng", "Đề Chính Thức"],
-    bg: "linear-gradient(135deg,#b71c1c 0%,#880e4f 100%)",
-    banner: "/banner-slide-3.png",
-  },
-];
-
-// ── Champions ────────────────────────────────────────────────────
-const CHAMPIONS = [
-  { name: "Tùng Lâm",   exam: "Kỳ thi đánh giá tư duy 2026", score: "89.24" },
-  { name: "Đức Trọng",  exam: "Kỳ thi đánh giá tư duy 2026", score: "88.69" },
-  { name: "Minh Dương", exam: "Kỳ thi đánh giá tư duy 2026", score: "83.44" },
-  { name: "Hải Nam",    exam: "Kỳ thi đánh giá tư duy 2026", score: "82.90" },
-  { name: "Thùy Linh",  exam: "Kỳ thi đánh giá tư duy 2026", score: "81.55" },
-  { name: "Quốc Bảo",   exam: "Kỳ thi đánh giá tư duy 2026", score: "80.78" },
-];
+const BANNER_SRC = "/real/banner-slide-1.jpg";
 
 const SEARCH_TAGS = [
   "Labteam","Khóa học","Mentor","TSA","HSA",
@@ -57,7 +21,6 @@ const SEARCH_TAGS = [
 
 
 export default function DashboardPage() {
-  const [slide, setSlide] = useState(0);
   const [courses, setCourses] = useState<Course[]>([]);
   const [courseIdx, setCourseIdx] = useState(0);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
@@ -70,10 +33,11 @@ export default function DashboardPage() {
     setTimeout(() => setToast(null), 5000);
   }
 
-  // Auto-advance carousel
+  // Listen for activation modal trigger from Navbar button
   useEffect(() => {
-    const t = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 4500);
-    return () => clearInterval(t);
+    const handler = () => setCodeModalOpen(true);
+    window.addEventListener("open-activation-modal", handler);
+    return () => window.removeEventListener("open-activation-modal", handler);
   }, []);
 
   // Fetch latest courses
@@ -90,8 +54,6 @@ export default function DashboardPage() {
     setCourseIdx((i) => Math.max(0, Math.min(maxIdx, i + dir)));
   }
 
-  const s = SLIDES[slide];
-
   return (
     <>
       <Navbar />
@@ -100,149 +62,73 @@ export default function DashboardPage() {
         className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
         onClick={toggleSidebar}
       />
-      <div className="layout-home">
-        <Sidebar />
-        {/* Toast notification */}
-        {toast && (
-          <div style={{
-            position: "fixed", top: "80px", right: "20px", zIndex: 9999,
-            background: "#2e7d32", color: "#fff", borderRadius: "14px",
-            padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
-            display: "flex", alignItems: "center", gap: "10px",
-          }}>
-            <i className="fas fa-check-circle" />
-            {toast}
-          </div>
-        )}
-        <ActivationCodeModal
-          open={codeModalOpen}
-          onClose={() => setCodeModalOpen(false)}
-          onSuccess={handleActivationSuccess}
-        />
-        <main style={{ background: "#fff", minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
-          {/* ── HERO CAROUSEL ─────────────────────────────── */}
+      {/* Toast notification */}
+      {toast && (
+        <div style={{
+          position: "fixed", top: "80px", right: "20px", zIndex: 9999,
+          background: "#2e7d32", color: "#fff", borderRadius: "14px",
+          padding: "14px 20px", fontSize: "0.875rem", fontWeight: 600,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.2)", maxWidth: "320px",
+          display: "flex", alignItems: "center", gap: "10px",
+        }}>
+          <i className="fas fa-check-circle" />
+          {toast}
+        </div>
+      )}
+      <ActivationCodeModal
+        open={codeModalOpen}
+        onClose={() => setCodeModalOpen(false)}
+        onSuccess={handleActivationSuccess}
+      />
+      <div className="home-page-wrapper">
+        <div className="layout-home">
+          <Sidebar />
+          <main style={{ minHeight: "calc(100vh - 62px)", display: "flex", flexDirection: "column", gap: 0 }}>
+          {/* ── HERO BANNER ───────────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
-            <div className="hero-inner" style={{
-              borderRadius: "20px",
-              position: "relative",
-              overflow: "hidden",
-              minHeight: "220px",
-            }}>
-              <img
-                src={s.banner}
-                alt={s.title.replace("\n", " ")}
-                style={{ width: "100%", height: "220px", objectFit: "cover", borderRadius: "20px", display: "block" }}
-              />
-
-              {/* Prev/Next */}
-              {["prev","next"].map((dir) => (
-                <button key={dir} onClick={() => setSlide((s) => dir === "prev" ? (s - 1 + SLIDES.length) % SLIDES.length : (s + 1) % SLIDES.length)} style={{
-                  position: "absolute", top: "50%", transform: "translateY(-50%)",
-                  [dir === "prev" ? "left" : "right"]: "16px",
-                  background: "rgba(0,0,0,0.12)", border: "1.5px solid #ccc",
-                  borderRadius: "50%", width: "36px", height: "36px",
-                  color: "#aaa", cursor: "pointer", zIndex: 3,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
-                  <i className={`fas fa-chevron-${dir === "prev" ? "left" : "right"}`} style={{ fontSize: "0.85rem" }} />
-                </button>
-              ))}
-
-              {/* Dots */}
-              <div style={{
-                position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)",
-                display: "flex", gap: "8px", zIndex: 3,
-              }}>
-                {SLIDES.map((_, i) => (
-                  <button key={i} onClick={() => setSlide(i)} style={{
-                    width: i === slide ? "28px" : "10px", height: "10px",
-                    borderRadius: "5px", border: "none",
-                    background: i === slide ? "#aaa" : "#ddd",
-                    cursor: "pointer", transition: "width .3s, background .3s", padding: 0,
-                  }} />
-                ))}
-              </div>
-            </div>
+            <img
+              src={BANNER_SRC}
+              alt="MITAEdu Banner"
+              style={{ width: "100%", height: "auto", display: "block", borderRadius: "20px" }}
+            />
           </section>
 
-          {/* ── VINH DANH BANNER ──────────────────────────── */}
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ──────────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
-              background: "#d32f2f", borderRadius: "12px",
+              background: "#1e7ab8", borderRadius: "12px",
               padding: "14px 24px", color: "#fff",
               display: "flex", alignItems: "center", justifyContent: "center",
               gap: "14px", fontFamily: "Nunito, sans-serif",
               fontWeight: 900, fontSize: "1.05rem", letterSpacing: "1px",
               cursor: "pointer",
             }}>
-              <i className="fas fa-award" />
-              VINH DANH THỦ KHOA &amp; Á KHOA
-              <i className="fas fa-award" />
+              <i className="fas fa-trophy" />
+              VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026
+              <i className="fas fa-trophy" />
             </div>
           </section>
 
-          {/* ── TOP 2 STUDENTS ────────────────────────────── */}
-          <section className="home-section home-top2-grid" style={{ padding: "16px 28px 0", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-            {[
-              { rank: "Thủ Khoa", score: "96.10", src: "/poster-thu-khoa.png" },
-              { rank: "Á Khoa",   score: "96.08", src: "/poster-a-khoa.png" },
-            ].map(({ rank, score, src }) => (
-              <img
-                key={rank}
-                src={src}
-                alt={`${rank} — ${score} điểm`}
-                style={{ width: "100%", height: "auto", borderRadius: "16px", display: "block" }}
-              />
-            ))}
-          </section>
-
-          {/* ── CHIẾN THẦN 80+ ────────────────────────────── */}
-          <section className="home-section" style={{ padding: "20px 28px 0" }}>
-            <div style={{ marginBottom: "16px" }}>
-              <span style={{
-                display: "inline-block", background: "#d32f2f", color: "#fff",
-                borderRadius: "8px", padding: "8px 18px",
-                fontFamily: "Nunito, sans-serif", fontWeight: 900,
-                fontSize: "0.9rem", letterSpacing: "1px",
-              }}>
-                CHIẾN THẦN 80+ TSA - MITAEdu
-              </span>
-            </div>
-            <div className="home-champions-grid" style={{
-              border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px",
-              display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px",
-            }}>
-              {CHAMPIONS.map((c) => (
-                <div key={c.name} style={{
-                  background: "#fff", borderRadius: "16px",
-                  border: "2px solid #f0d5d5", padding: "20px 16px",
-                  textAlign: "center", display: "flex", flexDirection: "column",
-                  alignItems: "center", gap: "8px",
-                }}>
-                  <ImagePlaceholder
-                    width="70px"
-                    height="70px"
-                    circular
-                    desc={`Ảnh ${c.name}\n70×70px | PNG`}
-                  />
-                  <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#d32f2f" }}>
-                    {c.name}
-                  </div>
-                  <div style={{ fontSize: "0.75rem", color: "#888" }}>{c.exam}</div>
-                  <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f", lineHeight: 1 }}>
-                    {c.score}
-                  </div>
-                  <div style={{ fontSize: "0.72rem", color: "#aaa" }}>điểm</div>
-                  <button style={{
-                    width: "100%", background: "#d32f2f", color: "#fff",
-                    border: "none", borderRadius: "20px", padding: "8px 0",
-                    fontWeight: 700, fontSize: "0.82rem", cursor: "pointer",
-                    marginTop: "4px",
-                  }}>
-                    Xem chứng chỉ
-                  </button>
-                </div>
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ─────────────────────── */}
+          <section className="home-section" style={{ padding: "16px 28px 0" }}>
+            <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px" }}>
+              {[
+                { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-1.jpg" },
+                { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-2.jpg" },
+              ].map(({ rank, src }) => (
+                <img
+                  key={rank}
+                  src={src}
+                  alt={rank}
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    width: "calc(50% - 8px)",
+                    height: "auto",
+                    borderRadius: "16px",
+                    display: "block",
+                  }}
+                />
               ))}
             </div>
           </section>
@@ -250,11 +136,12 @@ export default function DashboardPage() {
           {/* ── BẠN ĐANG TÌM GÌ ───────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{
-              border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
+              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
             }}>
               <div style={{ marginBottom: "16px" }}>
                 <span style={{
-                  display: "inline-block", background: "#d32f2f", color: "#fff",
+                  display: "inline-block", background: "#1e7ab8", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -271,7 +158,7 @@ export default function DashboardPage() {
                     cursor: "pointer", transition: "border-color .15s",
                     fontWeight: 500,
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#d32f2f"}
+                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1e7ab8"}
                   onMouseLeave={(e) => e.currentTarget.style.borderColor = "#e0e0e0"}
                   >
                     {tag}
@@ -284,11 +171,12 @@ export default function DashboardPage() {
           {/* ── KHÓA HỌC MỚI NHẤT ─────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 28px" }}>
             <div style={{
-              border: "2px dashed #f0d5d5", borderRadius: "16px", padding: "20px 24px",
+              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
             }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
                 <span style={{
-                  display: "inline-block", background: "#d32f2f", color: "#fff",
+                  display: "inline-block", background: "#1e7ab8", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -361,7 +249,8 @@ export default function DashboardPage() {
             </div>
           </section>
 
-        </main>
+          </main>
+        </div>
         <RightPanel onOpenCodeModal={() => setCodeModalOpen(true)} />
       </div>
       <Footer />
@@ -370,12 +259,6 @@ export default function DashboardPage() {
 }
 
 // ── Right Panel ──────────────────────────────────────────────────
-const NEWS_ITEMS = [
-  { title: "Thi thử TSA ngày 01/08/2025",  time: "12:48 - 01/01/2025" },
-  { title: "Lịch thi TSA 2026 chính thức",  time: "09:00 - 15/01/2025" },
-  { title: "Cập nhật đề thi mới nhất",      time: "08:30 - 20/02/2025" },
-];
-
 function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
   return (
     <aside className="home-right-panel" style={{
@@ -390,7 +273,7 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
 
       {/* ── Promo card ── */}
       <img
-        src="/banner-promo.png"
+        src="/real/banner-promo.jpg"
         alt="Khóa Tổng Ôn Đợt 2 — MITAEdu"
         style={{ width: "100%", height: "auto", borderRadius: "18px", display: "block" }}
       />
@@ -398,7 +281,7 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
       {/* ── Access code button ── */}
       <button onClick={onOpenCodeModal} style={{
         width: "100%",
-        background: "#d32f2f",
+        background: "#1e7ab8",
         color: "#fff",
         border: "none",
         borderRadius: "14px",
@@ -414,63 +297,8 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
         letterSpacing: "0.3px",
       }}>
         <i className="fas fa-key" />
-        Nhập mã truy cập
+        Mã kích hoạt
       </button>
-
-      {/* ── News panel ── */}
-      <div style={{
-        background: "#fff",
-        borderRadius: "16px",
-        border: "2px solid #f0d5d5",
-        padding: "16px",
-        flex: 1,
-      }}>
-        <div style={{
-          display: "flex", alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "14px",
-        }}>
-          <span style={{
-            fontFamily: "Nunito, sans-serif",
-            fontWeight: 800, fontSize: "0.95rem", color: "#2c2c2c",
-          }}>
-            Tin tức
-          </span>
-          <a href="#" style={{
-            fontSize: "0.78rem", color: "#d32f2f",
-            fontWeight: 600, textDecoration: "none",
-          }}>
-            Xem tất cả
-          </a>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {NEWS_ITEMS.map((item, i) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "flex-start", gap: "10px",
-            }}>
-              <ImagePlaceholder
-                width="36px"
-                height="36px"
-                desc={"Ảnh tin\n36×36px"}
-                style={{ borderRadius: "8px", flexShrink: 0 }}
-              />
-              <div>
-                <a href="#" style={{
-                  fontSize: "0.8rem", fontWeight: 600, color: "#2c2c2c",
-                  lineHeight: 1.35, display: "block", textDecoration: "none",
-                  marginBottom: "3px",
-                }}>
-                  {item.title}
-                </a>
-                <div style={{ fontSize: "0.7rem", color: "#aaa" }}>
-                  {item.time}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
     </aside>
   );

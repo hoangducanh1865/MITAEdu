@@ -73,7 +73,7 @@ export default function TsaDeAdminPage() {
 
             return (
               <div key={pkg.id} style={{
-                background: "#fff", border: `2px solid ${isOpen ? "#1565c0" : "#f0d5d5"}`,
+                background: "#fff", border: `2px solid ${isOpen ? "#1565c0" : "#c5ddf0"}`,
                 borderRadius: "14px", overflow: "hidden",
                 transition: "border-color .2s",
               }}>
@@ -127,7 +127,7 @@ export default function TsaDeAdminPage() {
 
                 {/* Expanded exam list */}
                 {isOpen && (
-                  <div style={{ borderTop: "2px solid #f0d5d5", padding: "12px 16px", background: "#fafcff" }}>
+                  <div style={{ borderTop: "2px solid #c5ddf0", padding: "12px 16px", background: "#fafcff" }}>
                     {isLoadingThis ? (
                       <div style={{ textAlign: "center", padding: "20px", color: "#1565c0" }}>
                         <i className="fas fa-spinner fa-spin" />
@@ -159,7 +159,7 @@ function EmptyState({ color, icon, message }: { color: string; icon: string; mes
   return (
     <div style={{
       textAlign: "center", padding: "60px", color: "#777",
-      background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5",
+      background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
     }}>
       <i className={`fas ${icon}`} style={{ fontSize: "2.5rem", color, marginBottom: "14px", display: "block", opacity: 0.5 }} />
       <p style={{ fontSize: "0.95rem" }}>{message}</p>

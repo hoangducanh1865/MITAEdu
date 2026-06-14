@@ -45,19 +45,19 @@ export default function DocumentsPage() {
         <Sidebar />
         <main style={{ padding: "28px 32px" }}>
           <div style={{ marginBottom: "24px" }}>
-            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#d32f2f", marginBottom: "8px" }}>
+            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "8px" }}>
               <i className="fas fa-file-alt" style={{ marginRight: "10px" }} />Tài liệu
             </h1>
             <p style={{ color: "#777", fontSize: "0.875rem" }}>Tài liệu học tập, bài giảng video, và các tài nguyên học tập</p>
           </div>
 
           {loading ? (
-            <div style={{ textAlign: "center", padding: "80px", color: "#d32f2f" }}>
+            <div style={{ textAlign: "center", padding: "80px", color: "#1e7ab8" }}>
               <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
             </div>
           ) : documents.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5" }}>
-              <i className="fas fa-folder-open" style={{ fontSize: "3rem", marginBottom: "16px", display: "block", color: "#d32f2f" }} />
+            <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0" }}>
+              <i className="fas fa-folder-open" style={{ fontSize: "3rem", marginBottom: "16px", display: "block", color: "#1e7ab8" }} />
               <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, marginBottom: "8px" }}>Chưa có tài liệu</h3>
               <p style={{ fontSize: "0.875rem" }}>Hãy quay lại sau để xem các tài liệu học tập mới</p>
             </div>

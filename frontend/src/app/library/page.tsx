@@ -54,19 +54,19 @@ export default function LibraryPage() {
         <Sidebar />
         <main style={{ padding: "28px 32px" }}>
           <div style={{ marginBottom: "24px" }}>
-            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#d32f2f", marginBottom: "8px" }}>
+            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "8px" }}>
               <i className="fas fa-book-open" style={{ marginRight: "10px" }} />Thư viện
             </h1>
             <p style={{ color: "#777", fontSize: "0.875rem" }}>Kho tài liệu học tập phong phú từ các khóa học</p>
           </div>
 
           {loading ? (
-            <div style={{ textAlign: "center", padding: "80px", color: "#d32f2f" }}>
+            <div style={{ textAlign: "center", padding: "80px", color: "#1e7ab8" }}>
               <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
             </div>
           ) : documents.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5" }}>
-              <i className="fas fa-book" style={{ fontSize: "3rem", marginBottom: "16px", display: "block", color: "#d32f2f" }} />
+            <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0" }}>
+              <i className="fas fa-book" style={{ fontSize: "3rem", marginBottom: "16px", display: "block", color: "#1e7ab8" }} />
               <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, marginBottom: "8px" }}>Thư viện học liệu</h3>
               <p style={{ fontSize: "0.875rem" }}>Chưa có tài liệu nào trong thư viện. Hãy quay lại sau!</p>
             </div>
@@ -80,13 +80,13 @@ export default function LibraryPage() {
                     gap: "12px",
                     marginBottom: "16px",
                     paddingBottom: "12px",
-                    borderBottom: "2px solid #f0d5d5"
+                    borderBottom: "2px solid #c5ddf0"
                   }}>
                     <div style={{
                       width: "36px",
                       height: "36px",
                       borderRadius: "8px",
-                      background: "linear-gradient(135deg, #d32f2f, #b71c1c)",
+                      background: "linear-gradient(135deg, #1e7ab8, #155f8f)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",

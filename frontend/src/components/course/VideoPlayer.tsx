@@ -30,7 +30,7 @@ export default function VideoPlayer({ lesson }: Props) {
       {(lesson.pdfPath || lesson.handwrittenPdfPath) && (
         <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
           {lesson.pdfPath && (
-            <a href={lesson.pdfPath} target="_blank" rel="noopener noreferrer" style={pdfBtnStyle("#d32f2f")}>
+            <a href={lesson.pdfPath} target="_blank" rel="noopener noreferrer" style={pdfBtnStyle("#1e7ab8")}>
               <i className="fas fa-file-pdf" /> Tải đề bài (PDF)
             </a>
           )}
@@ -48,7 +48,7 @@ export default function VideoPlayer({ lesson }: Props) {
 function pdfBtnStyle(color: string): React.CSSProperties {
   return {
     display: "inline-flex", alignItems: "center", gap: "8px",
-    background: "#fdf0f0", border: `2px solid ${color}33`,
+    background: "#f0f7fd", border: `2px solid ${color}33`,
     color, borderRadius: "10px", padding: "9px 18px",
     fontSize: "0.85rem", fontWeight: 600,
   };

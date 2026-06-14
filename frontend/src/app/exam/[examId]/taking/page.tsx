@@ -59,8 +59,8 @@ export default function ExamTakingPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", background: "#fdf0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ textAlign: "center", color: "#d32f2f" }}>
+      <div style={{ minHeight: "100vh", background: "#f0f7fd", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ textAlign: "center", color: "#1e7ab8" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "2.5rem" }} />
           <p style={{ marginTop: "12px" }}>Đang tải bài thi...</p>
         </div>
@@ -77,7 +77,7 @@ export default function ExamTakingPage() {
 
       {/* Top bar */}
       <header style={{
-        background: "#fff", borderBottom: "2px solid #f0d5d5",
+        background: "#fff", borderBottom: "2px solid #c5ddf0",
         height: "56px", display: "flex", alignItems: "center",
         padding: "0 24px", gap: "16px", position: "sticky", top: 0, zIndex: 100,
       }}>
@@ -89,7 +89,7 @@ export default function ExamTakingPage() {
 
       <div className="et-layout">
         {/* Main: question area */}
-        <main style={{ padding: "28px 36px", background: "#fdf0f0", overflowY: "auto" }}>
+        <main style={{ padding: "28px 36px", background: "#f0f7fd", overflowY: "auto" }}>
           {currentQ && (
             <QuestionCard
               question={currentQ}
@@ -118,7 +118,7 @@ export default function ExamTakingPage() {
         </main>
 
         {/* Right sidebar */}
-        <aside style={{ background: "#fff", borderLeft: "2px solid #f0d5d5", padding: "20px", display: "flex", flexDirection: "column", gap: "20px", overflowY: "auto" }}>
+        <aside style={{ background: "#fff", borderLeft: "2px solid #c5ddf0", padding: "20px", display: "flex", flexDirection: "column", gap: "20px", overflowY: "auto" }}>
           {/* Thí sinh */}
           <div>
             <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#777", textTransform: "uppercase", marginBottom: "8px" }}>Thông tin thí sinh</div>
@@ -126,7 +126,7 @@ export default function ExamTakingPage() {
           </div>
 
           {/* Timer */}
-          <div style={{ background: "#fdf0f0", borderRadius: "12px", padding: "14px" }}>
+          <div style={{ background: "#f0f7fd", borderRadius: "12px", padding: "14px" }}>
             <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#777", textTransform: "uppercase", marginBottom: "8px" }}>Thời gian còn lại</div>
             {exam && (
               <ExamTimer durationMinutes={exam.durationMinutes} onExpire={handleSubmit} />
@@ -144,8 +144,8 @@ export default function ExamTakingPage() {
               <span>Đã hoàn thành</span>
               <span style={{ fontWeight: 700, color: "#2c2c2c" }}>{answeredCount}/{questions.length} câu</span>
             </div>
-            <div style={{ height: "6px", background: "#f0d5d5", borderRadius: "3px" }}>
-              <div style={{ height: "100%", width: `${questions.length > 0 ? (answeredCount / questions.length) * 100 : 0}%`, background: "#d32f2f", borderRadius: "3px", transition: "width .3s" }} />
+            <div style={{ height: "6px", background: "#c5ddf0", borderRadius: "3px" }}>
+              <div style={{ height: "100%", width: `${questions.length > 0 ? (answeredCount / questions.length) * 100 : 0}%`, background: "#1e7ab8", borderRadius: "3px", transition: "width .3s" }} />
             </div>
           </div>
 
@@ -158,11 +158,11 @@ export default function ExamTakingPage() {
                 Đã trả lời
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                <span style={{ width: "16px", height: "16px", borderRadius: "4px", background: "#d32f2f", display: "inline-block" }} />
+                <span style={{ width: "16px", height: "16px", borderRadius: "4px", background: "#1e7ab8", display: "inline-block" }} />
                 Đang xem
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                <span style={{ width: "16px", height: "16px", borderRadius: "4px", background: "#fff", border: "1px solid #f0d5d5", display: "inline-block" }} />
+                <span style={{ width: "16px", height: "16px", borderRadius: "4px", background: "#fff", border: "1px solid #c5ddf0", display: "inline-block" }} />
                 Chưa làm
               </span>
             </div>
@@ -185,7 +185,7 @@ export default function ExamTakingPage() {
       {/* Submit confirm modal */}
       <Modal open={showConfirm} onClose={() => setShowConfirm(false)} title="Xác nhận nộp bài">
         <p style={{ fontSize: "0.9rem", color: "#555", marginBottom: "8px" }}>
-          Bạn đã trả lời <strong style={{ color: "#d32f2f" }}>{answeredCount}/{questions.length}</strong> câu hỏi.
+          Bạn đã trả lời <strong style={{ color: "#1e7ab8" }}>{answeredCount}/{questions.length}</strong> câu hỏi.
         </p>
         {answeredCount < questions.length && (
           <p style={{ fontSize: "0.82rem", color: "#e65100", marginBottom: "16px" }}>

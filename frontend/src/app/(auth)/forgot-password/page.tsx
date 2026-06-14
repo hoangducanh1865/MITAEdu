@@ -29,18 +29,18 @@ export default function ForgotPasswordPage() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#fdf0f0",
+      minHeight: "100vh", background: "#f0f7fd",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       <div style={{
         background: "#fff", borderRadius: "20px",
-        boxShadow: "0 4px 40px rgba(211,47,47,.14)",
+        boxShadow: "0 4px 40px rgba(30,122,184,.14)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f" }}>
-            🌙 MITA<span style={{ color: "#b71c1c" }}>Edu</span>
+          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
+            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
           </div>
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             {submitted ? "Kiểm tra email của bạn" : "Quên mật khẩu"}
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
             </h2>
             <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.65, marginBottom: "8px" }}>
               Chúng tôi đã gửi hướng dẫn đặt lại mật khẩu đến<br />
-              <strong style={{ color: "#d32f2f" }}>{email}</strong>
+              <strong style={{ color: "#1e7ab8" }}>{email}</strong>
             </p>
             <p style={{ fontSize: "0.82rem", color: "#888", lineHeight: 1.6, marginBottom: "28px" }}>
               Vui lòng kiểm tra hộp thư và nhấn vào link trong email.
@@ -76,7 +76,7 @@ export default function ForgotPasswordPage() {
             <Link
               href="/login"
               style={{
-                display: "inline-block", background: "#d32f2f", color: "#fff",
+                display: "inline-block", background: "#1e7ab8", color: "#fff",
                 borderRadius: "10px", padding: "12px 32px",
                 fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
               }}
@@ -104,9 +104,9 @@ export default function ForgotPasswordPage() {
 
               {error && (
                 <div style={{
-                  background: "#ffebee", border: "1px solid #f44336",
+                  background: "#e3f2fd", border: "1px solid #2196f3",
                   borderRadius: "10px", padding: "10px 14px",
-                  fontSize: "0.875rem", color: "#c62828",
+                  fontSize: "0.875rem", color: "#1970a8",
                 }}>
                   <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }} />
                   {error}
@@ -120,7 +120,7 @@ export default function ForgotPasswordPage() {
 
             <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
               Nhớ mật khẩu rồi?{" "}
-              <Link href="/login" style={{ color: "#d32f2f", fontWeight: 600 }}>
+              <Link href="/login" style={{ color: "#1e7ab8", fontWeight: 600 }}>
                 Đăng nhập
               </Link>
             </p>

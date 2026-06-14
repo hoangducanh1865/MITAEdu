@@ -8,7 +8,7 @@ export default function ThptKhaoThiPage() {
     <div style={{ maxWidth: "860px" }}>
       {/* Page header */}
       <div className="thpt-banner" style={{
-        background: "linear-gradient(135deg,#b71c1c,#880e0e)",
+        background: "linear-gradient(135deg,#155f8f,#880e0e)",
         borderRadius: "16px",
         padding: "28px 32px",
         color: "#fff",
@@ -56,10 +56,10 @@ export default function ThptKhaoThiPage() {
 
       {/* Score structure info */}
       <div style={{
-        background: "#fff", border: "2px solid #f0d5d5",
+        background: "#fff", border: "2px solid #c5ddf0",
         borderRadius: "14px", padding: "18px 22px", marginBottom: "24px",
       }}>
-        <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "0.9rem", color: "#b71c1c", marginBottom: "12px" }}>
+        <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "0.9rem", color: "#155f8f", marginBottom: "12px" }}>
           Cấu trúc điểm
         </h3>
         <div className="thpt-score-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
@@ -92,14 +92,14 @@ export default function ThptKhaoThiPage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {LOCAL_THPT_EXAMS.map((exam) => (
           <div key={exam.id} className="thpt-exam-card" style={{
-            background: "#fff", border: "2px solid #f0d5d5",
+            background: "#fff", border: "2px solid #c5ddf0",
             borderRadius: "14px", padding: "20px 24px",
             display: "flex", alignItems: "center", gap: "20px",
           }}>
             {/* Year badge */}
             <div style={{
               width: "56px", height: "56px", borderRadius: "12px",
-              background: "linear-gradient(135deg,#b71c1c,#880e0e)",
+              background: "linear-gradient(135deg,#155f8f,#880e0e)",
               display: "flex", flexDirection: "column",
               alignItems: "center", justifyContent: "center",
               flexShrink: 0, color: "#fff",
@@ -125,7 +125,7 @@ export default function ThptKhaoThiPage() {
                   { icon: "fa-file-pdf", label: "Đề PDF" },
                 ].map(({ icon, label }) => (
                   <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontSize: "0.78rem", color: "#777" }}>
-                    <i className={`fas ${icon}`} style={{ color: "#b71c1c", fontSize: "0.7rem" }} />
+                    <i className={`fas ${icon}`} style={{ color: "#155f8f", fontSize: "0.7rem" }} />
                     {label}
                   </span>
                 ))}
@@ -138,14 +138,14 @@ export default function ThptKhaoThiPage() {
               className="thpt-exam-cta"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
-                background: "#b71c1c", color: "#fff",
+                background: "#155f8f", color: "#fff",
                 padding: "10px 20px", borderRadius: "10px",
                 fontWeight: 700, fontSize: "0.875rem",
                 textDecoration: "none", flexShrink: 0,
                 transition: "background .15s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#d32f2f"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#b71c1c"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#1e7ab8"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#155f8f"; }}
             >
               Bắt đầu thi
               <i className="fas fa-chevron-right" style={{ fontSize: "0.75rem" }} />

@@ -12,7 +12,7 @@ export default function NewsPage() {
         <Sidebar />
         <main style={{ padding: "28px 32px" }}>
           <div style={{ marginBottom: "24px" }}>
-            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#d32f2f", marginBottom: "8px" }}>
+            <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "8px" }}>
               <i className="fas fa-newspaper" style={{ marginRight: "10px" }} />Tin tức
             </h1>
             <p style={{ color: "#777", fontSize: "0.875rem" }}>Cập nhật tin tức, thông báo và sự kiện từ MITAEdu</p>
@@ -21,13 +21,13 @@ export default function NewsPage() {
           <div style={{
             textAlign: "center", padding: "80px 32px",
             background: "#fff", borderRadius: "16px",
-            border: "2px solid #f0d5d5",
+            border: "2px solid #c5ddf0",
           }}>
             <div style={{
               width: "80px", height: "80px", borderRadius: "50%",
-              background: "#ffebee", display: "flex", alignItems: "center",
+              background: "#e3f2fd", display: "flex", alignItems: "center",
               justifyContent: "center", margin: "0 auto 24px",
-              fontSize: "2rem", color: "#d32f2f",
+              fontSize: "2rem", color: "#1e7ab8",
             }}>
               <i className="fas fa-hammer" />
             </div>

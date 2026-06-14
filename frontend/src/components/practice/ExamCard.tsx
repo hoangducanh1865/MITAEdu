@@ -6,7 +6,7 @@ import { formatDuration } from "@/lib/utils";
 export default function ExamCard({ exam }: { exam: Exam }) {
   return (
     <div style={{
-      background: "#fff", border: "2px solid #f0d5d5", borderRadius: "14px",
+      background: "#fff", border: "2px solid #c5ddf0", borderRadius: "14px",
       padding: "16px 18px", display: "flex", alignItems: "center", gap: "14px",
     }}>
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -24,7 +24,7 @@ export default function ExamCard({ exam }: { exam: Exam }) {
         <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#2c2c2c" }}>{exam.title}</div>
       </div>
       <Link href={`/exam/${exam.id}/confirm`} style={{
-        background: "#d32f2f", color: "#fff", borderRadius: "10px",
+        background: "#1e7ab8", color: "#fff", borderRadius: "10px",
         padding: "8px 16px", fontSize: "0.82rem", fontWeight: 600,
         display: "flex", alignItems: "center", gap: "6px", flexShrink: 0,
       }}>

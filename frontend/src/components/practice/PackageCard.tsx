@@ -13,7 +13,7 @@ export default function PackageCard({ pkg, examHref }: Props) {
 
   return (
     <Link href={href} style={{
-      background: "#fff", border: "2px solid #f0d5d5", borderRadius: "14px",
+      background: "#fff", border: "2px solid #c5ddf0", borderRadius: "14px",
       padding: "18px 20px", display: "flex", alignItems: "center", gap: "16px",
       transition: "box-shadow .15s",
     }}>

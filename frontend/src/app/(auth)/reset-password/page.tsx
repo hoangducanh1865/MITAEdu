@@ -12,7 +12,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.5rem", color: "#d32f2f" }} />
+        <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.5rem", color: "#1e7ab8" }} />
       </div>
     }>
       <ResetPasswordForm />
@@ -34,19 +34,19 @@ function ResetPasswordForm() {
   if (!token) {
     return (
       <div style={{
-        minHeight: "100vh", background: "#fdf0f0",
+        minHeight: "100vh", background: "#f0f7fd",
         display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         <div style={{
           background: "#fff", borderRadius: "20px",
-          boxShadow: "0 4px 40px rgba(211,47,47,.14)",
+          boxShadow: "0 4px 40px rgba(30,122,184,.14)",
           padding: "44px 48px", width: "440px", textAlign: "center",
         }}>
           <div style={{
             width: "64px", height: "64px", borderRadius: "50%",
-            background: "#ffebee", display: "flex", alignItems: "center",
+            background: "#e3f2fd", display: "flex", alignItems: "center",
             justifyContent: "center", margin: "0 auto 20px",
-            fontSize: "1.8rem", color: "#b71c1c",
+            fontSize: "1.8rem", color: "#155f8f",
           }}>
             <i className="fas fa-link-slash" />
           </div>
@@ -59,7 +59,7 @@ function ResetPasswordForm() {
           <Link
             href="/forgot-password"
             style={{
-              display: "inline-block", background: "#d32f2f", color: "#fff",
+              display: "inline-block", background: "#1e7ab8", color: "#fff",
               borderRadius: "10px", padding: "12px 28px",
               fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
             }}
@@ -99,18 +99,18 @@ function ResetPasswordForm() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#fdf0f0",
+      minHeight: "100vh", background: "#f0f7fd",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       <div style={{
         background: "#fff", borderRadius: "20px",
-        boxShadow: "0 4px 40px rgba(211,47,47,.14)",
+        boxShadow: "0 4px 40px rgba(30,122,184,.14)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#d32f2f" }}>
-            🌙 MITA<span style={{ color: "#b71c1c" }}>Edu</span>
+          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
+            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
           </div>
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             {success ? "Đặt lại mật khẩu thành công" : "Tạo mật khẩu mới"}
@@ -141,7 +141,7 @@ function ResetPasswordForm() {
             <Link
               href="/login"
               style={{
-                display: "inline-block", background: "#d32f2f", color: "#fff",
+                display: "inline-block", background: "#1e7ab8", color: "#fff",
                 borderRadius: "10px", padding: "12px 32px",
                 fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
               }}
@@ -173,9 +173,9 @@ function ResetPasswordForm() {
 
             {error && (
               <div style={{
-                background: "#ffebee", border: "1px solid #f44336",
+                background: "#e3f2fd", border: "1px solid #2196f3",
                 borderRadius: "10px", padding: "10px 14px",
-                fontSize: "0.875rem", color: "#c62828",
+                fontSize: "0.875rem", color: "#1970a8",
               }}>
                 <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }} />
                 {error}
@@ -187,7 +187,7 @@ function ResetPasswordForm() {
             </Button>
 
             <p style={{ textAlign: "center", fontSize: "0.875rem", color: "#777", marginTop: "4px" }}>
-              <Link href="/forgot-password" style={{ color: "#d32f2f", fontWeight: 600 }}>
+              <Link href="/forgot-password" style={{ color: "#1e7ab8", fontWeight: 600 }}>
                 Yêu cầu link mới
               </Link>
               {" "}·{" "}

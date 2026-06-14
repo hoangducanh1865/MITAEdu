@@ -34,14 +34,14 @@ function formatTime(s: number) {
 function timerColor(s: number) {
   if (s > TIMER_GREEN) return "#2e7d32";
   if (s > TIMER_ORANGE) return "#e65100";
-  return "#b71c1c";
+  return "#155f8f";
 }
 
 // ── Root export ────────────────────────────────────────────
 export default function ThptExamTakingPage() {
   return (
     <Suspense fallback={
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#b71c1c" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", color: "#155f8f" }}>
         <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
       </div>
     }>
@@ -143,7 +143,7 @@ function ExamRoom() {
 
   if (!exam) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", gap: "12px", color: "#b71c1c" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", gap: "12px", color: "#155f8f" }}>
         <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
         <span style={{ fontSize: "0.85rem", color: "#888" }}>
           {examId ? "Đang tải đề thi..." : "Không tìm thấy đề thi"}
@@ -159,7 +159,7 @@ function ExamRoom() {
       {/* ── Sticky header ─────────────────────────────── */}
       <header className="exam-room-header" style={{
         height: "56px", flexShrink: 0,
-        background: "#fff", borderBottom: "2px solid #f0d5d5",
+        background: "#fff", borderBottom: "2px solid #c5ddf0",
         display: "flex", alignItems: "center",
         padding: "0 20px", gap: "16px",
         position: "sticky", top: 0, zIndex: 100,
@@ -173,10 +173,10 @@ function ExamRoom() {
           Thoát
         </Link>
 
-        <div className="exam-header-sep" style={{ width: "1px", height: "24px", background: "#f0d5d5" }} />
+        <div className="exam-header-sep" style={{ width: "1px", height: "24px", background: "#c5ddf0" }} />
 
         <span className="exam-header-badge" style={{
-          background: "#b71c1c", color: "#fff",
+          background: "#155f8f", color: "#fff",
           borderRadius: "6px", padding: "3px 10px",
           fontSize: "0.72rem", fontWeight: 800, flexShrink: 0,
         }}>
@@ -217,7 +217,7 @@ function ExamRoom() {
             className="exam-submit-btn"
             onClick={() => setShowModal(true)}
             style={{
-              background: "#b71c1c", color: "#fff", border: "none",
+              background: "#155f8f", color: "#fff", border: "none",
               borderRadius: "8px", padding: "8px 16px",
               fontWeight: 700, fontSize: "0.85rem", cursor: "pointer",
               flexShrink: 0,
@@ -257,7 +257,7 @@ function ExamRoom() {
         {/* LEFT: PDF viewer */}
         <div className="exam-pdf-panel" style={{
           width: "55%", flexShrink: 0,
-          borderRight: "2px solid #f0d5d5",
+          borderRight: "2px solid #c5ddf0",
           background: "#f5f5f5",
         }}>
           <iframe
@@ -280,7 +280,7 @@ function ExamRoom() {
               {/* Section navigator tabs */}
               <div style={{
                 display: "flex", gap: "8px", padding: "12px 16px",
-                borderBottom: "1px solid #f0d5d5",
+                borderBottom: "1px solid #c5ddf0",
                 background: "#fff", position: "sticky", top: 0, zIndex: 10,
               }}>
                 {[
@@ -293,10 +293,10 @@ function ExamRoom() {
                     onClick={() => scrollTo(ref)}
                     style={{
                       flex: 1, padding: "7px 8px",
-                      borderRadius: "8px", border: "1.5px solid #f0d5d5",
+                      borderRadius: "8px", border: "1.5px solid #c5ddf0",
                       background: done === total ? "#fff5f5" : "#fff",
                       cursor: "pointer", fontSize: "0.75rem", fontWeight: 700,
-                      color: done === total ? "#b71c1c" : "#555",
+                      color: done === total ? "#155f8f" : "#555",
                       transition: "all .15s",
                     }}
                   >
@@ -321,7 +321,7 @@ function ExamRoom() {
                         display: "flex", alignItems: "center", gap: "10px",
                         padding: "8px 12px", borderRadius: "8px",
                         background: p1[q] ? "#fff5f5" : "#fafafa",
-                        border: `1px solid ${p1[q] ? "#fca5a5" : "#f0d5d5"}`,
+                        border: `1px solid ${p1[q] ? "#fca5a5" : "#c5ddf0"}`,
                       }}>
                         <span style={{
                           fontWeight: 700, fontSize: "0.8rem", color: "#555",
@@ -339,8 +339,8 @@ function ExamRoom() {
                                 style={{
                                   width: "36px", height: "32px",
                                   borderRadius: "6px", border: "1.5px solid",
-                                  borderColor: chosen ? "#b71c1c" : "#d0d0d0",
-                                  background: chosen ? "#b71c1c" : "#fff",
+                                  borderColor: chosen ? "#155f8f" : "#d0d0d0",
+                                  background: chosen ? "#155f8f" : "#fff",
                                   color: chosen ? "#fff" : "#555",
                                   fontWeight: 800, fontSize: "0.82rem",
                                   cursor: "pointer", transition: "all .12s",
@@ -357,7 +357,7 @@ function ExamRoom() {
                 </div>
 
                 {/* ── PHẦN II ─────────────────────── */}
-                <div ref={part2Ref} style={{ padding: "18px 16px 8px", borderTop: "2px dashed #f0d5d5" }}>
+                <div ref={part2Ref} style={{ padding: "18px 16px 8px", borderTop: "2px dashed #c5ddf0" }}>
                   <SectionHeader
                     title="Phần II — Đúng / Sai"
                     subtitle="4 câu, mỗi câu tối đa 1 điểm"
@@ -432,8 +432,8 @@ function ExamRoom() {
                                     style={{
                                       padding: "4px 12px", borderRadius: "6px",
                                       border: "1.5px solid",
-                                      borderColor: val === false ? "#b71c1c" : "#d0d0d0",
-                                      background: val === false ? "#b71c1c" : "#fff",
+                                      borderColor: val === false ? "#155f8f" : "#d0d0d0",
+                                      background: val === false ? "#155f8f" : "#fff",
                                       color: val === false ? "#fff" : "#555",
                                       fontWeight: 700, fontSize: "0.75rem", cursor: "pointer",
                                       transition: "all .12s",
@@ -455,7 +455,7 @@ function ExamRoom() {
                 </div>
 
                 {/* ── PHẦN III ────────────────────── */}
-                <div ref={part3Ref} style={{ padding: "18px 16px 8px", borderTop: "2px dashed #f0d5d5" }}>
+                <div ref={part3Ref} style={{ padding: "18px 16px 8px", borderTop: "2px dashed #c5ddf0" }}>
                   <SectionHeader
                     title="Phần III — Trả lời ngắn"
                     subtitle="6 câu × 0,5 điểm = 3,0 điểm"
@@ -467,7 +467,7 @@ function ExamRoom() {
                       <div key={q} style={{
                         display: "flex", alignItems: "center", gap: "10px",
                         padding: "8px 12px", borderRadius: "8px",
-                        border: `1px solid ${p3[q]?.trim() ? "#fed7aa" : "#f0d5d5"}`,
+                        border: `1px solid ${p3[q]?.trim() ? "#fed7aa" : "#c5ddf0"}`,
                         background: p3[q]?.trim() ? "#fff7ed" : "#fafafa",
                       }}>
                         <span style={{
@@ -488,7 +488,7 @@ function ExamRoom() {
                             fontFamily: "monospace", fontWeight: 600,
                             transition: "border-color .15s",
                           }}
-                          onFocus={(e) => { e.target.style.borderColor = "#b71c1c"; }}
+                          onFocus={(e) => { e.target.style.borderColor = "#155f8f"; }}
                           onBlur={(e) => { e.target.style.borderColor = "#e0e0e0"; }}
                         />
                       </div>
@@ -502,7 +502,7 @@ function ExamRoom() {
               <div style={{
                 position: "sticky", bottom: 0,
                 padding: "12px 16px",
-                background: "#fff", borderTop: "2px solid #f0d5d5",
+                background: "#fff", borderTop: "2px solid #c5ddf0",
                 display: "flex", alignItems: "center", gap: "12px",
               }}>
                 <div style={{ flex: 1, fontSize: "0.78rem", color: "#888" }}>
@@ -511,7 +511,7 @@ function ExamRoom() {
                 <button
                   onClick={() => setShowModal(true)}
                   style={{
-                    background: "#b71c1c", color: "#fff", border: "none",
+                    background: "#155f8f", color: "#fff", border: "none",
                     borderRadius: "8px", padding: "10px 24px",
                     fontWeight: 700, fontSize: "0.875rem", cursor: "pointer",
                   }}
@@ -542,7 +542,7 @@ function ExamRoom() {
               <div style={{
                 width: "44px", height: "44px", borderRadius: "50%",
                 background: "#fff5f5", display: "flex", alignItems: "center",
-                justifyContent: "center", color: "#b71c1c", fontSize: "1.1rem",
+                justifyContent: "center", color: "#155f8f", fontSize: "1.1rem",
                 flexShrink: 0,
               }}>
                 <i className="fas fa-paper-plane" />
@@ -585,7 +585,7 @@ function ExamRoom() {
                 onClick={handleSubmit}
                 style={{
                   flex: 1, padding: "10px", borderRadius: "8px",
-                  border: "none", background: "#b71c1c",
+                  border: "none", background: "#155f8f",
                   color: "#fff", fontWeight: 700, cursor: "pointer",
                 }}
               >
@@ -631,7 +631,7 @@ function ResultPanel({
   onReset: () => void;
 }) {
   const pct = (result.total / 10) * 100;
-  const scoreColor = pct >= 80 ? "#2e7d32" : pct >= 50 ? "#e65100" : "#b71c1c";
+  const scoreColor = pct >= 80 ? "#2e7d32" : pct >= 50 ? "#e65100" : "#155f8f";
 
   return (
     <div style={{ padding: "20px 16px", overflowY: "auto" }}>
@@ -659,7 +659,7 @@ function ResultPanel({
           { label: "Phần III", score: result.part3, max: 3, color: "#e65100" },
         ].map(({ label, score, max, color }) => (
           <div key={label} style={{
-            background: "#fff", border: "2px solid #f0d5d5",
+            background: "#fff", border: "2px solid #c5ddf0",
             borderRadius: "10px", padding: "12px", textAlign: "center",
           }}>
             <div style={{ fontSize: "0.72rem", color: "#888", marginBottom: "4px" }}>{label}</div>
@@ -688,7 +688,7 @@ function ResultPanel({
                 <span style={{ fontSize: "0.75rem", color: "#555", minWidth: "38px" }}>Câu {q}</span>
                 <span style={{
                   fontWeight: 800, fontSize: "0.82rem", minWidth: "22px",
-                  color: ok ? "#2e7d32" : "#b71c1c",
+                  color: ok ? "#2e7d32" : "#155f8f",
                 }}>
                   {userAns}
                 </span>
@@ -696,7 +696,7 @@ function ResultPanel({
                   <span style={{ fontSize: "0.72rem", color: "#888" }}>→ {correctAns}</span>
                 )}
                 <i className={`fas fa-${ok ? "check" : p1[q] ? "times" : "minus"}`}
-                  style={{ marginLeft: "auto", color: ok ? "#2e7d32" : p1[q] ? "#b71c1c" : "#ccc", fontSize: "0.72rem" }} />
+                  style={{ marginLeft: "auto", color: ok ? "#2e7d32" : p1[q] ? "#155f8f" : "#ccc", fontSize: "0.72rem" }} />
               </div>
             );
           })}
@@ -709,7 +709,7 @@ function ResultPanel({
           const { correct, score } = result.part2Detail[q];
           return (
             <div key={q} style={{
-              border: "1.5px solid #f0d5d5", borderRadius: "8px",
+              border: "1.5px solid #c5ddf0", borderRadius: "8px",
               overflow: "hidden", marginBottom: "8px",
             }}>
               <div style={{
@@ -718,7 +718,7 @@ function ResultPanel({
                 display: "flex", justifyContent: "space-between", alignItems: "center",
               }}>
                 <span style={{ fontWeight: 700, fontSize: "0.8rem", color: "#444" }}>Câu {q}</span>
-                <span style={{ fontWeight: 800, fontSize: "0.82rem", color: score === 1 ? "#2e7d32" : score > 0 ? "#e65100" : "#b71c1c" }}>
+                <span style={{ fontWeight: 800, fontSize: "0.82rem", color: score === 1 ? "#2e7d32" : score > 0 ? "#e65100" : "#155f8f" }}>
                   {correct}/4 đúng → {score}đ
                 </span>
               </div>
@@ -730,7 +730,7 @@ function ResultPanel({
                   return (
                     <span key={item} style={{
                       fontSize: "0.75rem", fontWeight: 600,
-                      color: itemOk ? "#2e7d32" : "#b71c1c",
+                      color: itemOk ? "#2e7d32" : "#155f8f",
                       display: "flex", alignItems: "center", gap: "4px",
                     }}>
                       <i className={`fas fa-${itemOk ? "check" : "times"}`} style={{ fontSize: "0.6rem" }} />
@@ -760,12 +760,12 @@ function ResultPanel({
               }}>
                 <span style={{ fontSize: "0.75rem", color: "#555", minWidth: "42px" }}>Câu {q}</span>
                 <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: "0.85rem",
-                  color: ok ? "#2e7d32" : "#b71c1c" }}>
+                  color: ok ? "#2e7d32" : "#155f8f" }}>
                   {userAns || "—"}
                 </span>
                 {!ok && <span style={{ fontSize: "0.72rem", color: "#888" }}>→ {correctAns}</span>}
                 <i className={`fas fa-${ok ? "check" : userAns ? "times" : "minus"}`}
-                  style={{ marginLeft: "auto", color: ok ? "#2e7d32" : userAns ? "#b71c1c" : "#ccc", fontSize: "0.72rem" }} />
+                  style={{ marginLeft: "auto", color: ok ? "#2e7d32" : userAns ? "#155f8f" : "#ccc", fontSize: "0.72rem" }} />
               </div>
             );
           })}
@@ -778,8 +778,8 @@ function ResultPanel({
           onClick={onReset}
           style={{
             flex: 1, padding: "11px", borderRadius: "8px",
-            border: "1.5px solid #b71c1c", background: "#fff",
-            color: "#b71c1c", fontWeight: 700, cursor: "pointer", fontSize: "0.875rem",
+            border: "1.5px solid #155f8f", background: "#fff",
+            color: "#155f8f", fontWeight: 700, cursor: "pointer", fontSize: "0.875rem",
           }}
         >
           <i className="fas fa-redo" style={{ marginRight: "8px" }} />
@@ -789,7 +789,7 @@ function ResultPanel({
           href="/practice/thpt/khao-thi"
           style={{
             flex: 1, padding: "11px", borderRadius: "8px",
-            background: "#b71c1c", color: "#fff",
+            background: "#155f8f", color: "#fff",
             fontWeight: 700, cursor: "pointer", fontSize: "0.875rem",
             textDecoration: "none", textAlign: "center",
           }}

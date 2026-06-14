@@ -34,11 +34,11 @@ export default function ExamListPage() {
         <nav style={{ fontSize: "0.82rem", color: "#777", marginBottom: "16px" }}>
           <Link href="/" style={{ color: "#777" }}>Trang chủ</Link> ›{" "}
           <Link href="/practice" style={{ color: "#777" }}>Phòng luyện</Link> ›{" "}
-          <span style={{ color: "#d32f2f", fontWeight: 600 }}>{pkg?.name ?? "..."}</span>
+          <span style={{ color: "#1e7ab8", fontWeight: 600 }}>{pkg?.name ?? "..."}</span>
         </nav>
 
         {/* Header */}
-        <div style={{ background: "#fff", border: "2px solid #f0d5d5", borderRadius: "16px", padding: "22px 24px", marginBottom: "20px" }}>
+        <div style={{ background: "#fff", border: "2px solid #c5ddf0", borderRadius: "16px", padding: "22px 24px", marginBottom: "20px" }}>
           {pkg && (
             <>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
@@ -60,11 +60,11 @@ export default function ExamListPage() {
         </div>
 
         {loading ? (
-          <div style={{ textAlign: "center", padding: "40px", color: "#d32f2f" }}>
+          <div style={{ textAlign: "center", padding: "40px", color: "#1e7ab8" }}>
             <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.5rem" }} />
           </div>
         ) : exams.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "60px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #f0d5d5" }}>
+          <div style={{ textAlign: "center", padding: "60px", color: "#777", background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0" }}>
             <i className="fas fa-file-alt" style={{ fontSize: "2rem", marginBottom: "12px", display: "block" }} />
             Chưa có đề nào được công bố
           </div>

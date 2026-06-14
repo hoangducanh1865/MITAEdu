@@ -34,17 +34,17 @@ export default function ExamConfirmPage() {
     }
   }
 
-  if (loading) return <><Navbar /><div style={{ textAlign: "center", padding: "80px", color: "#d32f2f" }}><i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} /></div></>;
+  if (loading) return <><Navbar /><div style={{ textAlign: "center", padding: "80px", color: "#1e7ab8" }}><i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} /></div></>;
 
   return (
     <>
       <Navbar />
-      <div style={{ minHeight: "calc(100vh - 62px)", background: "#fdf0f0", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
-        <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 30px rgba(211,47,47,.12)", padding: "40px 48px", width: "520px" }}>
+      <div style={{ minHeight: "calc(100vh - 62px)", background: "#f0f7fd", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div style={{ background: "#fff", borderRadius: "20px", boxShadow: "0 4px 30px rgba(30,122,184,.12)", padding: "40px 48px", width: "520px" }}>
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "32px" }}>
-            <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "#fdf0f0", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <i className="fas fa-file-alt" style={{ fontSize: "1.8rem", color: "#d32f2f" }} />
+            <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "#f0f7fd", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <i className="fas fa-file-alt" style={{ fontSize: "1.8rem", color: "#1e7ab8" }} />
             </div>
             <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "#2c2c2c" }}>
               Xác nhận thi
@@ -53,7 +53,7 @@ export default function ExamConfirmPage() {
           </div>
 
           {/* Exam info */}
-          <div style={{ background: "#fdf0f0", borderRadius: "14px", padding: "20px", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ background: "#f0f7fd", borderRadius: "14px", padding: "20px", marginBottom: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
             <InfoRow icon="fa-user" label="Thí sinh" value={user?.name ?? "—"} />
             <InfoRow icon="fa-envelope" label="Email" value={user?.email ?? "—"} />
             <InfoRow icon="fa-clock" label="Thời gian" value={exam ? formatDuration(exam.durationMinutes) : "—"} />
@@ -85,7 +85,7 @@ function InfoRow({ icon, label, value }: { icon: string; label: string; value: s
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "0.875rem" }}>
       <span style={{ color: "#777", display: "flex", alignItems: "center", gap: "8px" }}>
-        <i className={`fas ${icon}`} style={{ width: "16px", color: "#d32f2f" }} />{label}
+        <i className={`fas ${icon}`} style={{ width: "16px", color: "#1e7ab8" }} />{label}
       </span>
       <span style={{ fontWeight: 600, color: "#2c2c2c" }}>{value}</span>
     </div>

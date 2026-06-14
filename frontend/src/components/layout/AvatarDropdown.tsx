@@ -44,7 +44,7 @@ export default function AvatarDropdown() {
         <div
           style={{
             width: "34px", height: "34px", borderRadius: "50%",
-            background: "linear-gradient(135deg,#d32f2f,#b71c1c)",
+            background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: "#fff", fontSize: "0.9rem",
           }}
@@ -59,7 +59,7 @@ export default function AvatarDropdown() {
           style={{
             position: "absolute", right: 0, top: "calc(100% + 8px)",
             background: "#fff", borderRadius: "12px", boxShadow: "0 4px 20px rgba(0,0,0,.12)",
-            border: "1px solid #f0d5d5", minWidth: "180px", zIndex: 200,
+            border: "1px solid #c5ddf0", minWidth: "180px", zIndex: 200,
             padding: "8px 0",
           }}
         >
@@ -69,10 +69,10 @@ export default function AvatarDropdown() {
           <Link href="/practice/history" style={dropItemStyle} onClick={() => setOpen(false)}>
             <i className="fas fa-history" style={{ width: "16px" }} /> Lịch sử làm bài
           </Link>
-          <hr style={{ borderColor: "#f0d5d5", margin: "4px 12px" }} />
+          <hr style={{ borderColor: "#c5ddf0", margin: "4px 12px" }} />
           <button
             onClick={logout}
-            style={{ ...dropItemStyle, width: "100%", textAlign: "left", color: "#d32f2f" }}
+            style={{ ...dropItemStyle, width: "100%", textAlign: "left", color: "#1e7ab8" }}
           >
             <i className="fas fa-sign-out-alt" style={{ width: "16px" }} /> Đăng xuất
           </button>

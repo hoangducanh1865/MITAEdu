@@ -123,12 +123,12 @@ export default function PracticeHomePage() {
 
       {/* Recent submissions */}
       {!loading && completed.length > 0 && (
-        <div style={{ background: "#fff", border: "2px solid #f0d5d5", borderRadius: "16px", padding: "20px 24px" }}>
+        <div style={{ background: "#fff", border: "2px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
             <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
               Bài thi gần đây
             </h2>
-            <Link href="/practice/history" style={{ fontSize: "0.8rem", color: "#d32f2f", fontWeight: 600 }}>
+            <Link href="/practice/history" style={{ fontSize: "0.8rem", color: "#1e7ab8", fontWeight: 600 }}>
               Xem tất cả →
             </Link>
           </div>
@@ -136,13 +136,13 @@ export default function PracticeHomePage() {
             {completed.slice(0, 3).map((s) => (
               <div key={s.id} style={{
                 display: "flex", alignItems: "center", gap: "14px",
-                padding: "10px 14px", borderRadius: "10px", background: "#fdf0f0",
+                padding: "10px 14px", borderRadius: "10px", background: "#f0f7fd",
               }}>
-                <i className="fas fa-file-alt" style={{ color: "#d32f2f", fontSize: "0.9rem" }} />
+                <i className="fas fa-file-alt" style={{ color: "#1e7ab8", fontSize: "0.9rem" }} />
                 <div style={{ flex: 1, fontSize: "0.875rem", fontWeight: 600, color: "#2c2c2c" }}>
                   {s.examTitle}
                 </div>
-                <div style={{ fontWeight: 800, fontSize: "0.95rem", color: (s.percentage ?? 0) >= 70 ? "#2e7d32" : "#d32f2f" }}>
+                <div style={{ fontWeight: 800, fontSize: "0.95rem", color: (s.percentage ?? 0) >= 70 ? "#2e7d32" : "#1e7ab8" }}>
                   {s.percentage}%
                 </div>
               </div>
@@ -158,7 +158,7 @@ function StatCard({ loading, icon, color, bg, label, value, unit }: {
   loading: boolean; icon: string; color: string; bg: string; label: string; value: number; unit: string;
 }) {
   return (
-    <div style={{ background: "#fff", border: "2px solid #f0d5d5", borderRadius: "14px", padding: "16px 18px" }}>
+    <div style={{ background: "#fff", border: "2px solid #c5ddf0", borderRadius: "14px", padding: "16px 18px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
         <span style={{ width: "34px", height: "34px", borderRadius: "8px", background: bg, display: "flex", alignItems: "center", justifyContent: "center", color, fontSize: "0.95rem" }}>
           <i className={`fas ${icon}`} />
@@ -202,7 +202,7 @@ function ExamCatCard({ title, color, bg, icon, links }: {
 }
 
 const utilCard: React.CSSProperties = {
-  background: "#fff", border: "2px solid #f0d5d5", borderRadius: "14px",
+  background: "#fff", border: "2px solid #c5ddf0", borderRadius: "14px",
   padding: "16px 18px", display: "flex", alignItems: "center", gap: "14px",
   color: "#2c2c2c", textDecoration: "none",
 };

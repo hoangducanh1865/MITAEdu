@@ -10,7 +10,7 @@ interface ToastProps {
 
 const COLORS = {
   success: { bg: "#e8f5e9", border: "#4caf50", icon: "fa-check-circle", iconColor: "#2e7d32" },
-  error:   { bg: "#ffebee", border: "#f44336", icon: "fa-times-circle", iconColor: "#c62828" },
+  error:   { bg: "#e3f2fd", border: "#2196f3", icon: "fa-times-circle", iconColor: "#1970a8" },
   info:    { bg: "#e3f2fd", border: "#2196f3", icon: "fa-info-circle",  iconColor: "#1565c0" },
 };
 

@@ -33,7 +33,7 @@ public class ActivationCodeService {
     private final EntitlementService entitlementService;
 
     @Transactional
-    public List<String> generateCodes(Long courseId, int count, Long adminId) {
+    public List<String> generateCodes(Long courseId, int count, Long adminId, LocalDateTime expiresAt) {
         if (count < 1 || count > 500) {
             throw ApiException.badRequest("Số lượng mã phải từ 1 đến 500");
         }
@@ -48,6 +48,7 @@ public class ActivationCodeService {
                     .code(code)
                     .course(course)
                     .createdBy(admin)
+                    .expiresAt(expiresAt)
                     .build();
             activationCodeRepository.save(ac);
             generated.add(code);
@@ -91,14 +92,6 @@ public class ActivationCodeService {
         return activationCodeRepository.findByCourseId(courseId).stream()
                 .map(ActivationCodeDto::from)
                 .toList();
-    }
-
-    @Transactional
-    public void revokeCode(Long codeId) {
-        ActivationCode ac = activationCodeRepository.findById(codeId)
-                .orElseThrow(() -> ApiException.notFound("Không tìm thấy mã kích hoạt"));
-        ac.setStatus(Status.REVOKED);
-        activationCodeRepository.save(ac);
     }
 
     private String generateUniqueCode() {

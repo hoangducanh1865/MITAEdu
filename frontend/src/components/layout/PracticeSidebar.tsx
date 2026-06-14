@@ -83,7 +83,7 @@ export default function PracticeSidebar() {
     }}>
     <aside style={{
       width: "260px",
-      background: "#fff", borderRight: "2px solid #f0d5d5",
+      background: "#fff", borderRight: "2px solid #c5ddf0",
       padding: "12px 0", overflowY: "auto",
       height: "100%",
     }}>
@@ -101,7 +101,7 @@ export default function PracticeSidebar() {
               style={groupHdStyle}
             >
               <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <i className={`fas ${group.icon}`} style={{ color: "#d32f2f", width: "16px" }} />
+                <i className={`fas ${group.icon}`} style={{ color: "#1e7ab8", width: "16px" }} />
                 <span style={{ fontSize: "0.875rem", fontWeight: 600 }}>{group.label}</span>
               </span>
               <i
@@ -159,7 +159,7 @@ export default function PracticeSidebar() {
         );
       })}
 
-      <hr style={{ borderColor: "#f0d5d5", margin: "8px 12px" }} />
+      <hr style={{ borderColor: "#c5ddf0", margin: "8px 12px" }} />
       <NavItem href="/practice/history" icon="fa-history" active={pathname === "/practice/history"}>
         Lịch sử làm bài
       </NavItem>
@@ -180,12 +180,12 @@ function NavItem({ href, icon, active, small, children }: {
       padding: small ? "7px 16px" : "10px 16px",
       fontSize: small ? "0.82rem" : "0.875rem",
       fontWeight: active ? 600 : 400,
-      color: active ? "#d32f2f" : "#2c2c2c",
-      background: active ? "#fdf0f0" : "transparent",
-      borderRight: active ? "3px solid #d32f2f" : "3px solid transparent",
+      color: active ? "#1e7ab8" : "#2c2c2c",
+      background: active ? "#f0f7fd" : "transparent",
+      borderRight: active ? "3px solid #1e7ab8" : "3px solid transparent",
       transition: "background .15s",
     }}>
-      <i className={`fas ${icon}`} style={{ width: "14px", color: active ? "#d32f2f" : "#777", fontSize: "0.85rem" }} />
+      <i className={`fas ${icon}`} style={{ width: "14px", color: active ? "#1e7ab8" : "#777", fontSize: "0.85rem" }} />
       {children}
     </Link>
   );

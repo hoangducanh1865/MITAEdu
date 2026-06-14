@@ -9,6 +9,7 @@ export default function AccessCodesPage() {
   const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
   const [codes, setCodes] = useState<ActivationCode[]>([]);
   const [count, setCount] = useState(10);
+  const [expiresAt, setExpiresAt] = useState("");
   const [generating, setGenerating] = useState(false);
   const [loadingCodes, setLoadingCodes] = useState(false);
   const [generatedCodes, setGeneratedCodes] = useState<string[] | null>(null);
@@ -39,11 +40,10 @@ export default function AccessCodesPage() {
     setError(null);
     setGeneratedCodes(null);
     try {
-      const res = await api.post<ApiResponse<string[]>>("/api/admin/access-codes/generate", {
-        courseId: selectedCourseId, count,
-      });
+      const payload: Record<string, unknown> = { courseId: selectedCourseId, count };
+      if (expiresAt) payload.expiresAt = expiresAt;
+      const res = await api.post<ApiResponse<string[]>>("/api/admin/access-codes/generate", payload);
       setGeneratedCodes(res.data.data);
-      // Refresh list
       const updated = await api.get<ApiResponse<ActivationCode[]>>(`/api/admin/access-codes?courseId=${selectedCourseId}`);
       setCodes(updated.data.data || []);
     } catch (e: unknown) {
@@ -51,12 +51,6 @@ export default function AccessCodesPage() {
     } finally {
       setGenerating(false);
     }
-  }
-
-  async function handleRevoke(id: number) {
-    if (!confirm("Thu hồi mã này?")) return;
-    await api.delete(`/api/admin/access-codes/${id}`);
-    setCodes((prev) => prev.map((c) => c.id === id ? { ...c, status: "REVOKED" as const } : c));
   }
 
   return (
@@ -79,17 +73,31 @@ export default function AccessCodesPage() {
               {courses.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
+
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
             <label style={{ fontSize: "0.78rem", color: "#777", fontWeight: 600 }}>Số lượng</label>
             <input type="number" min={1} max={500} value={count} onChange={(e) => setCount(Number(e.target.value))}
               style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid #e0e0e0", fontSize: "0.875rem", width: "80px" }} />
           </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <label style={{ fontSize: "0.78rem", color: "#777", fontWeight: 600 }}>
+              Hạn kích hoạt <span style={{ color: "#aaa", fontWeight: 400 }}>(để trống = không giới hạn)</span>
+            </label>
+            <input
+              type="datetime-local"
+              value={expiresAt}
+              onChange={(e) => setExpiresAt(e.target.value)}
+              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid #e0e0e0", fontSize: "0.875rem" }}
+            />
+          </div>
+
           <button onClick={handleGenerate} disabled={generating || !selectedCourseId}
-            style={{ padding: "10px 20px", background: "#d32f2f", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer" }}>
+            style={{ padding: "10px 20px", background: "#1e7ab8", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer" }}>
             {generating ? <><i className="fas fa-spinner fa-spin" /> Đang tạo...</> : <><i className="fas fa-plus" /> Tạo mã</>}
           </button>
         </div>
-        {error && <p style={{ marginTop: "10px", color: "#d32f2f", fontSize: "0.82rem" }}>{error}</p>}
+        {error && <p style={{ marginTop: "10px", color: "#1e7ab8", fontSize: "0.82rem" }}>{error}</p>}
 
         {generatedCodes && (
           <div style={{ marginTop: "16px", background: "#f5fff5", border: "1px solid #c8e6c9", borderRadius: "10px", padding: "14px" }}>
@@ -118,25 +126,26 @@ export default function AccessCodesPage() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #f0d5d5" }}>
-                  <Th>Mã</Th><Th>Trạng thái</Th><Th>Dùng bởi</Th><Th>Ngày dùng</Th><Th>Thao tác</Th>
+                <tr style={{ borderBottom: "2px solid #c5ddf0" }}>
+                  <Th>Mã</Th>
+                  <Th>Trạng thái</Th>
+                  <Th>Hạn kích hoạt</Th>
+                  <Th>Dùng bởi</Th>
+                  <Th>Ngày dùng</Th>
                 </tr>
               </thead>
               <tbody>
                 {codes.map((code) => (
                   <tr key={code.id} style={{ borderBottom: "1px solid #f5f5f5" }}>
                     <Td><code style={{ fontWeight: 700, letterSpacing: "1px" }}>{code.code}</code></Td>
-                    <Td><StatusBadge status={code.status} /></Td>
+                    <Td><StatusBadge status={code.status} expiresAt={code.expiresAt} /></Td>
+                    <Td style={{ color: code.expiresAt ? "#555" : "#aaa" }}>
+                      {code.expiresAt
+                        ? new Date(code.expiresAt).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })
+                        : "Không giới hạn"}
+                    </Td>
                     <Td>{code.usedByEmail ?? "—"}</Td>
                     <Td>{code.usedAt ? new Date(code.usedAt).toLocaleDateString("vi-VN") : "—"}</Td>
-                    <Td>
-                      {code.status === "UNUSED" && (
-                        <button onClick={() => handleRevoke(code.id)}
-                          style={{ padding: "4px 12px", background: "#fdf0f0", color: "#d32f2f", border: "1px solid #f0d5d5", borderRadius: "6px", fontSize: "0.78rem", cursor: "pointer", fontWeight: 600 }}>
-                          Thu hồi
-                        </button>
-                      )}
-                    </Td>
                   </tr>
                 ))}
               </tbody>
@@ -148,11 +157,17 @@ export default function AccessCodesPage() {
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, expiresAt }: { status: string; expiresAt?: string }) {
+  const isExpired = status === "UNUSED" && expiresAt && new Date(expiresAt) < new Date();
+
+  if (isExpired) {
+    return <span style={{ background: "#fff3e0", color: "#e65100", borderRadius: "6px", padding: "3px 10px", fontSize: "0.75rem", fontWeight: 700 }}>Hết hạn</span>;
+  }
+
   const map: Record<string, { bg: string; color: string; label: string }> = {
     UNUSED: { bg: "#e8f5e9", color: "#2e7d32", label: "Chưa dùng" },
     USED:   { bg: "#e3f2fd", color: "#1565c0", label: "Đã dùng" },
-    REVOKED:{ bg: "#fdf0f0", color: "#d32f2f", label: "Thu hồi" },
+    REVOKED:{ bg: "#f0f7fd", color: "#1e7ab8", label: "Thu hồi" },
   };
   const s = map[status] ?? { bg: "#f5f5f5", color: "#777", label: status };
   return <span style={{ background: s.bg, color: s.color, borderRadius: "6px", padding: "3px 10px", fontSize: "0.75rem", fontWeight: 700 }}>{s.label}</span>;
@@ -161,6 +176,6 @@ function StatusBadge({ status }: { status: string }) {
 function Th({ children }: { children: React.ReactNode }) {
   return <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "0.78rem", color: "#777", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap" }}>{children}</th>;
 }
-function Td({ children }: { children: React.ReactNode }) {
-  return <td style={{ padding: "10px 12px", color: "#444" }}>{children}</td>;
+function Td({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
+  return <td style={{ padding: "10px 12px", color: "#444", ...style }}>{children}</td>;
 }

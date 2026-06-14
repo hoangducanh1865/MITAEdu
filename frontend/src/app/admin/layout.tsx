@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: "fas fa-tachometer-alt", exact: true },
   { href: "/admin/access-codes", label: "Mã kích hoạt", icon: "fas fa-key" },
-  { href: "/admin/entitlements", label: "Phân quyền", icon: "fas fa-user-check" },
   { href: "/admin/users", label: "Người dùng", icon: "fas fa-users" },
 ];
 
@@ -17,7 +16,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", flexDirection: "column" }}>
       {/* Top bar */}
       <header style={{
-        background: "linear-gradient(135deg,#d32f2f,#b71c1c)", color: "#fff",
+        background: "linear-gradient(135deg,#1e7ab8,#155f8f)", color: "#fff",
         padding: "0 28px", height: "60px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         boxShadow: "0 2px 8px rgba(0,0,0,0.2)", position: "sticky", top: 0, zIndex: 100,
@@ -46,8 +45,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link key={item.href} href={item.href} style={{
                 display: "flex", alignItems: "center", gap: "10px",
                 padding: "11px 14px", borderRadius: "10px", textDecoration: "none",
-                background: active ? "#fdf0f0" : "transparent",
-                color: active ? "#d32f2f" : "#444",
+                background: active ? "#f0f7fd" : "transparent",
+                color: active ? "#1e7ab8" : "#444",
                 fontWeight: active ? 700 : 500, fontSize: "0.875rem",
                 transition: "all .15s",
               }}>
