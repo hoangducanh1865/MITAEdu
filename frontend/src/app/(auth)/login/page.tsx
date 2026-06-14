@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ email: "admin@mita.edu.vn", password: "admin123" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [needVerify, setNeedVerify] = useState(false);
@@ -68,9 +68,7 @@ export default function LoginPage() {
       }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
-            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
-          </div>
+          <img src="/logo-mita-2.png" alt="MITA Edu" style={{ height: "64px", objectFit: "contain" }} />
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             Đăng nhập để tiếp tục học tập
           </p>

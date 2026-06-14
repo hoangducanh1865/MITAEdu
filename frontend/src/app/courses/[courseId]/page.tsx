@@ -140,9 +140,19 @@ function ApiCourseDetail({ courseId }: { courseId: string }) {
             {/* Media player */}
             {activeLesson && (
               <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
-                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "16px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: activeLesson.description ? "6px" : "16px" }}>
                   {activeLesson.title}
                 </h2>
+                {activeLesson.description && (
+                  <div style={{ fontSize: "0.8rem", color: "#777", lineHeight: 1.5, marginBottom: "16px" }}>
+                    {activeLesson.description.split(" | ").map((item, i) => (
+                      <div key={i} style={{ display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "2px" }}>
+                        <span style={{ color: "#1e7ab8", fontWeight: 700, flexShrink: 0 }}>·</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {activeLesson.videoMediaId || activeLesson.pdfMediaId || activeLesson.handwrittenMediaId
                   ? <SecureMediaViewer lesson={activeLesson} />
                   : <VideoPlayer lesson={activeLesson} />

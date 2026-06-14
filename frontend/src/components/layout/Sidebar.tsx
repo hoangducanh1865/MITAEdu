@@ -72,7 +72,7 @@ export default function Sidebar() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
         <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
-        <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
+        <SocialLink href="https://m.me/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
         <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
       </div>
     </aside>
