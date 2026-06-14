@@ -1,14 +1,14 @@
 -- V13: Full idempotent seed for HSA course (covers cases where V11 failed)
--- Uses PostgreSQL ON CONFLICT syntax + full lesson re-seed
 
 ALTER TABLE lessons ADD COLUMN IF NOT EXISTS description TEXT;
 
--- Upsert course
 INSERT INTO courses (name, slug, category, teacher, description)
-VALUES ('Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)',
-        'khoa-nen-tang-vact-2027', 'HSA', 'MITA Education',
-        'Khóa học toàn diện 8 môn: Toán, Tiếng Việt, Tiếng Anh, Hóa, Sinh học, Sử, Địa, Lí cho kỳ thi ĐGNL TP HCM (V-ACT) 2027')
-ON CONFLICT (slug) DO NOTHING;
+SELECT 'Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)',
+       'khoa-nen-tang-vact-2027', 'HSA', 'MITA Education',
+       'Khóa học toàn diện 8 môn: Toán, Tiếng Việt, Tiếng Anh, Hóa, Sinh học, Sử, Địa, Lí cho kỳ thi ĐGNL TP HCM (V-ACT) 2027'
+WHERE NOT EXISTS (
+    SELECT 1 FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
+);
 
 -- Re-seed lessons (idempotent delete + insert)
 DELETE FROM lessons WHERE course_id = (SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027');
