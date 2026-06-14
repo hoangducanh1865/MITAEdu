@@ -83,6 +83,7 @@ a { text-decoration: none; color: inherit; }
 .layout-home {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   min-height: calc(100vh - 62px);
   overflow: hidden;
   background: #fdf0f0;
@@ -143,9 +144,25 @@ a { text-decoration: none; color: inherit; }
     cursor: pointer;
   }
 
-  /* Right panel: hidden on mobile */
+  /* Right panel: move below main on mobile */
   .home-right-panel {
-    display: none !important;
+    display: flex !important;
+    width: 100% !important;
+    min-height: unset !important;
+    padding: 0 14px 20px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 14px !important;
+    order: 3 !important;
+  }
+  .home-right-panel > img {
+    width: auto !important;
+    height: 110px !important;
+    border-radius: 12px !important;
+  }
+  .home-right-panel > button {
+    flex: 1 !important;
+    min-height: 52px !important;
   }
 
   /* Section horizontal padding */
@@ -200,10 +217,24 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
-  /* Tablet: thu gọn right panel */
+  /* Tablet: right panel moves below main */
   .home-right-panel {
-    width: 220px !important;
-    padding-right: 12px !important;
+    width: 100% !important;
+    min-height: unset !important;
+    padding: 0 20px 20px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    order: 3 !important;
+  }
+  .home-right-panel > img {
+    width: auto !important;
+    height: 130px !important;
+    border-radius: 14px !important;
+  }
+  .home-right-panel > button {
+    flex: 1 !important;
+    min-height: 52px !important;
   }
 }
 
