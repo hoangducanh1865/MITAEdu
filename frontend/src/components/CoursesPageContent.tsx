@@ -46,6 +46,17 @@ const CAT_TITLES: Record<string, string> = {
   THPT: "KHÓA LUYỆN ĐỀ V-ACT 2027",
 };
 
+const HSA_SUBJECTS = [
+  { name: "Toán", prefix: "Toán", icon: "fas fa-calculator", color: "#1565c0", bg: "#e3f2fd", count: 58 },
+  { name: "Tiếng Việt", prefix: "Tiếng Việt", icon: "fas fa-book-open", color: "#6a1b9a", bg: "#f3e5f5", count: 23 },
+  { name: "Tiếng Anh", prefix: "Tiếng Anh", icon: "fas fa-language", color: "#0277bd", bg: "#e1f5fe", count: 22 },
+  { name: "Hóa học", prefix: "Hóa", icon: "fas fa-flask", color: "#2e7d32", bg: "#e8f5e9", count: 23 },
+  { name: "Sinh học", prefix: "Sinh học", icon: "fas fa-dna", color: "#00695c", bg: "#e0f2f1", count: 14 },
+  { name: "Lịch sử", prefix: "Sử", icon: "fas fa-landmark", color: "#bf360c", bg: "#fbe9e7", count: 16 },
+  { name: "Địa lí", prefix: "Địa", icon: "fas fa-globe-asia", color: "#33691e", bg: "#f1f8e9", count: 16 },
+  { name: "Vật lí", prefix: "Lí", icon: "fas fa-atom", color: "#4527a0", bg: "#ede7f6", count: 7 },
+];
+
 
 export default function CoursesPageContent() {
   const searchParams = useSearchParams();
@@ -237,42 +248,67 @@ export default function CoursesPageContent() {
                 <div style={{ textAlign: "center", padding: "40px", color: "#1e7ab8" }}>
                   <i className="fas fa-spinner fa-spin" />
                 </div>
+              ) : category === "HSA" ? (
+                courses.length === 0 ? (
+                  <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px" }}>
+                    <i className="fas fa-box-open" style={{ fontSize: "3rem", marginBottom: "14px", display: "block", opacity: 0.3 }} />
+                    <p>Khóa học đang được chuẩn bị, vui lòng quay lại sau</p>
+                  </div>
+                ) : (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+                    {HSA_SUBJECTS.map((subject) => (
+                      <Link
+                        key={subject.name}
+                        href={`/courses/${courses[0].id}?subject=${encodeURIComponent(subject.prefix)}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <div style={{
+                          background: "#fff", border: "2px solid #e8f0f7", borderRadius: "16px",
+                          padding: "24px 20px", display: "flex", flexDirection: "column",
+                          alignItems: "center", gap: "12px", cursor: "pointer",
+                          transition: "all .15s", textAlign: "center",
+                        }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = subject.color;
+                            e.currentTarget.style.boxShadow = `0 4px 16px ${subject.color}22`;
+                            e.currentTarget.style.transform = "translateY(-2px)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "#e8f0f7";
+                            e.currentTarget.style.boxShadow = "none";
+                            e.currentTarget.style.transform = "translateY(0)";
+                          }}
+                        >
+                          <div style={{
+                            width: "56px", height: "56px", borderRadius: "14px",
+                            background: subject.bg, display: "flex",
+                            alignItems: "center", justifyContent: "center",
+                            fontSize: "1.5rem", color: subject.color,
+                          }}>
+                            <i className={subject.icon} />
+                          </div>
+                          <div>
+                            <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
+                              {subject.name}
+                            </div>
+                            <div style={{ fontSize: "0.78rem", color: "#999", marginTop: "4px" }}>
+                              {subject.count} bài học
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )
               ) : courses.length === 0 ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                    padding: "80px",
-                    color: "#777",
-                    background: "#fff",
-                    borderRadius: "16px",
-                  }}
-                >
-                  <i
-                    className="fas fa-box-open"
-                    style={{
-                      fontSize: "3rem",
-                      marginBottom: "14px",
-                      display: "block",
-                      opacity: 0.3,
-                    }}
-                  />
+                <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px" }}>
+                  <i className="fas fa-box-open" style={{ fontSize: "3rem", marginBottom: "14px", display: "block", opacity: 0.3 }} />
                   <p>Chưa có khóa học nào trong danh mục này</p>
                 </div>
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "16px",
-                    overflowX: "auto",
-                    paddingBottom: "8px",
-                    scrollSnapType: "x mandatory",
-                  }}
-                >
+                <div style={{ display: "flex", gap: "16px", overflowX: "auto", paddingBottom: "8px", scrollSnapType: "x mandatory" }}>
                   {courses.map((course) => (
-                    <CourseCard
-                      key={course.id}
-                      course={course}
-                    />
+                    <CourseCard key={course.id} course={course} />
                   ))}
                 </div>
               )}
