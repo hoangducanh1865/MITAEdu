@@ -3,6 +3,7 @@ package com.mita.auth.service;
 import com.mita.auth.entity.PasswordResetToken;
 import com.mita.auth.repository.PasswordResetTokenRepository;
 import com.mita.common.exception.ApiException;
+import com.mita.user.entity.User;
 import com.mita.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,20 +35,19 @@ public class PasswordResetService {
     @Transactional
     public void requestReset(String email) {
         userRepository.findByEmail(email).ifPresent(user -> {
-            tokenRepository.deleteByUserIdAndUsedFalse(user.getId());
-
-            String rawToken = UUID.randomUUID().toString();
-            PasswordResetToken prt = PasswordResetToken.builder()
-                    .user(user)
-                    .token(rawToken)
-                    .expiresAt(LocalDateTime.now().plusHours(1))
-                    .build();
-            tokenRepository.save(prt);
-
-            String resetUrl = frontendUrl + "/reset-password?token=" + rawToken;
-            resendEmailService.sendPasswordResetEmail(user.getEmail(), user.getName(), resetUrl);
+            createTokenAndSendEmail(user, false);
             log.info("Password reset requested for user: {}", user.getEmail());
         });
+    }
+
+    /** Gửi link đổi mật khẩu cho chính người dùng đang đăng nhập. */
+    @Transactional
+    public void requestPasswordChange(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> ApiException.unauthorized("Vui lòng đăng nhập lại"));
+
+        createTokenAndSendEmail(user, true);
+        log.info("Password change requested for user: {}", user.getEmail());
     }
 
     /** Xác thực token và đặt lại mật khẩu mới */
@@ -71,5 +71,24 @@ public class PasswordResetService {
         tokenRepository.save(prt);
 
         log.info("Password reset successfully for user: {}", user.getEmail());
+    }
+
+    private void createTokenAndSendEmail(User user, boolean passwordChange) {
+        tokenRepository.deleteByUserIdAndUsedFalse(user.getId());
+
+        String rawToken = UUID.randomUUID().toString();
+        PasswordResetToken prt = PasswordResetToken.builder()
+                .user(user)
+                .token(rawToken)
+                .expiresAt(LocalDateTime.now().plusHours(1))
+                .build();
+        tokenRepository.save(prt);
+
+        String resetUrl = frontendUrl + "/reset-password?token=" + rawToken;
+        if (passwordChange) {
+            resendEmailService.sendPasswordChangeEmail(user.getEmail(), user.getName(), resetUrl);
+        } else {
+            resendEmailService.sendPasswordResetEmail(user.getEmail(), user.getName(), resetUrl);
+        }
     }
 }

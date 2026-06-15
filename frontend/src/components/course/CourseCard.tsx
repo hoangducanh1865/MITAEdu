@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { getCourseCategoryCode } from "@/lib/courseCategory";
 import type { Course } from "@/types";
 
 const categoryColors: Record<string, { bg: string; color: string }> = {
@@ -11,6 +12,7 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
 
 export default function CourseCard({ course }: { course: Course }) {
   const colors = categoryColors[course.category] || categoryColors.TSA;
+  const categoryCode = getCourseCategoryCode(course.category);
 
   return (
     <Link href={`/courses/${course.id}`}>
@@ -52,7 +54,7 @@ export default function CourseCard({ course }: { course: Course }) {
             fontWeight: 700,
             textTransform: "uppercase"
           }}>
-            {course.category}
+            {categoryCode}
           </span>
           {course.lessonCount && (
             <span style={{

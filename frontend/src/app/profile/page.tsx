@@ -15,6 +15,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [form, setForm] = useState({ name: "", school: "", city: "", birthYear: "" });
   const [saving, setSaving] = useState(false);
+  const [requestingPasswordChange, setRequestingPasswordChange] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   useEffect(() => {
@@ -54,6 +55,22 @@ export default function ProfilePage() {
       setToast({ message: "Cập nhật thất bại, vui lòng thử lại", type: "error" });
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function requestPasswordChange() {
+    setRequestingPasswordChange(true);
+    try {
+      await api.post<ApiResponse<void>>("/api/users/me/password-reset-link");
+      setToast({
+        message: "Đã gửi link đổi mật khẩu đến email của bạn. Link có hiệu lực trong 1 giờ.",
+        type: "success",
+      });
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setToast({ message: msg ?? "Không gửi được link đổi mật khẩu, vui lòng thử lại", type: "error" });
+    } finally {
+      setRequestingPasswordChange(false);
     }
   }
 
@@ -103,6 +120,18 @@ export default function ProfilePage() {
                 <Input label="Năm sinh" type="number" value={form.birthYear} onChange={(e) => setForm({ ...form, birthYear: e.target.value })} leftIcon={<i className="fas fa-birthday-cake" />} placeholder="2006" />
                 <Button onClick={save} loading={saving} className="w-fit">
                   <i className="fas fa-save" /> Lưu thay đổi
+                </Button>
+              </div>
+
+              <div id="security" style={{ borderTop: "1px solid #c5ddf0", marginTop: "28px", paddingTop: "24px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "10px" }}>
+                  Bảo mật tài khoản
+                </h2>
+                <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.6, marginBottom: "16px" }}>
+                  Để đổi mật khẩu, MITA Education sẽ gửi một link xác nhận đến email <strong>{user?.email}</strong>. Bạn cần mở link đó để thiết lập mật khẩu mới.
+                </p>
+                <Button onClick={requestPasswordChange} loading={requestingPasswordChange} variant="secondary" className="w-fit">
+                  <i className="fas fa-key" /> Gửi link đổi mật khẩu
                 </Button>
               </div>
             </div>

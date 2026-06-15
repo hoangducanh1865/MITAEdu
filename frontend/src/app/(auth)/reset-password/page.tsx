@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/api";
+import { removeToken } from "@/lib/auth";
 import type { ApiResponse, ResetPasswordRequest } from "@/types";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -88,6 +89,7 @@ function ResetPasswordForm() {
     try {
       const payload: ResetPasswordRequest = { token: token!, newPassword: form.newPassword };
       await api.post<ApiResponse<void>>("/api/auth/reset-password", payload);
+      removeToken();
       setSuccess(true);
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;

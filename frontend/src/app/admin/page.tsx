@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
+import { getCourseCategoryCode } from "@/lib/courseCategory";
 import type { ApiResponse, Course } from "@/types";
 
 interface Stats {
@@ -54,7 +55,7 @@ export default function AdminDashboard() {
                 <tr key={c.id} style={{ borderBottom: "1px solid #f5f5f5" }}>
                   <Td>{c.id}</Td>
                   <Td><span style={{ fontWeight: 600 }}>{c.name}</span></Td>
-                  <Td><span style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "6px", padding: "2px 8px", fontSize: "0.75rem", fontWeight: 700 }}>{c.category}</span></Td>
+                  <Td><span style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "6px", padding: "2px 8px", fontSize: "0.75rem", fontWeight: 700 }}>{getCourseCategoryCode(c.category)}</span></Td>
                   <Td>{c.teacher ?? "—"}</Td>
                   <Td><code style={{ fontSize: "0.78rem", color: "#555" }}>{c.slug}</code></Td>
                 </tr>

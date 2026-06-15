@@ -10,6 +10,7 @@ import VideoPlayer from "@/components/course/VideoPlayer";
 import SecureMediaViewer from "@/components/course/SecureMediaViewer";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
 import api from "@/lib/api";
+import { getCourseCategoryCode, getCourseCategoryUrl } from "@/lib/courseCategory";
 import type { ApiResponse, Course, Lesson } from "@/types";
 import Badge from "@/components/ui/Badge";
 
@@ -114,6 +115,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
   );
 
   const catLower = course.category.toLowerCase() as "tsa" | "hsa" | "thpt";
+  const categoryCode = getCourseCategoryCode(course.category);
   const allLessons = course.lessons ?? [];
   const visibleLessons = subject
     ? allLessons.filter((l) => l.title.startsWith(subject + " ·"))
@@ -134,7 +136,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
               {" › "}
               <a href="/courses" style={{ color: "#777" }}>Khóa học</a>
               {" › "}
-              <a href={`/courses?category=${course.category}`} style={{ color: "#777" }}>{course.name}</a>
+              <a href={getCourseCategoryUrl(course.category)} style={{ color: "#777" }}>{course.name}</a>
               {subject && (
                 <>
                   {" › "}
@@ -174,7 +176,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
             {/* Course header */}
             <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                <Badge variant={catLower}>{course.category}</Badge>
+                <Badge variant={catLower}>{categoryCode}</Badge>
                 <span style={{ fontSize: "0.78rem", color: "#777" }}>
                   <i className="fas fa-book" style={{ marginRight: "4px" }} />{course.lessonCount} bài học
                 </span>
@@ -241,6 +243,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
 
 function LockedCourseView({ course, onOpenCodeModal }: { course: Course; onOpenCodeModal: () => void }) {
   const catLower = course.category.toLowerCase() as "tsa" | "hsa" | "thpt";
+  const categoryCode = getCourseCategoryCode(course.category);
   return (
     <main style={{ flex: 1, padding: "40px 28px", background: "#f0f7fd", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
       <div style={{ background: "#fff", borderRadius: "20px", border: "2px solid #c5ddf0", padding: "40px", maxWidth: "560px", width: "100%", textAlign: "center" }}>
@@ -249,7 +252,7 @@ function LockedCourseView({ course, onOpenCodeModal }: { course: Course; onOpenC
             style={{ width: "100%", maxHeight: "200px", objectFit: "cover", borderRadius: "12px", marginBottom: "24px" }} />
         )}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-          <Badge variant={catLower}>{course.category}</Badge>
+          <Badge variant={catLower}>{categoryCode}</Badge>
         </div>
         <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "#2c2c2c", marginBottom: "8px" }}>
           {course.name}
