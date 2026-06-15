@@ -142,7 +142,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ──────────────────────────── */}
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026 ──────────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
               background: "#1e7ab8", borderRadius: "12px",
@@ -153,12 +153,12 @@ export default function DashboardPage() {
               cursor: "pointer",
             }}>
               <i className="fas fa-trophy" />
-              VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026
+              VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026
               <i className="fas fa-trophy" />
             </div>
           </section>
 
-          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ─────────────────────── */}
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026 ─────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px" }}>
               {[
