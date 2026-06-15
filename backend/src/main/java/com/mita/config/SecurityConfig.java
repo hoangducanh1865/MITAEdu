@@ -69,6 +69,9 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/documents/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/documents/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/documents/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/exam-packages/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/exams/**").permitAll()
@@ -77,6 +80,7 @@ public class SecurityConfig {
                 )
                 .headers(h -> h.frameOptions(f -> f.sameOrigin())) // H2 console
                 .authenticationProvider(authenticationProvider())
+                .addFilterBefore(new RateLimitFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
