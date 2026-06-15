@@ -57,6 +57,7 @@ const HSA_SUBJECTS = [
   { name: "Vật lí", prefix: "Lí", icon: "fas fa-atom", color: "#4527a0", bg: "#ede7f6", count: 7 },
 ];
 
+const NEN_TANG_COURSE_THUMBNAIL = "/real/khoa-hoc/khoa-tu-duy-toan-dien-dgnl-2027.jpg";
 
 export default function CoursesPageContent() {
   const searchParams = useSearchParams();
@@ -323,6 +324,7 @@ export default function CoursesPageContent() {
 
 function CourseCard({ course }: { course: any }) {
   const href = `/courses/${course.slug ?? course.id}`;
+  const thumbnailUrl = getCourseThumbnail(course);
 
   return (
     <Link
@@ -341,10 +343,10 @@ function CourseCard({ course }: { course: any }) {
         }}
       >
         <div style={{ width: "200px", height: "150px", borderRadius: "14px", overflow: "hidden", background: "#e0e0e0" }}>
-          {course.thumbnailUrl ? (
+          {thumbnailUrl ? (
             <img
               className="c-thumb"
-              src={course.thumbnailUrl}
+              src={thumbnailUrl}
               alt={course.name}
               style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .2s" }}
             />
@@ -378,4 +380,14 @@ function CourseCard({ course }: { course: any }) {
       </div>
     </Link>
   );
+}
+
+function getCourseThumbnail(course: any) {
+  if (course.thumbnailUrl) return course.thumbnailUrl;
+  if (course.id === 1
+    || course.slug === "khoa-nen-tang-vact-2027"
+    || String(course.name ?? "").includes("Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027")) {
+    return NEN_TANG_COURSE_THUMBNAIL;
+  }
+  return undefined;
 }

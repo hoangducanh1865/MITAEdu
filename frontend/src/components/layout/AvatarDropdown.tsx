@@ -11,6 +11,7 @@ export default function AvatarDropdown() {
   const [user, setUser] = useState<User | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const showExamHistory = false;
 
   useEffect(() => {
     setUser(getSavedUser<User>());
@@ -94,9 +95,11 @@ export default function AvatarDropdown() {
           <Link href="/profile" style={dropItemStyle} onClick={() => setOpen(false)}>
             <i className="fas fa-user-circle" style={{ width: "16px" }} /> Hồ sơ
           </Link>
-          <Link href="/practice/history" style={dropItemStyle} onClick={() => setOpen(false)}>
-            <i className="fas fa-history" style={{ width: "16px" }} /> Lịch sử làm bài
-          </Link>
+          {showExamHistory && (
+            <Link href="/practice/history" style={dropItemStyle} onClick={() => setOpen(false)}>
+              <i className="fas fa-history" style={{ width: "16px" }} /> Lịch sử làm bài
+            </Link>
+          )}
           <hr style={{ borderColor: "#c5ddf0", margin: "4px 12px" }} />
           <button
             onClick={logout}

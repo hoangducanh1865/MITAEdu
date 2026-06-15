@@ -21,6 +21,7 @@ const FEEDBACK_IMAGES = Array.from(
   (_, i) => `/real/feedback_hoc_vien/${i + 1}.jpg`,
 );
 
+const NEN_TANG_COURSE_THUMBNAIL = "/real/khoa-hoc/khoa-tu-duy-toan-dien-dgnl-2027.jpg";
 
 export default function DashboardPage() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -142,7 +143,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ──────────────────────────── */}
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026 ──────────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
               background: "#1e7ab8", borderRadius: "12px",
@@ -153,12 +154,12 @@ export default function DashboardPage() {
               cursor: "pointer",
             }}>
               <i className="fas fa-trophy" />
-              VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026
+              VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026
               <i className="fas fa-trophy" />
             </div>
           </section>
 
-          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI V-VACT 2026 ─────────────────────── */}
+          {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026 ─────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px" }}>
               {[
@@ -261,18 +262,20 @@ export default function DashboardPage() {
                 gap: "16px",
                 overflow: "hidden",
               }}>
-                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course) => (
+                {courses.slice(courseIdx, courseIdx + VISIBLE).map((course) => {
+                  const thumbnailUrl = getCourseThumbnail(course);
+                  return (
                   <Link key={course.id} href={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                       {/* Thumbnail */}
                       <div style={{
                         width: "100%", aspectRatio: "4/3", borderRadius: "12px",
                         overflow: "hidden",
-                        background: course.thumbnailUrl ? "#000" : "#fff",
+                        background: thumbnailUrl ? "#000" : "#fff",
                         display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
-                        {course.thumbnailUrl ? (
-                          <img src={course.thumbnailUrl} alt={course.name}
+                        {thumbnailUrl ? (
+                          <img src={thumbnailUrl} alt={course.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         ) : (
                           <ImagePlaceholder
@@ -302,7 +305,8 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </Link>
-                ))}
+                );
+                })}
               </div>
             </div>
           </section>
@@ -319,6 +323,18 @@ export default function DashboardPage() {
 function wrapIndex(index: number, total: number) {
   if (total <= 0) return 0;
   return (index + total) % total;
+}
+
+function getCourseThumbnail(course: Course) {
+  if (course.thumbnailUrl) return course.thumbnailUrl;
+  if (isNenTangCourse(course)) return NEN_TANG_COURSE_THUMBNAIL;
+  return undefined;
+}
+
+function isNenTangCourse(course: Course) {
+  return course.id === 1
+    || course.slug === "khoa-nen-tang-vact-2027"
+    || course.name.includes("Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027");
 }
 
 function RoundIconButton({ icon, onClick }: { icon: string; onClick: () => void }) {

@@ -8,7 +8,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", school: "", city: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", school: "", city: "TP. HCM" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState("");
@@ -84,7 +84,7 @@ export default function RegisterPage() {
               <Input label="Email" type="email" placeholder="email@example.com" value={form.email} onChange={(e) => set("email", e.target.value)} leftIcon={<i className="fas fa-envelope" />} required />
               <Input label="Mật khẩu" type="password" placeholder="Ít nhất 6 ký tự" value={form.password} onChange={(e) => set("password", e.target.value)} leftIcon={<i className="fas fa-lock" />} required />
               <Input label="Trường học (tuỳ chọn)" placeholder="THPT ABC" value={form.school} onChange={(e) => set("school", e.target.value)} leftIcon={<i className="fas fa-school" />} />
-              <Input label="Tỉnh/Thành phố (tuỳ chọn)" placeholder="Hà Nội" value={form.city} onChange={(e) => set("city", e.target.value)} leftIcon={<i className="fas fa-map-marker-alt" />} />
+              <Input label="Tỉnh/Thành phố (tuỳ chọn)" placeholder="TP. HCM" value={form.city} onChange={(e) => set("city", e.target.value)} leftIcon={<i className="fas fa-map-marker-alt" />} />
 
               {error && (
                 <div style={{ background: "#e3f2fd", border: "1px solid #2196f3", borderRadius: "10px", padding: "10px 14px", fontSize: "0.875rem", color: "#1970a8" }}>
