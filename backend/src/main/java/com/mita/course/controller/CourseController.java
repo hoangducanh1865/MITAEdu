@@ -22,7 +22,10 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    @Operation(summary = "Danh sách khóa học", description = "?category=TSA|HSA|THPT")
+    @Operation(
+            summary = "Danh sách khóa học",
+            description = "?category=KTH-DTTD-DGNL|KNT-TDTD-DGNL-TPHCM-2027|KLD-TDTD-DGNL-TPHCM-2027"
+    )
     public ResponseEntity<ApiResponse<List<CourseDto>>> list(
             @RequestParam(required = false) String category,
             Authentication authentication) {

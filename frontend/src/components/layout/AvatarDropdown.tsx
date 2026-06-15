@@ -95,6 +95,9 @@ export default function AvatarDropdown() {
           <Link href="/profile" style={dropItemStyle} onClick={() => setOpen(false)}>
             <i className="fas fa-user-circle" style={{ width: "16px" }} /> Hồ sơ
           </Link>
+          <Link href="/profile#security" style={dropItemStyle} onClick={() => setOpen(false)}>
+            <i className="fas fa-key" style={{ width: "16px" }} /> Đổi mật khẩu
+          </Link>
           {showExamHistory && (
             <Link href="/practice/history" style={dropItemStyle} onClick={() => setOpen(false)}>
               <i className="fas fa-history" style={{ width: "16px" }} /> Lịch sử làm bài

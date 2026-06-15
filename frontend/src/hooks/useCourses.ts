@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
+import { getCourseCategoryCode } from "@/lib/courseCategory";
 import type { ApiResponse, Course } from "@/types";
 
 export function useCourses(category?: string) {
@@ -10,7 +11,7 @@ export function useCourses(category?: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const url = category ? `/api/courses?category=${category}` : "/api/courses";
+    const url = category ? `/api/courses?category=${getCourseCategoryCode(category)}` : "/api/courses";
     api.get<ApiResponse<Course[]>>(url)
       .then((r) => setCourses(r.data.data))
       .catch(() => setError("Không tải được danh sách khóa học"))

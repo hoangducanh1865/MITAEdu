@@ -9,6 +9,11 @@ import Link from "next/link";
 import api from "@/lib/api";
 import type { ApiResponse, Course, CourseCategory } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import {
+  COURSE_CATEGORY_CODES,
+  getCourseCategoryCode,
+  getCourseCategoryFromParam,
+} from "@/lib/courseCategory";
 
 const CATEGORIES: {
   value: CourseCategory;
@@ -20,21 +25,21 @@ const CATEGORIES: {
   {
     value: "TSA",
     label: "Khóa Trại hè Đánh thức tư duy ĐGNL",
-    short: "TSA",
+    short: COURSE_CATEGORY_CODES.TSA,
     color: "#1e7ab8",
     gradient: "linear-gradient(135deg,#1e7ab8,#155f8f)",
   },
   {
     value: "HSA",
     label: "Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
-    short: "HSA",
+    short: COURSE_CATEGORY_CODES.HSA,
     color: "#1565c0",
     gradient: "linear-gradient(135deg,#1565c0,#0d47a1)",
   },
   {
     value: "THPT",
     label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
-    short: "THPT",
+    short: COURSE_CATEGORY_CODES.THPT,
     color: "#0e6fa3",
     gradient: "linear-gradient(135deg,#0e6fa3,#0a4f78)",
   },
@@ -62,7 +67,7 @@ const NEN_TANG_COURSE_THUMBNAIL = "/real/khoa-hoc/khoa-tu-duy-toan-dien-dgnl-202
 export default function CoursesPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const category = (searchParams.get("category") ?? "TSA") as CourseCategory;
+  const category = getCourseCategoryFromParam(searchParams.get("category"));
 
   const [apiCourses, setApiCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +75,7 @@ export default function CoursesPageContent() {
   useEffect(() => {
     setLoading(true);
     api
-      .get<ApiResponse<Course[]>>(`/api/courses?category=${category}`)
+      .get<ApiResponse<Course[]>>(`/api/courses?category=${getCourseCategoryCode(category)}`)
       .then((r) => setApiCourses(r.data.data || []))
       .catch(() => setApiCourses([]))
       .finally(() => setLoading(false));
@@ -148,7 +153,7 @@ export default function CoursesPageContent() {
                     key={cat.value}
                     className="courses-cat-btn"
                     onClick={() =>
-                      router.push(`/courses?category=${cat.value}`)
+                      router.push(`/courses?category=${getCourseCategoryCode(cat.value)}`)
                     }
                     style={{
                       width: "100%",

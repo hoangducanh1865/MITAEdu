@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import {
+  COURSE_CATEGORY_CODES,
+  getCourseCategoryFromParam,
+  getCourseCategoryUrl,
+} from "@/lib/courseCategory";
+import type { CourseCategory } from "@/types";
 
 const CATEGORIES = [
-  { value: "tsa", label: "Khóa Trại hè Đánh thức tư duy ĐGNL", badge: "TSA" },
-  { value: "hsa", label: "Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)", badge: "HSA" },
-  { value: "thpt", label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)", badge: "THPT" },
-];
+  { value: "TSA", label: "Khóa Trại hè Đánh thức tư duy ĐGNL", badge: COURSE_CATEGORY_CODES.TSA },
+  { value: "HSA", label: "Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)", badge: COURSE_CATEGORY_CODES.HSA },
+  { value: "THPT", label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)", badge: COURSE_CATEGORY_CODES.THPT },
+] satisfies { value: CourseCategory; label: string; badge: string }[];
 
 export default function CoursesCategorySidebar() {
   const searchParams = useSearchParams();
-  const activeCategory = searchParams.get("category") || "tsa";
+  const activeCategory = getCourseCategoryFromParam(searchParams.get("category"));
 
   return (
     <aside style={{
@@ -27,7 +33,7 @@ export default function CoursesCategorySidebar() {
           return (
             <Link
               key={cat.value}
-              href={`/courses?category=${cat.value.toUpperCase()}`}
+              href={getCourseCategoryUrl(cat.value)}
               style={{
                 display: "flex", alignItems: "center", gap: "12px",
                 padding: "12px 14px", borderRadius: "10px",
@@ -49,7 +55,7 @@ export default function CoursesCategorySidebar() {
                 <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#2c2c2c", lineHeight: 1.35 }}>
                   {cat.label}
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "#999" }}>MITAEdu</div>
+                <div style={{ fontSize: "0.7rem", color: "#999" }}>{cat.badge}</div>
               </div>
             </Link>
           );

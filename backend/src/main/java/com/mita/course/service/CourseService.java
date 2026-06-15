@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class CourseService {
     @Transactional(readOnly = true)
     public List<CourseDto> getAll(String category, Authentication authentication) {
         List<Course> courses = (category != null && !category.isBlank())
-                ? courseRepository.findByCategory(Course.Category.valueOf(category.toUpperCase()))
+                ? courseRepository.findByCategory(resolveCategory(category))
                 : courseRepository.findAll();
         boolean isAdmin = isAdmin(authentication);
         return courses.stream()
@@ -91,6 +92,16 @@ public class CourseService {
         return authentication != null
                 && authentication.getPrincipal() instanceof User user
                 && user.getRole() == User.Role.ADMIN;
+    }
+
+    private Course.Category resolveCategory(String rawCategory) {
+        String category = rawCategory.trim().toUpperCase(Locale.ROOT);
+        return switch (category) {
+            case "KTH-DTTD-DGNL", "TSA" -> Course.Category.TSA;
+            case "KNT-TDTD-DGNL-TPHCM-2027", "HSA" -> Course.Category.HSA;
+            case "KLD-TDTD-DGNL-TPHCM-2027", "THPT" -> Course.Category.THPT;
+            default -> throw ApiException.badRequest("Danh mục khóa học không hợp lệ");
+        };
     }
 
     private Course findById(Long id) {

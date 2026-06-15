@@ -48,8 +48,43 @@ public class ResendEmailService {
     }
 
     public void sendPasswordResetEmail(String toEmail, String recipientName, String resetUrl) {
-        String html = buildPasswordResetHtml(recipientName, resetUrl);
+        sendPasswordActionEmail(
+                toEmail,
+                "Đặt lại mật khẩu — MITAEdu",
+                buildPasswordActionHtml(
+                        recipientName,
+                        resetUrl,
+                        "Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản MITAEdu của bạn. Nhấn vào nút bên dưới để tạo mật khẩu mới.",
+                        "Đặt lại mật khẩu",
+                        "Nếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này — tài khoản của bạn vẫn an toàn."
+                ),
+                "Password reset email sent to {}",
+                "Failed to send password reset email to {}: {}"
+        );
+    }
 
+    public void sendPasswordChangeEmail(String toEmail, String recipientName, String resetUrl) {
+        sendPasswordActionEmail(
+                toEmail,
+                "Đổi mật khẩu — MITAEdu",
+                buildPasswordActionHtml(
+                        recipientName,
+                        resetUrl,
+                        "Bạn vừa yêu cầu đổi mật khẩu cho tài khoản MITAEdu. Nhấn vào nút bên dưới để thiết lập mật khẩu mới.",
+                        "Đổi mật khẩu",
+                        "Nếu bạn không thực hiện yêu cầu này, hãy bỏ qua email này và giữ nguyên mật khẩu hiện tại."
+                ),
+                "Password change email sent to {}",
+                "Failed to send password change email to {}: {}"
+        );
+    }
+
+    private void sendPasswordActionEmail(
+            String toEmail,
+            String subject,
+            String html,
+            String successLog,
+            String errorLog) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
@@ -57,7 +92,7 @@ public class ResendEmailService {
         Map<String, Object> body = Map.of(
                 "from", fromEmail,
                 "to", new String[]{toEmail},
-                "subject", "Đặt lại mật khẩu — MITAEdu",
+                "subject", subject,
                 "html", html
         );
 
@@ -65,13 +100,13 @@ public class ResendEmailService {
 
         try {
             restTemplate.exchange(RESEND_API_URL, HttpMethod.POST, request, String.class);
-            log.info("Password reset email sent to {}", toEmail);
+            log.info(successLog, toEmail);
         } catch (Exception e) {
-            log.error("Failed to send password reset email to {}: {}", toEmail, e.getMessage());
+            log.error(errorLog, toEmail, e.getMessage());
         }
     }
 
-    private String buildPasswordResetHtml(String name, String resetUrl) {
+    private String buildPasswordActionHtml(String name, String resetUrl, String intro, String actionLabel, String ignoreMessage) {
         return """
                 <!DOCTYPE html>
                 <html lang="vi">
@@ -85,17 +120,17 @@ public class ResendEmailService {
                     <div style="padding:36px 40px">
                       <h2 style="color:#2c2c2c;font-size:1.2rem;margin:0 0 12px">Xin chào, %s!</h2>
                       <p style="color:#555;line-height:1.7;margin:0 0 24px">
-                        Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản MITAEdu của bạn. Nhấn vào nút bên dưới để tạo mật khẩu mới.
+                        %s
                       </p>
                       <div style="text-align:center;margin:32px 0">
                         <a href="%s"
                            style="display:inline-block;background:#d32f2f;color:#fff;text-decoration:none;
                                   padding:14px 36px;border-radius:10px;font-weight:700;font-size:1rem">
-                          Đặt lại mật khẩu
+                          %s
                         </a>
                       </div>
                       <p style="color:#888;font-size:0.82rem;line-height:1.6;margin:0">
-                        Link này có hiệu lực trong <strong>1 giờ</strong>. Nếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này — tài khoản của bạn vẫn an toàn.<br><br>
+                        Link này có hiệu lực trong <strong>1 giờ</strong>. %s<br><br>
                         Hoặc copy link sau vào trình duyệt:<br>
                         <a href="%s" style="color:#d32f2f;word-break:break-all">%s</a>
                       </p>
@@ -106,7 +141,7 @@ public class ResendEmailService {
                   </div>
                 </body>
                 </html>
-                """.formatted(name, resetUrl, resetUrl, resetUrl);
+                """.formatted(name, intro, resetUrl, actionLabel, ignoreMessage, resetUrl, resetUrl);
     }
 
     private String buildEmailHtml(String name, String verifyUrl) {

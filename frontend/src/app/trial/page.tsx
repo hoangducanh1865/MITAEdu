@@ -10,6 +10,7 @@ import SecureMediaViewer from "@/components/course/SecureMediaViewer";
 import VideoPlayer from "@/components/course/VideoPlayer";
 import Badge from "@/components/ui/Badge";
 import api from "@/lib/api";
+import { getCourseCategoryCode } from "@/lib/courseCategory";
 import type { ApiResponse, Course, Lesson } from "@/types";
 
 const SUBJECT_STYLES: Record<string, { icon: string; color: string; bg: string }> = {
@@ -67,6 +68,7 @@ export default function TrialPage() {
   }
 
   const lessons = course.lessons ?? [];
+  const categoryCode = getCourseCategoryCode(course.category);
 
   return (
     <>
@@ -116,7 +118,7 @@ export default function TrialPage() {
 
             <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                <Badge variant="hsa">HSA</Badge>
+                <Badge variant="hsa">{categoryCode}</Badge>
                 <span style={{ fontSize: "0.78rem", color: "#777" }}>
                   <i className="fas fa-play-circle" style={{ marginRight: "4px" }} />{lessons.length} buổi học thử
                 </span>
