@@ -5,6 +5,7 @@ import com.mita.common.dto.ApiResponse;
 import com.mita.common.exception.ApiException;
 import com.mita.user.dto.UpdateProfileRequest;
 import com.mita.user.dto.UserDto;
+import com.mita.user.entity.User;
 import com.mita.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,17 +26,32 @@ public class UserController {
     private final PasswordResetService passwordResetService;
 
     @GetMapping("/{id}")
-    @Operation(summary = "Lấy thông tin người dùng")
-    public ResponseEntity<ApiResponse<UserDto>> getUser(@PathVariable Long id) {
+    @Operation(summary = "Lấy thông tin người dùng (chỉ của chính mình; ADMIN xem được mọi người)")
+    public ResponseEntity<ApiResponse<UserDto>> getUser(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User currentUser) {
+        requireSelfOrAdmin(id, currentUser);
         return ResponseEntity.ok(ApiResponse.ok(userService.getById(id)));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Cập nhật thông tin cá nhân")
+    @Operation(summary = "Cập nhật thông tin cá nhân (chỉ của chính mình; ADMIN cập nhật được mọi người)")
     public ResponseEntity<ApiResponse<UserDto>> updateProfile(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateProfileRequest req) {
+            @Valid @RequestBody UpdateProfileRequest req,
+            @AuthenticationPrincipal User currentUser) {
+        requireSelfOrAdmin(id, currentUser);
         return ResponseEntity.ok(ApiResponse.ok(userService.updateProfile(id, req)));
+    }
+
+    /** Chỉ cho phép thao tác trên hồ sơ của chính người dùng đang đăng nhập, trừ ADMIN. */
+    private void requireSelfOrAdmin(Long id, User currentUser) {
+        if (currentUser == null) {
+            throw ApiException.unauthorized("Vui lòng đăng nhập");
+        }
+        if (currentUser.getRole() != User.Role.ADMIN && !currentUser.getId().equals(id)) {
+            throw ApiException.forbidden("Bạn không có quyền truy cập tài nguyên này");
+        }
     }
 
     @PutMapping("/{id}/password")
