@@ -12,6 +12,7 @@ import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
 
 const SLIDE_INTERVAL_MS = 8000;
+const FEEDBACK_SLIDE_INTERVAL_MS = 30000;
 const BANNER_IMAGES = [
   "/real/banner-slide-1.jpg",
 ];
@@ -73,7 +74,7 @@ export default function DashboardPage() {
     if (feedbackPageCount <= 1) return;
     const timer = window.setInterval(() => {
       setFeedbackPage((page) => (page + 1) % feedbackPageCount);
-    }, SLIDE_INTERVAL_MS);
+    }, FEEDBACK_SLIDE_INTERVAL_MS);
     return () => window.clearInterval(timer);
   }, [feedbackPageCount]);
 
