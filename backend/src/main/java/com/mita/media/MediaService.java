@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import software.amazon.awssdk.core.ResponseInputStream;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -21,7 +19,10 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.Duration;
 
 @Service
@@ -83,25 +84,20 @@ public class MediaService {
         ensureObjectExists(asset);
 
         try {
-            ResponseInputStream<GetObjectResponse> stream = s3Client.getObject(GetObjectRequest.builder()
-                    .bucket(props.getBucket())
-                    .key(asset.getObjectKey())
-                    .build());
-            GetObjectResponse response = stream.response();
-            String contentType = response.contentType() != null && !response.contentType().isBlank()
-                    ? response.contentType()
+            URLConnection connection = new URL(buildPresignedUrl(asset, false)).openConnection();
+            connection.setConnectTimeout(10_000);
+            connection.setReadTimeout(30_000);
+            String contentType = connection.getContentType() != null && !connection.getContentType().isBlank()
+                    ? connection.getContentType()
                     : asset.getContentType();
             return new MediaContent(
-                    stream,
+                    connection.getInputStream(),
                     contentType,
-                    response.contentLength(),
+                    connection.getContentLengthLong(),
                     buildDownloadFileName(asset));
-        } catch (S3Exception ex) {
-            if (isMissingObject(ex)) {
-                throw ApiException.notFound("Nội dung chưa được tải lên");
-            }
-            log.warn("Cannot stream media object: mediaId={}, status={}, code={}",
-                    asset.getId(), ex.statusCode(), ex.awsErrorDetails().errorCode());
+        } catch (IOException ex) {
+            log.warn("Cannot stream media object via presigned URL: mediaId={}, key={}",
+                    asset.getId(), asset.getObjectKey(), ex);
             throw ApiException.badRequest("Không tải được nội dung. Vui lòng thử lại sau.");
         }
     }
@@ -149,6 +145,27 @@ public class MediaService {
         return ex.statusCode() == 404
                 || "NoSuchKey".equalsIgnoreCase(code)
                 || "NotFound".equalsIgnoreCase(code);
+    }
+
+    private String buildPresignedUrl(MediaAsset asset, boolean download) {
+        GetObjectRequest.Builder getObjectRequestBuilder = GetObjectRequest.builder()
+                .bucket(props.getBucket())
+                .key(asset.getObjectKey());
+
+        if (download) {
+            getObjectRequestBuilder.responseContentDisposition(
+                    "attachment; filename=\"" + buildDownloadFileName(asset) + "\"");
+            if (asset.getContentType() != null && !asset.getContentType().isBlank()) {
+                getObjectRequestBuilder.responseContentType(asset.getContentType());
+            }
+        }
+
+        GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+                .signatureDuration(Duration.ofSeconds(props.getUrlTtlSeconds()))
+                .getObjectRequest(getObjectRequestBuilder.build())
+                .build();
+
+        return presigner.presignGetObject(presignRequest).url().toString();
     }
 
     private boolean isTrialMedia(String mediaId) {

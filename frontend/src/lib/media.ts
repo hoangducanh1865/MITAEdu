@@ -20,10 +20,24 @@ export async function getMediaUrl(mediaId: string, options?: { download?: boolea
 }
 
 export async function getMediaBlob(mediaId: string, options?: { download?: boolean }): Promise<Blob> {
-  const res = await api.get<Blob>(`/api/media/${mediaId}/content`, {
-    params: options?.download ? { download: true } : undefined,
-    responseType: "blob",
-    headers: { Accept: "application/pdf" },
-  });
-  return res.data;
+  try {
+    const res = await api.get<Blob>(`/api/media/${mediaId}/content`, {
+      params: options?.download ? { download: true } : undefined,
+      responseType: "blob",
+      headers: { Accept: "application/pdf" },
+    });
+    return res.data;
+  } catch (err) {
+    const response = (err as { response?: { data?: unknown } }).response;
+    if (response?.data instanceof Blob) {
+      const text = await response.data.text();
+      try {
+        const parsed = JSON.parse(text) as { message?: string };
+        response.data = parsed;
+      } catch {
+        response.data = { message: text };
+      }
+    }
+    throw err;
+  }
 }

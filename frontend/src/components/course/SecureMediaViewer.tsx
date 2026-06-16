@@ -327,7 +327,7 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
       {status === "error" && (
         <div style={{ padding: "60px", textAlign: "center", color: "#777" }}>
           <i className="fas fa-lock" style={{ fontSize: "1.6rem", marginBottom: 10 }} /><br />
-          Không tải được tài liệu. Vui lòng đăng nhập để xem.
+          Không tải được tài liệu. Vui lòng thử lại sau.
         </div>
       )}
       {status === "unavailable" && (
@@ -384,7 +384,11 @@ function MobilePdfCanvasViewer({
         if (cancelled) return;
 
         const data = new Uint8Array(await blob.arrayBuffer());
-        const loadingTask = pdfjs.getDocument({ data, disableWorker: true } as Parameters<typeof pdfjs.getDocument>[0] & { disableWorker: boolean });
+        pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+          "pdfjs-dist/build/pdf.worker.min.js",
+          import.meta.url,
+        ).toString();
+        const loadingTask = pdfjs.getDocument({ data });
         const pdf = await loadingTask.promise;
         pdfDocument = pdf;
 
