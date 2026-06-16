@@ -50,13 +50,7 @@ function VerifyEmailContent() {
       }}>
         {/* Logo */}
         <div style={{ marginBottom: "24px" }}>
-          <span style={{ fontSize: "2.5rem" }}>🌙</span>
-          <div style={{
-            fontFamily: "Nunito, sans-serif", fontWeight: 900,
-            fontSize: "1.3rem", color: "#1e7ab8", marginTop: "4px",
-          }}>
-            MITAEdu
-          </div>
+          <img src="/logo-mita-2.png" alt="MITA Education" style={{ height: "64px", objectFit: "contain" }} />
         </div>
 
         {status === "loading" && (

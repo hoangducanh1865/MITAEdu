@@ -64,12 +64,14 @@ public class UserController {
     @PostMapping("/me/password-reset-link")
     @Operation(summary = "Gửi link đổi mật khẩu về email của người dùng hiện tại")
     public ResponseEntity<ApiResponse<Void>> requestPasswordChange(
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestHeader(value = "Origin", required = false) String origin,
+            @RequestHeader(value = "Referer", required = false) String referer) {
         if (userDetails == null) {
             throw ApiException.unauthorized("Vui lòng đăng nhập để đổi mật khẩu");
         }
 
-        passwordResetService.requestPasswordChange(userDetails.getUsername());
+        passwordResetService.requestPasswordChange(userDetails.getUsername(), origin, referer);
         return ResponseEntity.ok(ApiResponse.ok(
                 "Chúng tôi đã gửi link đổi mật khẩu đến email của bạn.", null));
     }

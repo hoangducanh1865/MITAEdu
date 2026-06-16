@@ -33,8 +33,11 @@ public class AuthController {
 
     @PostMapping("/register")
     @Operation(summary = "Đăng ký tài khoản mới — gửi email xác minh, chưa cấp quyền truy cập")
-    public ResponseEntity<ApiResponse<Void>> register(@Valid @RequestBody RegisterRequest req) {
-        authService.register(req);
+    public ResponseEntity<ApiResponse<Void>> register(
+            @Valid @RequestBody RegisterRequest req,
+            @RequestHeader(value = "Origin", required = false) String origin,
+            @RequestHeader(value = "Referer", required = false) String referer) {
+        authService.register(req, origin, referer);
         return ResponseEntity.ok(ApiResponse.ok(
                 "Đăng ký thành công. Vui lòng kiểm tra email để xác minh tài khoản trước khi đăng nhập.", null));
     }
@@ -65,10 +68,13 @@ public class AuthController {
 
     @PostMapping("/resend-verification")
     @Operation(summary = "Gửi lại email xác minh theo địa chỉ email")
-    public ResponseEntity<ApiResponse<Void>> resendVerification(@RequestBody Map<String, String> body) {
+    public ResponseEntity<ApiResponse<Void>> resendVerification(
+            @RequestBody Map<String, String> body,
+            @RequestHeader(value = "Origin", required = false) String origin,
+            @RequestHeader(value = "Referer", required = false) String referer) {
         String email = body.get("email");
         if (email != null && !email.isBlank()) {
-            emailVerificationService.resendVerification(email);
+            emailVerificationService.resendVerification(email, origin, referer);
         }
         return ResponseEntity.ok(ApiResponse.ok(
                 "Nếu email hợp lệ và chưa được xác minh, chúng tôi đã gửi lại link xác minh.", null));
@@ -76,8 +82,11 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     @Operation(summary = "Yêu cầu đặt lại mật khẩu — gửi link qua email")
-    public ResponseEntity<ApiResponse<Void>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest req) {
-        passwordResetService.requestReset(req.getEmail());
+    public ResponseEntity<ApiResponse<Void>> forgotPassword(
+            @Valid @RequestBody ForgotPasswordRequest req,
+            @RequestHeader(value = "Origin", required = false) String origin,
+            @RequestHeader(value = "Referer", required = false) String referer) {
+        passwordResetService.requestReset(req.getEmail(), origin, referer);
         // Luôn trả 200 để không lộ email nào tồn tại trong hệ thống
         return ResponseEntity.ok(ApiResponse.ok(
                 "Nếu email hợp lệ, chúng tôi đã gửi hướng dẫn đặt lại mật khẩu.", null));

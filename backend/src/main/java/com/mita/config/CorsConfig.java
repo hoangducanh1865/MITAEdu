@@ -8,10 +8,18 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class CorsConfig {
+
+    private static final List<String> BUILT_IN_ALLOWED_ORIGINS = List.of(
+            "https://mitaedu.com",
+            "https://www.mitaedu.com",
+            "https://staging.mitaedu.com"
+    );
 
     @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
@@ -32,9 +40,11 @@ public class CorsConfig {
     }
 
     private List<String> parseAllowedOrigins() {
-        return Arrays.stream(allowedOrigins.split(","))
+        Set<String> origins = new LinkedHashSet<>(Arrays.stream(allowedOrigins.split(","))
                 .map(String::trim)
                 .filter(origin -> !origin.isEmpty())
-                .toList();
+                .toList());
+        origins.addAll(BUILT_IN_ALLOWED_ORIGINS);
+        return List.copyOf(origins);
     }
 }
