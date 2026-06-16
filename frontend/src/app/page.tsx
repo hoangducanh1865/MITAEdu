@@ -157,8 +157,8 @@ export default function DashboardPage() {
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div className="thanh-tich-grid" style={{ display: "flex", gap: "16px" }}>
               {[
-                { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-1.jpg" },
-                { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-2.jpg" },
+                { rank: "Bảng thành tích 1", src: "/real/poster-thanh-tich-2.jpg" },
+                { rank: "Bảng thành tích 2", src: "/real/poster-thanh-tich-1.jpg" },
               ].map(({ rank, src }) => (
                 <img
                   key={rank}

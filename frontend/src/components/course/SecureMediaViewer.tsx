@@ -16,6 +16,24 @@ interface Props {
   lesson: SecureLesson;
 }
 
+type MediaStatus = "loading" | "ready" | "error" | "unavailable";
+
+function getMediaErrorMessage(err: unknown) {
+  return (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+}
+
+function isUnavailableError(err: unknown) {
+  const status = (err as { response?: { status?: number } })?.response?.status;
+  const message = getMediaErrorMessage(err) ?? "";
+  return status === 404 || message.includes("chưa được tải lên");
+}
+
+function isIOSDevice() {
+  if (typeof navigator === "undefined") return false;
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
 /**
  * Hiển thị media bảo mật của một bài học:
  *  - Video: phát qua presigned URL ngắn hạn, chặn nút tải, watermark email động.
@@ -85,7 +103,7 @@ export default function SecureMediaViewer({ lesson }: Props) {
 /* ── Video bảo mật ───────────────────────────────── */
 function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: string }) {
   const [url, setUrl] = useState<string | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [status, setStatus] = useState<MediaStatus>("loading");
   const [pos, setPos] = useState({ top: "8%", left: "8%" });
 
   useEffect(() => {
@@ -93,7 +111,10 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
     setStatus("loading");
     getMediaUrl(mediaId)
       .then((m) => { if (alive) { setUrl(m.url); setStatus("ready"); } })
-      .catch(() => { if (alive) setStatus("error"); });
+      .catch((err) => {
+        if (!alive) return;
+        setStatus(isUnavailableError(err) ? "unavailable" : "error");
+      });
     return () => { alive = false; };
   }, [mediaId]);
 
@@ -137,6 +158,14 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
           </div>
         </Center>
       )}
+      {status === "unavailable" && (
+        <Center>
+          <div style={{ color: "#fff", textAlign: "center", padding: "24px" }}>
+            <i className="fas fa-cloud-arrow-up" style={{ fontSize: "1.8rem", marginBottom: 10 }} /><br />
+            Nội dung chưa được tải lên
+          </div>
+        </Center>
+      )}
 
       {/* Watermark động */}
       {status === "ready" && (
@@ -159,7 +188,7 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
 /* ── PDF bảo mật ─────────────────────────────────── */
 function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: string; watermark: string }) {
   const [url, setUrl] = useState<string | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [status, setStatus] = useState<MediaStatus>("loading");
   const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
@@ -167,14 +196,31 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
     setStatus("loading");
     getMediaUrl(mediaId)
       .then((m) => { if (alive) { setUrl(m.url); setStatus("ready"); } })
-      .catch(() => { if (alive) setStatus("error"); });
+      .catch((err) => {
+        if (!alive) return;
+        setStatus(isUnavailableError(err) ? "unavailable" : "error");
+      });
     return () => { alive = false; };
   }, [mediaId]);
 
   async function handleDownload() {
+    if (downloading) return;
     setDownloading(true);
+    const ios = isIOSDevice();
+    const iosWindow = ios ? window.open("", "_blank") : null;
+    if (iosWindow) iosWindow.opener = null;
+
     try {
       const media = await getMediaUrl(mediaId, { download: true });
+      if (ios) {
+        if (iosWindow) {
+          iosWindow.location.href = media.url;
+        } else {
+          window.location.assign(media.url);
+        }
+        return;
+      }
+
       const link = document.createElement("a");
       link.href = media.url;
       link.target = "_blank";
@@ -183,6 +229,9 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    } catch (err) {
+      if (iosWindow) iosWindow.close();
+      setStatus(isUnavailableError(err) ? "unavailable" : "error");
     } finally {
       setDownloading(false);
     }
@@ -240,6 +289,12 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
         <div style={{ padding: "60px", textAlign: "center", color: "#777" }}>
           <i className="fas fa-lock" style={{ fontSize: "1.6rem", marginBottom: 10 }} /><br />
           Không tải được tài liệu. Vui lòng đăng nhập để xem.
+        </div>
+      )}
+      {status === "unavailable" && (
+        <div style={{ padding: "60px", textAlign: "center", color: "#777" }}>
+          <i className="fas fa-cloud-arrow-up" style={{ fontSize: "1.6rem", marginBottom: 10 }} /><br />
+          Nội dung chưa được tải lên
         </div>
       )}
 

@@ -28,20 +28,23 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div style={{
+    <div className="auth-page" style={{
       minHeight: "100vh", background: "#f0f7fd",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
-      <div style={{
+      <div className="auth-card" style={{
         background: "#fff", borderRadius: "20px",
         boxShadow: "0 4px 40px rgba(30,122,184,.14)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
-            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
-          </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px" }}>
+          <img
+            className="auth-logo"
+            src="/logo-mita-2.png"
+            alt="MITA Education"
+            style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain" }}
+          />
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             {submitted ? "Kiểm tra email của bạn" : "Quên mật khẩu"}
           </p>

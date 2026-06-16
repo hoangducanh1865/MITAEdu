@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
@@ -26,6 +29,7 @@ public class MediaService {
     private final MediaAssetRepository mediaAssetRepository;
     private final MediaStorageProperties props;
     private final S3Presigner presigner;
+    private final S3Client s3Client;
     private final EntitlementService entitlementService;
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
@@ -52,6 +56,8 @@ public class MediaService {
                 }
             }
         }
+
+        ensureObjectExists(asset);
 
         long ttl = props.getUrlTtlSeconds();
         GetObjectRequest.Builder getObjectRequestBuilder = GetObjectRequest.builder()
@@ -81,6 +87,31 @@ public class MediaService {
                 .title(asset.getTitle())
                 .expiresInSeconds(ttl)
                 .build();
+    }
+
+    private void ensureObjectExists(MediaAsset asset) {
+        try {
+            s3Client.headObject(HeadObjectRequest.builder()
+                    .bucket(props.getBucket())
+                    .key(asset.getObjectKey())
+                    .build());
+        } catch (S3Exception ex) {
+            if (isMissingObject(ex)) {
+                log.warn("Media object is missing from storage: mediaId={}, key={}",
+                        asset.getId(), asset.getObjectKey());
+                throw ApiException.notFound("Nội dung chưa được tải lên");
+            }
+            log.warn("Cannot verify media object in storage: mediaId={}, key={}, status={}, code={}",
+                    asset.getId(), asset.getObjectKey(), ex.statusCode(), ex.awsErrorDetails().errorCode());
+            throw ApiException.badRequest("Không tải được nội dung. Vui lòng thử lại sau.");
+        }
+    }
+
+    private boolean isMissingObject(S3Exception ex) {
+        String code = ex.awsErrorDetails() != null ? ex.awsErrorDetails().errorCode() : "";
+        return ex.statusCode() == 404
+                || "NoSuchKey".equalsIgnoreCase(code)
+                || "NotFound".equalsIgnoreCase(code);
     }
 
     private boolean isTrialMedia(String mediaId) {

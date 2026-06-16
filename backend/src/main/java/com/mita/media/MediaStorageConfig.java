@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
@@ -26,6 +28,25 @@ public class MediaStorageConfig {
 
     @Bean
     public S3Presigner s3Presigner() {
+        return S3Presigner.builder()
+                .endpointOverride(URI.create(props.getEndpoint()))
+                .region(Region.of(props.getRegion()))
+                .credentialsProvider(credentialsProvider())
+                .serviceConfiguration(s3Configuration())
+                .build();
+    }
+
+    @Bean
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .endpointOverride(URI.create(props.getEndpoint()))
+                .region(Region.of(props.getRegion()))
+                .credentialsProvider(credentialsProvider())
+                .serviceConfiguration(s3Configuration())
+                .build();
+    }
+
+    private AwsCredentialsProvider credentialsProvider() {
         String accessKey = props.getAccessKey();
         String secretKey = props.getSecretKey();
 
@@ -38,14 +59,12 @@ public class MediaStorageConfig {
             secretKey = "unset";
         }
 
-        return S3Presigner.builder()
-                .endpointOverride(URI.create(props.getEndpoint()))
-                .region(Region.of(props.getRegion()))
-                .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create(accessKey, secretKey)))
-                .serviceConfiguration(S3Configuration.builder()
-                        .pathStyleAccessEnabled(true)
-                        .build())
+        return StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey));
+    }
+
+    private S3Configuration s3Configuration() {
+        return S3Configuration.builder()
+                .pathStyleAccessEnabled(true)
                 .build();
     }
 }
