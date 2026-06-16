@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getMediaUrl } from "@/lib/media";
+import { useEffect, useRef, useState } from "react";
+import { getMediaBlob, getMediaUrl } from "@/lib/media";
 import { getSavedUser } from "@/lib/auth";
 import type { User } from "@/types";
 
@@ -32,6 +32,23 @@ function isIOSDevice() {
   if (typeof navigator === "undefined") return false;
   return /iPad|iPhone|iPod/.test(navigator.userAgent)
     || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function isMobilePdfDevice() {
+  if (typeof window === "undefined") return false;
+  return isIOSDevice() || window.matchMedia("(max-width: 768px)").matches;
+}
+
+function buildPdfFileName(label: string) {
+  const safeName = label
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .replace(/[^A-Za-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+  return `${safeName || "mita-document"}.pdf`;
 }
 
 /**
@@ -190,6 +207,14 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
   const [url, setUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<MediaStatus>("loading");
   const [downloading, setDownloading] = useState(false);
+  const [useCanvasViewer, setUseCanvasViewer] = useState(false);
+
+  useEffect(() => {
+    const updateViewerMode = () => setUseCanvasViewer(isMobilePdfDevice());
+    updateViewerMode();
+    window.addEventListener("resize", updateViewerMode);
+    return () => window.removeEventListener("resize", updateViewerMode);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -209,26 +234,32 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
     const ios = isIOSDevice();
     const iosWindow = ios ? window.open("", "_blank") : null;
     if (iosWindow) iosWindow.opener = null;
+    if (iosWindow) {
+      iosWindow.document.write("<!doctype html><title>MITA PDF</title><body style=\"font-family:sans-serif;padding:24px;color:#1e7ab8\">Đang chuẩn bị PDF...</body>");
+    }
 
     try {
-      const media = await getMediaUrl(mediaId, { download: true });
+      const blob = await getMediaBlob(mediaId, { download: true });
+      const blobUrl = URL.createObjectURL(blob);
       if (ios) {
         if (iosWindow) {
-          iosWindow.location.href = media.url;
+          iosWindow.location.href = blobUrl;
         } else {
-          window.location.assign(media.url);
+          window.location.assign(blobUrl);
         }
+        window.setTimeout(() => URL.revokeObjectURL(blobUrl), 120000);
         return;
       }
 
       const link = document.createElement("a");
-      link.href = media.url;
+      link.href = blobUrl;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.download = "";
+      link.download = buildPdfFileName(label);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      window.setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
     } catch (err) {
       if (iosWindow) iosWindow.close();
       setStatus(isUnavailableError(err) ? "unavailable" : "error");
@@ -273,12 +304,20 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
         </div>
       )}
       {status === "ready" && url && (
-        <iframe
-          className="pdf-iframe"
-          src={`${url}#toolbar=0&navpanes=0&statusbar=0&view=FitH`}
-          title="PDF"
-          style={{ width: "100%", height: "600px", border: "none", display: "block" }}
-        />
+        useCanvasViewer ? (
+          <MobilePdfCanvasViewer
+            mediaId={mediaId}
+            onUnavailable={() => setStatus("unavailable")}
+            onError={() => setStatus("error")}
+          />
+        ) : (
+          <iframe
+            className="pdf-iframe"
+            src={`${url}#toolbar=0&navpanes=0&statusbar=0&view=FitH`}
+            title="PDF"
+            style={{ width: "100%", height: "600px", border: "none", display: "block" }}
+          />
+        )
       )}
       {status === "loading" && (
         <div style={{ padding: "60px", textAlign: "center", color: "#1e7ab8" }}>
@@ -310,6 +349,106 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
           {watermark}
         </div>
       )}
+    </div>
+  );
+}
+
+function MobilePdfCanvasViewer({
+  mediaId,
+  onUnavailable,
+  onError,
+}: {
+  mediaId: string;
+  onUnavailable: () => void;
+  onError: () => void;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [rendering, setRendering] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    let pdfDocument: { destroy: () => Promise<void> } | null = null;
+
+    async function renderPdf() {
+      const container = containerRef.current;
+      if (!container) return;
+
+      setRendering(true);
+      container.innerHTML = "";
+
+      try {
+        const [pdfjs, blob] = await Promise.all([
+          import("pdfjs-dist"),
+          getMediaBlob(mediaId),
+        ]);
+        if (cancelled) return;
+
+        const data = new Uint8Array(await blob.arrayBuffer());
+        const loadingTask = pdfjs.getDocument({ data, disableWorker: true } as Parameters<typeof pdfjs.getDocument>[0] & { disableWorker: boolean });
+        const pdf = await loadingTask.promise;
+        pdfDocument = pdf;
+
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+          if (cancelled) return;
+
+          const page = await pdf.getPage(pageNumber);
+          const baseViewport = page.getViewport({ scale: 1 });
+          const availableWidth = Math.max(container.clientWidth - 16, 280);
+          const scale = availableWidth / baseViewport.width;
+          const viewport = page.getViewport({ scale });
+          const ratio = window.devicePixelRatio || 1;
+
+          const pageWrap = document.createElement("div");
+          pageWrap.style.display = "flex";
+          pageWrap.style.justifyContent = "center";
+          pageWrap.style.padding = "8px";
+          pageWrap.style.background = "#f8fbfe";
+
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          if (!context) throw new Error("Canvas context is not available");
+
+          canvas.width = Math.floor(viewport.width * ratio);
+          canvas.height = Math.floor(viewport.height * ratio);
+          canvas.style.width = `${Math.floor(viewport.width)}px`;
+          canvas.style.height = `${Math.floor(viewport.height)}px`;
+          canvas.style.maxWidth = "100%";
+          canvas.style.border = "1px solid #e2edf7";
+          canvas.style.background = "#fff";
+          canvas.style.boxShadow = "0 2px 8px rgba(30,122,184,.08)";
+          context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+          pageWrap.appendChild(canvas);
+          container.appendChild(pageWrap);
+
+          await page.render({ canvasContext: context, viewport }).promise;
+          page.cleanup();
+        }
+      } catch (err) {
+        if (cancelled) return;
+        if (isUnavailableError(err)) onUnavailable();
+        else onError();
+      } finally {
+        if (!cancelled) setRendering(false);
+      }
+    }
+
+    renderPdf();
+
+    return () => {
+      cancelled = true;
+      if (pdfDocument) void pdfDocument.destroy();
+    };
+  }, [mediaId, onError, onUnavailable]);
+
+  return (
+    <div style={{ position: "relative", background: "#f8fbfe" }}>
+      {rendering && (
+        <div style={{ padding: "38px", textAlign: "center", color: "#1e7ab8" }}>
+          <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.4rem" }} />
+        </div>
+      )}
+      <div ref={containerRef} style={{ width: "100%" }} />
     </div>
   );
 }

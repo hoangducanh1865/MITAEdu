@@ -18,3 +18,12 @@ export async function getMediaUrl(mediaId: string, options?: { download?: boolea
   });
   return res.data.data;
 }
+
+export async function getMediaBlob(mediaId: string, options?: { download?: boolean }): Promise<Blob> {
+  const res = await api.get<Blob>(`/api/media/${mediaId}/content`, {
+    params: options?.download ? { download: true } : undefined,
+    responseType: "blob",
+    headers: { Accept: "application/pdf" },
+  });
+  return res.data;
+}

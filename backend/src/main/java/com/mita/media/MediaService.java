@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -19,6 +21,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
+import java.io.InputStream;
 import java.time.Duration;
 
 @Service
@@ -41,22 +44,7 @@ public class MediaService {
 
     @Transactional(readOnly = true)
     public MediaUrlDto getUrl(String mediaId, Authentication authentication, boolean download) {
-        MediaAsset asset = mediaAssetRepository.findById(mediaId)
-                .orElseThrow(() -> ApiException.notFound("Không tìm thấy media: " + mediaId));
-
-        if (!isTrialMedia(asset.getId())) {
-            if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
-                throw ApiException.unauthorized("Vui lòng đăng nhập để xem nội dung này");
-            }
-            if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
-                Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
-                        .map(c -> c.getId()).orElse(null);
-                if (courseId != null && !entitlementService.hasAccess(user.getId(), courseId)) {
-                    throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
-                }
-            }
-        }
-
+        MediaAsset asset = requireAccessibleAsset(mediaId, authentication);
         ensureObjectExists(asset);
 
         long ttl = props.getUrlTtlSeconds();
@@ -87,6 +75,55 @@ public class MediaService {
                 .title(asset.getTitle())
                 .expiresInSeconds(ttl)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public MediaContent getContent(String mediaId, Authentication authentication) {
+        MediaAsset asset = requireAccessibleAsset(mediaId, authentication);
+        ensureObjectExists(asset);
+
+        try {
+            ResponseInputStream<GetObjectResponse> stream = s3Client.getObject(GetObjectRequest.builder()
+                    .bucket(props.getBucket())
+                    .key(asset.getObjectKey())
+                    .build());
+            GetObjectResponse response = stream.response();
+            String contentType = response.contentType() != null && !response.contentType().isBlank()
+                    ? response.contentType()
+                    : asset.getContentType();
+            return new MediaContent(
+                    stream,
+                    contentType,
+                    response.contentLength(),
+                    buildDownloadFileName(asset));
+        } catch (S3Exception ex) {
+            if (isMissingObject(ex)) {
+                throw ApiException.notFound("Nội dung chưa được tải lên");
+            }
+            log.warn("Cannot stream media object: mediaId={}, status={}, code={}",
+                    asset.getId(), ex.statusCode(), ex.awsErrorDetails().errorCode());
+            throw ApiException.badRequest("Không tải được nội dung. Vui lòng thử lại sau.");
+        }
+    }
+
+    private MediaAsset requireAccessibleAsset(String mediaId, Authentication authentication) {
+        MediaAsset asset = mediaAssetRepository.findById(mediaId)
+                .orElseThrow(() -> ApiException.notFound("Không tìm thấy media: " + mediaId));
+
+        if (!isTrialMedia(asset.getId())) {
+            if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
+                throw ApiException.unauthorized("Vui lòng đăng nhập để xem nội dung này");
+            }
+            if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
+                Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
+                        .map(c -> c.getId()).orElse(null);
+                if (courseId != null && !entitlementService.hasAccess(user.getId(), courseId)) {
+                    throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
+                }
+            }
+        }
+
+        return asset;
     }
 
     private void ensureObjectExists(MediaAsset asset) {
@@ -129,4 +166,11 @@ public class MediaService {
         }
         return fileName;
     }
+
+    public record MediaContent(
+            InputStream stream,
+            String contentType,
+            Long contentLength,
+            String fileName
+    ) {}
 }
