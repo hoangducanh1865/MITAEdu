@@ -9,9 +9,9 @@ import type { ApiResponse, User, UpdateProfileRequest } from "@/types";
 import { getSavedUser, saveUser } from "@/lib/auth";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
+import ProvinceSelect from "@/components/ui/ProvinceSelect";
 import Toast from "@/components/ui/Toast";
-import { PROVINCES, normalizeProvince } from "@/lib/provinces";
+import { normalizeProvince } from "@/lib/provinces";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -135,11 +135,7 @@ export default function ProfilePage() {
                 <Input label="Email" value={user?.email ?? ""} disabled leftIcon={<i className="fas fa-envelope" />} />
                 <Input label="Số điện thoại" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} leftIcon={<i className="fas fa-phone" />} placeholder="0941.899.726" />
                 <Input label="Trường học" value={form.school} onChange={(e) => setForm({ ...form, school: e.target.value })} leftIcon={<i className="fas fa-school" />} placeholder="Nhập tên trường..." />
-                <Select label="Tỉnh/Thành phố" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} leftIcon={<i className="fas fa-map-marker-alt" />}>
-                  {PROVINCES.map((province) => (
-                    <option key={province} value={province}>{province}</option>
-                  ))}
-                </Select>
+                <ProvinceSelect label="Tỉnh/Thành phố" value={form.city} onChange={(province) => setForm({ ...form, city: province })} leftIcon={<i className="fas fa-map-marker-alt" />} />
                 <Input label="Năm sinh" type="number" value={form.birthYear} onChange={(e) => setForm({ ...form, birthYear: e.target.value })} leftIcon={<i className="fas fa-birthday-cake" />} placeholder="2006" />
                 <Button onClick={save} loading={saving} className="profile-action-btn w-fit">
                   <i className="fas fa-save" /> Lưu thay đổi

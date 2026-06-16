@@ -6,7 +6,6 @@ import Sidebar from "@/components/layout/Sidebar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import api from "@/lib/api";
-import { useSidebar } from "@/lib/SidebarContext";
 import type { ApiResponse, Course } from "@/types";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import ActivationCodeModal from "@/components/ActivationCodeModal";
@@ -32,7 +31,6 @@ export default function DashboardPage() {
   const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const { sidebarOpen, toggleSidebar } = useSidebar();
 
   function handleActivationSuccess(courseName: string) {
     setToast(`Kích hoạt thành công! Bạn đã mở khóa: ${courseName}`);
@@ -93,11 +91,6 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      {/* Backdrop: click to close sidebar on mobile */}
-      <div
-        className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
-        onClick={toggleSidebar}
-      />
       {/* Toast notification */}
       {toast && (
         <div style={{

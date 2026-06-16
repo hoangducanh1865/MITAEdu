@@ -6,8 +6,8 @@ import api from "@/lib/api";
 import type { ApiResponse } from "@/types";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
-import { DEFAULT_PROVINCE, PROVINCES } from "@/lib/provinces";
+import ProvinceSelect from "@/components/ui/ProvinceSelect";
+import { DEFAULT_PROVINCE } from "@/lib/provinces";
 
 function getPasswordStrength(password: string) {
   const checks = [
@@ -146,11 +146,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <Input label="Trường học (tuỳ chọn)" placeholder="THPT ABC" value={form.school} onChange={(e) => set("school", e.target.value)} leftIcon={<i className="fas fa-school" />} />
-              <Select label="Tỉnh/Thành phố" value={form.city} onChange={(e) => set("city", e.target.value)} leftIcon={<i className="fas fa-map-marker-alt" />}>
-                {PROVINCES.map((province) => (
-                  <option key={province} value={province}>{province}</option>
-                ))}
-              </Select>
+              <ProvinceSelect label="Tỉnh/Thành phố" value={form.city} onChange={(province) => set("city", province)} leftIcon={<i className="fas fa-map-marker-alt" />} required />
 
               {error && (
                 <div style={{ background: "#e3f2fd", border: "1px solid #2196f3", borderRadius: "10px", padding: "10px 14px", fontSize: "0.875rem", color: "#1970a8" }}>
