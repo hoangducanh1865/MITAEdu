@@ -11,13 +11,12 @@ export default function Footer() {
         <div>
           <h4 style={colTitle}>LIÊN HỆ</h4>
           <p style={colText}><i className="fas fa-building" style={{ marginRight: 8, opacity: 0.7 }} /><strong>HKD HỆ THỐNG GIÁO DỤC THỜI ĐẠI MỚI</strong></p>
-          <p style={colText}><i className="fas fa-user-tie" style={{ marginRight: 8, opacity: 0.7 }} />Chịu trách nhiệm: Hoàng Trung Anh</p>
           <p style={colText}><i className="fas fa-envelope" style={{ marginRight: 8, opacity: 0.7 }} />mita.education.official@gmail.com</p>
           <p style={colText}><i className="fas fa-phone" style={{ marginRight: 8, opacity: 0.7 }} />0941.899.726</p>
           <div style={{ display: "flex", gap: "12px", marginTop: "14px" }}>
             <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" />
-            <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" />
-            <SocialIcon href="https://www.youtube.com/@%C4%90%E1%BB%A9cAnhHo%C3%A0ng-j6v" icon="fab fa-youtube" />
+            <SocialIcon href="https://m.me/mitaeducation" icon="fab fa-facebook-messenger" />
+            <SocialIcon href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" />
           </div>
         </div>
 
@@ -35,7 +34,6 @@ export default function Footer() {
           <h4 style={colTitle}>ĐIỀU KHOẢN</h4>
           <FooterLink href="#">Điều khoản sử dụng</FooterLink>
           <FooterLink href="#">Quy định học viên</FooterLink>
-          <FooterLink href="#">Liên hệ hỗ trợ</FooterLink>
         </div>
       </div>
 

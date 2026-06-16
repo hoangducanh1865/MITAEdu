@@ -7,7 +7,6 @@ import com.mita.user.entity.User;
 import com.mita.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,29 +23,27 @@ public class PasswordResetService {
     private final PasswordResetTokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final ResendEmailService resendEmailService;
-
-    @Value("${app.frontend-url}")
-    private String frontendUrl;
+    private final FrontendUrlResolver frontendUrlResolver;
 
     /**
      * Gửi email đặt lại mật khẩu.
      * Im lặng nếu email không tồn tại — tránh lộ thông tin tài khoản.
      */
     @Transactional
-    public void requestReset(String email) {
+    public void requestReset(String email, String originHeader, String refererHeader) {
         userRepository.findByEmail(email).ifPresent(user -> {
-            createTokenAndSendEmail(user, false);
+            createTokenAndSendEmail(user, false, originHeader, refererHeader);
             log.info("Password reset requested for user: {}", user.getEmail());
         });
     }
 
     /** Gửi link đổi mật khẩu cho chính người dùng đang đăng nhập. */
     @Transactional
-    public void requestPasswordChange(String email) {
+    public void requestPasswordChange(String email, String originHeader, String refererHeader) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> ApiException.unauthorized("Vui lòng đăng nhập lại"));
 
-        createTokenAndSendEmail(user, true);
+        createTokenAndSendEmail(user, true, originHeader, refererHeader);
         log.info("Password change requested for user: {}", user.getEmail());
     }
 
@@ -73,7 +70,7 @@ public class PasswordResetService {
         log.info("Password reset successfully for user: {}", user.getEmail());
     }
 
-    private void createTokenAndSendEmail(User user, boolean passwordChange) {
+    private void createTokenAndSendEmail(User user, boolean passwordChange, String originHeader, String refererHeader) {
         tokenRepository.deleteByUserIdAndUsedFalse(user.getId());
 
         String rawToken = UUID.randomUUID().toString();
@@ -84,6 +81,7 @@ public class PasswordResetService {
                 .build();
         tokenRepository.save(prt);
 
+        String frontendUrl = frontendUrlResolver.resolve(originHeader, refererHeader);
         String resetUrl = frontendUrl + "/reset-password?token=" + rawToken;
         if (passwordChange) {
             resendEmailService.sendPasswordChangeEmail(user.getEmail(), user.getName(), resetUrl);

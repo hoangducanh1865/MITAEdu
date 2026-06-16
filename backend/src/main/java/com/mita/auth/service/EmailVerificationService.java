@@ -7,7 +7,6 @@ import com.mita.user.entity.User;
 import com.mita.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +21,11 @@ public class EmailVerificationService {
     private final EmailVerificationTokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final ResendEmailService resendEmailService;
-
-    @Value("${app.frontend-url}")
-    private String frontendUrl;
+    private final FrontendUrlResolver frontendUrlResolver;
 
     /** Tạo token và gửi email xác minh */
     @Transactional
-    public void sendVerification(User user) {
+    public void sendVerification(User user, String originHeader, String refererHeader) {
         // Xóa token cũ chưa dùng nếu có
         tokenRepository.deleteByUserIdAndUsedFalse(user.getId());
 
@@ -40,6 +37,7 @@ public class EmailVerificationService {
                 .build();
         tokenRepository.save(verificationToken);
 
+        String frontendUrl = frontendUrlResolver.resolve(originHeader, refererHeader);
         String verifyUrl = frontendUrl + "/verify-email?token=" + rawToken;
         resendEmailService.sendVerificationEmail(user.getEmail(), user.getName(), verifyUrl);
     }
@@ -73,10 +71,10 @@ public class EmailVerificationService {
      * tránh để lộ thông tin tài khoản nào tồn tại trong hệ thống.
      */
     @Transactional
-    public void resendVerification(String email) {
+    public void resendVerification(String email, String originHeader, String refererHeader) {
         userRepository.findByEmail(email).ifPresent(user -> {
             if (!user.isEmailVerified()) {
-                sendVerification(user);
+                sendVerification(user, originHeader, refererHeader);
             }
         });
     }

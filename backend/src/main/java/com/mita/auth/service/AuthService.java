@@ -30,7 +30,7 @@ public class AuthService {
      * KHÔNG cấp JWT — user phải xác minh email trước khi đăng nhập.
      */
     @Transactional
-    public void register(RegisterRequest req) {
+    public void register(RegisterRequest req, String originHeader, String refererHeader) {
         if (userRepository.existsByEmail(req.getEmail())) {
             throw ApiException.badRequest("Email đã được sử dụng");
         }
@@ -44,7 +44,7 @@ public class AuthService {
                 .build();
         userRepository.save(user);
 
-        emailVerificationService.sendVerification(user);
+        emailVerificationService.sendVerification(user, originHeader, refererHeader);
     }
 
     public AuthResponse login(LoginRequest req) {
