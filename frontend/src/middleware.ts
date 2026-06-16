@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const PUBLIC_PATHS = ["/", "/login", "/register", "/verify-email", "/forgot-password", "/reset-password", "/trial", "/api"];
+const EXACT_PUBLIC_PATHS = ["/courses"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"));
+  const isPublic =
+    EXACT_PUBLIC_PATHS.includes(pathname) ||
+    PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
   if (isPublic) return NextResponse.next();
 
