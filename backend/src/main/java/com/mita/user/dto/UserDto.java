@@ -16,6 +16,7 @@ public class UserDto {
     private Long id;
     private String name;
     private String email;
+    private String phone;
     private String role;
     private String school;
     private String city;
@@ -28,6 +29,7 @@ public class UserDto {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .phone(user.getPhone())
                 .role(user.getRole().name())
                 .school(user.getSchool())
                 .city(user.getCity())

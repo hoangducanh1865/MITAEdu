@@ -9,11 +9,13 @@ import type { ApiResponse, User, UpdateProfileRequest } from "@/types";
 import { getSavedUser, saveUser } from "@/lib/auth";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
 import Toast from "@/components/ui/Toast";
+import { PROVINCES, normalizeProvince } from "@/lib/provinces";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
-  const [form, setForm] = useState({ name: "", school: "", city: "", birthYear: "" });
+  const [form, setForm] = useState({ name: "", phone: "", school: "", city: normalizeProvince(null), birthYear: "" });
   const [saving, setSaving] = useState(false);
   const [requestingPasswordChange, setRequestingPasswordChange] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -25,12 +27,24 @@ export default function ProfilePage() {
         const freshUser = res.data.data;
         setUser(freshUser);
         saveUser(freshUser);
-        setForm({ name: freshUser.name, school: freshUser.school ?? "", city: freshUser.city ?? "", birthYear: freshUser.birthYear?.toString() ?? "" });
+        setForm({
+          name: freshUser.name,
+          phone: freshUser.phone ?? "",
+          school: freshUser.school ?? "",
+          city: normalizeProvince(freshUser.city),
+          birthYear: freshUser.birthYear?.toString() ?? "",
+        });
       } catch {
         const saved = getSavedUser<User>();
         if (saved) {
           setUser(saved);
-          setForm({ name: saved.name, school: saved.school ?? "", city: saved.city ?? "", birthYear: saved.birthYear?.toString() ?? "" });
+          setForm({
+            name: saved.name,
+            phone: saved.phone ?? "",
+            school: saved.school ?? "",
+            city: normalizeProvince(saved.city),
+            birthYear: saved.birthYear?.toString() ?? "",
+          });
         }
       }
     }
@@ -43,8 +57,9 @@ export default function ProfilePage() {
     try {
       const payload: UpdateProfileRequest = {
         name: form.name,
+        phone: form.phone || undefined,
         school: form.school || undefined,
-        city: form.city || undefined,
+        city: form.city,
         birthYear: form.birthYear ? Number(form.birthYear) : undefined,
       };
       const res = await api.put<ApiResponse<User>>(`/api/users/${user.id}`, payload);
@@ -79,14 +94,14 @@ export default function ProfilePage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "28px 32px" }}>
-          <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "24px" }}>
+        <main className="profile-main" style={{ padding: "28px 32px", minWidth: 0, width: "100%" }}>
+          <h1 className="profile-title" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "24px" }}>
             <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />Hồ sơ cá nhân
           </h1>
 
-          <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "24px" }}>
+          <div className="profile-grid" style={{ display: "grid", gridTemplateColumns: "300px minmax(0, 1fr)", gap: "24px" }}>
             {/* Avatar card */}
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 20px", textAlign: "center" }}>
+            <div className="profile-card profile-avatar-card" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 20px", textAlign: "center" }}>
               <div style={{
                 width: "80px", height: "80px", borderRadius: "50%",
                 background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
@@ -97,6 +112,9 @@ export default function ProfilePage() {
               </div>
               <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#2c2c2c" }}>{user?.name}</div>
               <div style={{ fontSize: "0.8rem", color: "#777", marginTop: "4px" }}>{user?.email}</div>
+              {user?.phone && (
+                <div style={{ fontSize: "0.8rem", color: "#777", marginTop: "4px" }}>{user.phone}</div>
+              )}
               <div style={{ marginTop: "12px" }}>
                 <span style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "20px", padding: "4px 14px", fontSize: "0.78rem", fontWeight: 700 }}>
                   {user?.role === "ADMIN" ? "Quản trị viên" : "Học viên"}
@@ -108,17 +126,22 @@ export default function ProfilePage() {
             </div>
 
             {/* Edit form */}
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 32px" }}>
+            <div className="profile-card profile-edit-card" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 32px" }}>
               <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "20px" }}>
                 Chỉnh sửa thông tin
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <Input label="Họ và tên" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} leftIcon={<i className="fas fa-user" />} />
                 <Input label="Email" value={user?.email ?? ""} disabled leftIcon={<i className="fas fa-envelope" />} />
+                <Input label="Số điện thoại" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} leftIcon={<i className="fas fa-phone" />} placeholder="0941.899.726" />
                 <Input label="Trường học" value={form.school} onChange={(e) => setForm({ ...form, school: e.target.value })} leftIcon={<i className="fas fa-school" />} placeholder="Nhập tên trường..." />
-                <Input label="Tỉnh/Thành phố" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} leftIcon={<i className="fas fa-map-marker-alt" />} placeholder="Hà Nội, TP.HCM..." />
+                <Select label="Tỉnh/Thành phố" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} leftIcon={<i className="fas fa-map-marker-alt" />}>
+                  {PROVINCES.map((province) => (
+                    <option key={province} value={province}>{province}</option>
+                  ))}
+                </Select>
                 <Input label="Năm sinh" type="number" value={form.birthYear} onChange={(e) => setForm({ ...form, birthYear: e.target.value })} leftIcon={<i className="fas fa-birthday-cake" />} placeholder="2006" />
-                <Button onClick={save} loading={saving} className="w-fit">
+                <Button onClick={save} loading={saving} className="profile-action-btn w-fit">
                   <i className="fas fa-save" /> Lưu thay đổi
                 </Button>
               </div>
@@ -130,7 +153,7 @@ export default function ProfilePage() {
                 <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.6, marginBottom: "16px" }}>
                   Để đổi mật khẩu, MITA Education sẽ gửi một link xác nhận đến email <strong>{user?.email}</strong>. Bạn cần mở link đó để thiết lập mật khẩu mới.
                 </p>
-                <Button onClick={requestPasswordChange} loading={requestingPasswordChange} variant="secondary" className="w-fit">
+                <Button onClick={requestPasswordChange} loading={requestingPasswordChange} variant="secondary" className="profile-action-btn w-fit">
                   <i className="fas fa-key" /> Gửi link đổi mật khẩu
                 </Button>
               </div>

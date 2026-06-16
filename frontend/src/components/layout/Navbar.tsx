@@ -20,14 +20,14 @@ export default function Navbar() {
       background: "#f0f7fd", borderBottom: "1px solid #c5ddf0",
       height: "62px", position: "sticky", top: 0, zIndex: 100,
     }}>
-    <div style={{
+    <div className="navbar-inner" style={{
       maxWidth: "1440px", margin: "0 auto", padding: "0 32px",
       height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
       {/* Left: Logo + Search */}
-      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+      <div className="navbar-left" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img src="/logo-mita-2.png" alt="MITA Edu" style={{ height: "48px", objectFit: "contain" }} />
+          <img className="navbar-logo" src="/logo-mita-2.png" alt="MITA Edu" style={{ height: "48px", objectFit: "contain" }} />
         </Link>
 
         {/* Toggle Sidebar Button */}
@@ -92,7 +92,7 @@ export default function Navbar() {
       </nav>
 
       {/* Right: Activation button + Avatar */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <div className="navbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
         <button
           className="navbar-activation-btn"
           onClick={() => window.dispatchEvent(new CustomEvent("open-activation-modal"))}

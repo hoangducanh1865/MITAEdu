@@ -32,8 +32,9 @@ export default function AvatarDropdown() {
 
   if (!user) {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <div className="public-auth-actions" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <Link
+          className="public-auth-link public-auth-link-login"
           href="/login"
           style={{
             fontSize: "0.875rem", fontWeight: 600, color: "#1e7ab8",
@@ -44,6 +45,7 @@ export default function AvatarDropdown() {
           Đăng nhập
         </Link>
         <Link
+          className="public-auth-link public-auth-link-register"
           href="/register"
           style={{
             fontSize: "0.875rem", fontWeight: 600, color: "#fff",
