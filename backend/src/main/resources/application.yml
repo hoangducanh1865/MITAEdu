@@ -46,7 +46,7 @@ app:
   from-email: ${APP_FROM_EMAIL:onboarding@resend.dev}
   admin-email: ${APP_ADMIN_EMAIL:trung3anh@gmail.com}
   cors:
-    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000,https://mita-edu.vercel.app,https://mita-edu.com,https://www.mita-edu.com,https://staging.mita-edu.com}
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000,https://mita-edu.vercel.app,https://mita-edu.com,https://www.mita-edu.com,https://staging.mita-edu.com,https://mitaedu.com,https://www.mitaedu.com,https://staging.mitaedu.com}
 
 # Viettel Cloud Object Storage (S3-compatible) - dùng để ký presigned URL cho video/PDF bài giảng
 viettel:

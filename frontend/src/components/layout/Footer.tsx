@@ -10,10 +10,10 @@ export default function Footer() {
         {/* LIÊN HỆ */}
         <div>
           <h4 style={colTitle}>LIÊN HỆ</h4>
-          <p style={colText}><i className="fas fa-building" style={{ marginRight: 8, opacity: 0.7 }} /><strong>CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MITA</strong></p>
-          <p style={colText}><i className="fas fa-user-tie" style={{ marginRight: 8, opacity: 0.7 }} />Chịu trách nhiệm: HethongMITA - Hoàng Trung Anh</p>
+          <p style={colText}><i className="fas fa-building" style={{ marginRight: 8, opacity: 0.7 }} /><strong>HKD HỆ THỐNG GIÁO DỤC THỜI ĐẠI MỚI</strong></p>
+          <p style={colText}><i className="fas fa-user-tie" style={{ marginRight: 8, opacity: 0.7 }} />Chịu trách nhiệm: Hoàng Trung Anh</p>
           <p style={colText}><i className="fas fa-envelope" style={{ marginRight: 8, opacity: 0.7 }} />mita.education.official@gmail.com</p>
-          <p style={colText}><i className="fas fa-phone" style={{ marginRight: 8, opacity: 0.7 }} />0123456789</p>
+          <p style={colText}><i className="fas fa-phone" style={{ marginRight: 8, opacity: 0.7 }} />0941.899.726</p>
           <div style={{ display: "flex", gap: "12px", marginTop: "14px" }}>
             <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" />
             <SocialIcon href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook-messenger" />
@@ -34,7 +34,6 @@ export default function Footer() {
         <div>
           <h4 style={colTitle}>ĐIỀU KHOẢN</h4>
           <FooterLink href="#">Điều khoản sử dụng</FooterLink>
-          <FooterLink href="#">Chính sách hoàn tiền</FooterLink>
           <FooterLink href="#">Quy định học viên</FooterLink>
           <FooterLink href="#">Liên hệ hỗ trợ</FooterLink>
         </div>
@@ -46,7 +45,7 @@ export default function Footer() {
         borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: "16px",
         paddingBottom: "16px",
       }}>
-        © 2026, Bản quyền thuộc về MITA — CÔNG TY CỔ PHẦN ĐẦU TƯ GIÁO DỤC MITA
+        © 2026, Bản quyền thuộc về HKD HỆ THỐNG GIÁO DỤC THỜI ĐẠI MỚI
       </div>
     </footer>
   );

@@ -10,7 +10,7 @@ export interface MediaUrl {
 
 /**
  * Lấy presigned URL ngắn hạn cho một media (video/PDF) từ backend.
- * Endpoint yêu cầu đăng nhập - token được api interceptor tự gắn vào.
+ * Media học thử được mở công khai; media khóa học đầy đủ vẫn cần token/quyền truy cập.
  */
 export async function getMediaUrl(mediaId: string, options?: { download?: boolean }): Promise<MediaUrl> {
   const res = await api.get<ApiResponse<MediaUrl>>(`/api/media/${mediaId}/url`, {

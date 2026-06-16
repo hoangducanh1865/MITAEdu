@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/media")
 @RequiredArgsConstructor
-@Tag(name = "Media", description = "Cấp presigned URL video/PDF (yêu cầu đăng nhập)")
+@Tag(name = "Media", description = "Cấp presigned URL video/PDF")
 public class MediaController {
 
     private final MediaService mediaService;
 
     @GetMapping("/{mediaId}/url")
-    @Operation(summary = "Lấy presigned URL ngắn hạn cho một media (video/PDF)")
+    @Operation(summary = "Lấy presigned URL ngắn hạn cho một media. Media học thử được mở công khai.")
     public ResponseEntity<ApiResponse<MediaUrlDto>> getUrl(
             @PathVariable String mediaId,
             @RequestParam(defaultValue = "false") boolean download,

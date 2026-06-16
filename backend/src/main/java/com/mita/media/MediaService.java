@@ -40,14 +40,16 @@ public class MediaService {
         MediaAsset asset = mediaAssetRepository.findById(mediaId)
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy media: " + mediaId));
 
-        User user = (User) authentication.getPrincipal();
-        if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
-            Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
-                    .map(c -> c.getId()).orElse(null);
-            if (courseId != null
-                    && !entitlementService.hasAccess(user.getId(), courseId)
-                    && !isTrialMedia(asset.getId())) {
-                throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
+        if (!isTrialMedia(asset.getId())) {
+            if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
+                throw ApiException.unauthorized("Vui lòng đăng nhập để xem nội dung này");
+            }
+            if (!user.getRole().equals(User.Role.ADMIN) && asset.getCourseSlug() != null) {
+                Long courseId = courseRepository.findBySlug(asset.getCourseSlug())
+                        .map(c -> c.getId()).orElse(null);
+                if (courseId != null && !entitlementService.hasAccess(user.getId(), courseId)) {
+                    throw ApiException.forbidden("Bạn chưa có quyền truy cập khóa học này");
+                }
             }
         }
 
