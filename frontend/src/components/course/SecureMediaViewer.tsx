@@ -446,7 +446,19 @@ function MobilePdfCanvasViewer({
   }, [mediaId, onError, onUnavailable]);
 
   return (
-    <div style={{ position: "relative", background: "#f8fbfe" }}>
+    <div
+      className="mobile-pdf-scroll-frame"
+      style={{
+        position: "relative",
+        background: "#f8fbfe",
+        height: "min(78vh, 720px)",
+        minHeight: "520px",
+        overflowY: "auto",
+        overflowX: "hidden",
+        WebkitOverflowScrolling: "touch",
+        overscrollBehavior: "contain",
+      }}
+    >
       {rendering && (
         <div style={{ padding: "38px", textAlign: "center", color: "#1e7ab8" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.4rem" }} />
