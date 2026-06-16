@@ -31,15 +31,17 @@ public class AuthService {
      */
     @Transactional
     public void register(RegisterRequest req, String originHeader, String refererHeader) {
-        if (userRepository.existsByEmail(req.getEmail())) {
+        String email = req.getEmail().trim();
+        if (userRepository.existsByEmail(email)) {
             throw ApiException.badRequest("Email đã được sử dụng");
         }
         User user = User.builder()
-                .name(req.getName())
-                .email(req.getEmail())
+                .name(req.getName().trim())
+                .email(email)
+                .phone(req.getPhone().trim())
                 .passwordHash(passwordEncoder.encode(req.getPassword()))
-                .school(req.getSchool())
-                .city(req.getCity())
+                .school(normalize(req.getSchool()))
+                .city(normalize(req.getCity()))
                 .birthYear(req.getBirthYear())
                 .build();
         userRepository.save(user);
@@ -64,5 +66,12 @@ public class AuthService {
     public User getCurrentUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> ApiException.notFound("Người dùng không tồn tại"));
+    }
+
+    private String normalize(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        return value.trim();
     }
 }

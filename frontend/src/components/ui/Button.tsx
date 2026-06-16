@@ -16,7 +16,7 @@ export default function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all cursor-pointer border-0";
+  const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all cursor-pointer border-0 disabled:cursor-not-allowed disabled:opacity-60";
   const variants = {
     primary: "bg-[#1e7ab8] hover:bg-[#155f8f] text-white",
     secondary: "bg-[#f0f7fd] hover:bg-[#e3f2fd] text-[#1e7ab8]",

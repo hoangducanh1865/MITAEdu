@@ -17,6 +17,7 @@ export interface LoginRequest {
 export interface RegisterRequest {
   name: string;
   email: string;
+  phone: string;
   password: string;
   school?: string;
   city?: string;
@@ -37,6 +38,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  phone?: string;
   role: "USER" | "ADMIN";
   school?: string;
   city?: string;
@@ -47,6 +49,7 @@ export interface User {
 
 export interface UpdateProfileRequest {
   name: string;
+  phone?: string;
   school?: string;
   city?: string;
   birthYear?: number;

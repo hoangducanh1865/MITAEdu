@@ -25,8 +25,9 @@ public class UserService {
     @Transactional
     public UserDto updateProfile(Long id, UpdateProfileRequest req) {
         User user = findById(id);
-        user.setName(req.getName());
-        user.setSchool(req.getSchool());
+        user.setName(req.getName().trim());
+        user.setPhone(normalize(req.getPhone()));
+        user.setSchool(normalize(req.getSchool()));
         user.setCity(req.getCity());
         user.setBirthYear(req.getBirthYear());
         return UserDto.from(userRepository.save(user));
@@ -45,5 +46,12 @@ public class UserService {
     private User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> ApiException.notFound("Người dùng không tồn tại"));
+    }
+
+    private String normalize(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        return value.trim();
     }
 }

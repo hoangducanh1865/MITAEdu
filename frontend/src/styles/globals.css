@@ -443,3 +443,123 @@ a { text-decoration: none; color: inherit; }
     height: 420px !important;
   }
 }
+
+/* ── Auth pages + profile mobile polish ─────────────────── */
+.auth-page {
+  padding: 24px 16px;
+}
+
+@media (max-width: 640px) {
+  .navbar-inner {
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+
+  .navbar-left {
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .navbar-right {
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .navbar-logo {
+    height: 38px !important;
+    max-width: 174px !important;
+  }
+
+  .auth-page {
+    align-items: flex-start !important;
+    min-height: 100svh !important;
+    padding: 18px 14px 32px !important;
+  }
+
+  .auth-card {
+    width: min(100%, 390px) !important;
+    padding: 28px 22px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 24px rgba(30,122,184,.12) !important;
+  }
+
+  .auth-logo {
+    width: 260px !important;
+  }
+
+  .public-auth-actions {
+    gap: 6px !important;
+  }
+
+  .public-auth-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
+    padding: 6px 9px !important;
+    border-radius: 9px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-card {
+    padding: 24px 18px !important;
+  }
+
+  .auth-logo {
+    width: 230px !important;
+  }
+
+  .navbar-logo {
+    height: 34px !important;
+    max-width: 150px !important;
+  }
+
+  .public-auth-link {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-main {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    padding: 22px 16px 96px !important;
+  }
+
+  .profile-title {
+    font-size: 1.9rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .profile-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .profile-card {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .profile-avatar-card {
+    padding: 24px 18px !important;
+  }
+
+  .profile-edit-card {
+    padding: 24px 18px !important;
+  }
+
+  .profile-action-btn {
+    width: 100% !important;
+  }
+}
