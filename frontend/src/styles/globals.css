@@ -396,30 +396,106 @@ a { text-decoration: none; color: inherit; }
 /* ── Courses list page ──────────────────────────────── */
 @media (max-width: 768px) {
   /* Stack categories above course list */
+  .courses-main {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
   .courses-layout {
     flex-direction: column !important;
     padding: 0 14px 24px !important;
-    gap: 16px !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
   }
 
-  /* Categories: horizontal scrollable chips */
+  .courses-content {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .courses-title {
+    font-size: 1.6rem !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* Categories: title row + horizontally scrollable cards */
   .courses-cat-sidebar {
+    width: 100% !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    gap: 10px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .courses-cat-title {
+    width: 100% !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+    letter-spacing: 1.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .courses-cat-list {
     width: 100% !important;
     flex-direction: row !important;
     overflow-x: auto !important;
-    gap: 8px !important;
+    gap: 12px !important;
     padding-bottom: 8px !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .courses-cat-sidebar::-webkit-scrollbar { display: none; }
+  .courses-cat-list::-webkit-scrollbar { display: none; }
 
-  /* Each category button: compact card */
   .courses-cat-btn {
-    width: 150px !important;
-    min-width: 150px !important;
+    width: 188px !important;
+    min-width: 188px !important;
     flex-shrink: 0 !important;
-    padding: 10px 12px !important;
+    padding: 14px 12px !important;
+    min-height: 150px !important;
+  }
+
+  .courses-cat-logo {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 14px !important;
+  }
+
+  .courses-cat-label {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+    width: 100% !important;
+  }
+
+  .courses-subject-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .courses-subject-card {
+    padding: 18px 12px !important;
+    min-width: 0 !important;
+    border-radius: 14px !important;
+  }
+
+  .courses-subject-icon {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .courses-subject-name {
+    font-size: 1rem !important;
+    line-height: 1.22 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .courses-subject-count {
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
   }
 
   /* ── Course detail (video + lesson list) ── */
