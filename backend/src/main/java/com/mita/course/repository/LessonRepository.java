@@ -20,7 +20,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
               AND l.sortOrder IN :sortOrders
               AND (:mediaId = l.videoMediaId
                    OR :mediaId = l.pdfMediaId
-                   OR :mediaId = l.handwrittenMediaId)
+                   OR :mediaId = l.handwrittenMediaId
+                   OR :mediaId = l.answerMediaId)
             """)
     long countTrialMediaLinks(
             @Param("courseSlug") String courseSlug,
