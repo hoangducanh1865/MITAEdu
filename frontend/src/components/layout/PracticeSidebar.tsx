@@ -65,7 +65,7 @@ export default function PracticeSidebar() {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const [openSubs, setOpenSubs] = useState<Record<string, boolean>>({});
-  const { sidebarOpen } = useSidebar();
+  const { sidebarOpen, closeSidebar } = useSidebar();
 
   function toggleGroup(id: string) {
     setOpenGroups((p) => ({ ...p, [id]: !p[id] }));
@@ -75,6 +75,13 @@ export default function PracticeSidebar() {
   }
 
   return (
+    <>
+    <div
+      className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
+      onClick={closeSidebar}
+      onTouchStart={closeSidebar}
+      aria-hidden="true"
+    />
     <div className="prac-sidebar-wrapper" style={{
       width: sidebarOpen ? "260px" : "0",
       overflow: "hidden",
@@ -168,6 +175,7 @@ export default function PracticeSidebar() {
       </NavItem>
     </aside>
     </div>
+    </>
   );
 }
 

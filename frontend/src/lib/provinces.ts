@@ -37,8 +37,31 @@ export const PROVINCES = [
   "Tỉnh An Giang",
 ] as const;
 
+export type Province = (typeof PROVINCES)[number];
+
+const VI_COLLATOR = new Intl.Collator("vi", { sensitivity: "base" });
+
+export function getProvinceName(province: string) {
+  return province.replace(/^(TP\.|Tỉnh)\s+/i, "").trim();
+}
+
+export function getProvinceSearchKey(province: string) {
+  return getProvinceName(province)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .trim();
+}
+
+export const SORTED_PROVINCES = [...PROVINCES].sort((a, b) => {
+  const byName = VI_COLLATOR.compare(getProvinceName(a), getProvinceName(b));
+  return byName === 0 ? VI_COLLATOR.compare(a, b) : byName;
+});
+
 export function normalizeProvince(value?: string | null) {
   if (!value) return DEFAULT_PROVINCE;
   if (value === "TP. HCM" || value === "TP.HCM") return DEFAULT_PROVINCE;
-  return PROVINCES.includes(value as (typeof PROVINCES)[number]) ? value : DEFAULT_PROVINCE;
+  return PROVINCES.includes(value as Province) ? value : DEFAULT_PROVINCE;
 }

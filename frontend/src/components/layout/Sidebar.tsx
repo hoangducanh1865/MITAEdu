@@ -8,11 +8,18 @@ import type { User } from "@/types";
 
 export default function Sidebar() {
   const [user, setUser] = useState<User | null>(null);
-  const { sidebarOpen } = useSidebar();
+  const { sidebarOpen, closeSidebar } = useSidebar();
 
   useEffect(() => { setUser(getSavedUser<User>()); }, []);
 
   return (
+    <>
+    <div
+      className={`sidebar-mobile-backdrop${sidebarOpen ? " active" : ""}`}
+      onClick={closeSidebar}
+      onTouchStart={closeSidebar}
+      aria-hidden="true"
+    />
     <aside
       className="home-left-sidebar"
       style={{
@@ -80,6 +87,7 @@ export default function Sidebar() {
         <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
       </div>
     </aside>
+    </>
   );
 }
 
