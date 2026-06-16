@@ -89,6 +89,7 @@ export default function CoursesPageContent() {
       <div className="layout">
         <Sidebar />
         <main
+          className="courses-main"
           style={{
             padding: "0",
             background: "#f0f7fd",
@@ -133,6 +134,7 @@ export default function CoursesPageContent() {
               }}
             >
               <div
+                className="courses-cat-title"
                 style={{
                   fontSize: "0.72rem",
                   fontWeight: 800,
@@ -146,61 +148,65 @@ export default function CoursesPageContent() {
                 DANH MỤC
               </div>
 
-              {CATEGORIES.map((cat) => {
-                const active = category === cat.value;
-                return (
-                  <button
-                    key={cat.value}
-                    className="courses-cat-btn"
-                    onClick={() =>
-                      router.push(`/courses?category=${getCourseCategoryCode(cat.value)}`)
-                    }
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "14px",
-                      padding: "13px 16px",
-                      borderRadius: "14px",
-                      border: active
-                        ? "none"
-                        : "2px solid transparent",
-                      background: active ? cat.gradient : "#fff",
-                      cursor: "pointer",
-                      textAlign: "left",
-                      transition: "all .15s",
-                      boxShadow: active
-                        ? "0 4px 16px rgba(0,0,0,.15)"
-                        : "none",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!active)
-                        e.currentTarget.style.background = "#f0f7fd";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!active)
-                        e.currentTarget.style.background = "#fff";
-                    }}
-                  >
-                    <div
+              <div className="courses-cat-list" style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                {CATEGORIES.map((cat) => {
+                  const active = category === cat.value;
+                  return (
+                    <button
+                      key={cat.value}
+                      className="courses-cat-btn"
+                      onClick={() =>
+                        router.push(`/courses?category=${getCourseCategoryCode(cat.value)}`)
+                      }
                       style={{
-                        width: "42px",
-                        height: "42px",
-                        borderRadius: "10px",
-                        background: active
-                          ? "rgba(255,255,255,0.22)"
-                          : "#e8f4fd",
+                        width: "100%",
                         display: "flex",
+                        flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
+                        justifyContent: "flex-start",
+                        gap: "10px",
+                        padding: "14px 16px",
+                        borderRadius: "14px",
+                        border: active
+                          ? "none"
+                          : "2px solid transparent",
+                        background: active ? cat.gradient : "#fff",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        transition: "all .15s",
+                        boxShadow: active
+                          ? "0 4px 16px rgba(0,0,0,.15)"
+                          : "none",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!active)
+                          e.currentTarget.style.background = "#f0f7fd";
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!active)
+                          e.currentTarget.style.background = "#fff";
                       }}
                     >
-                      <img src="/logo-mita.png" alt="MITA" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
-                    </div>
-
-                    <div style={{ flex: 1, minWidth: 0 }}>
                       <div
+                        className="courses-cat-logo"
+                        style={{
+                          width: "44px",
+                          height: "44px",
+                          borderRadius: "12px",
+                          background: active
+                            ? "rgba(255,255,255,0.22)"
+                            : "#e8f4fd",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img src="/logo-mita.png" alt="MITA" style={{ width: "30px", height: "30px", objectFit: "contain" }} />
+                      </div>
+
+                      <div
+                        className="courses-cat-label"
                         style={{
                           fontWeight: 700,
                           fontSize: "0.8rem",
@@ -210,23 +216,15 @@ export default function CoursesPageContent() {
                       >
                         {cat.label}
                       </div>
-                      <div
-                        style={{
-                          fontSize: "0.72rem",
-                          color: active ? "rgba(255,255,255,0.7)" : "#aaa",
-                          marginTop: "2px",
-                        }}
-                      >
-                        MITAEdu
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="courses-content" style={{ flex: 1, minWidth: 0 }}>
               <h1
+                className="courses-title"
                 style={{
                   fontFamily: "Nunito, sans-serif",
                   fontWeight: 900,
@@ -261,14 +259,14 @@ export default function CoursesPageContent() {
                     <p>Khóa học đang được chuẩn bị, vui lòng quay lại sau</p>
                   </div>
                 ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+                  <div className="courses-subject-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
                     {HSA_SUBJECTS.map((subject) => (
                       <Link
                         key={subject.name}
                         href={`/courses/${courses[0].id}?subject=${encodeURIComponent(subject.prefix)}`}
                         style={{ textDecoration: "none" }}
                       >
-                        <div style={{
+                        <div className="courses-subject-card" style={{
                           background: "#fff", border: "2px solid #e8f0f7", borderRadius: "16px",
                           padding: "24px 20px", display: "flex", flexDirection: "column",
                           alignItems: "center", gap: "12px", cursor: "pointer",
@@ -285,7 +283,7 @@ export default function CoursesPageContent() {
                             e.currentTarget.style.transform = "translateY(0)";
                           }}
                         >
-                          <div style={{
+                          <div className="courses-subject-icon" style={{
                             width: "56px", height: "56px", borderRadius: "14px",
                             background: subject.bg, display: "flex",
                             alignItems: "center", justifyContent: "center",
@@ -294,10 +292,10 @@ export default function CoursesPageContent() {
                             <i className={subject.icon} />
                           </div>
                           <div>
-                            <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
+                            <div className="courses-subject-name" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
                               {subject.name}
                             </div>
-                            <div style={{ fontSize: "0.78rem", color: "#999", marginTop: "4px" }}>
+                            <div className="courses-subject-count" style={{ fontSize: "0.78rem", color: "#999", marginTop: "4px" }}>
                               {subject.count} bài học
                             </div>
                           </div>
