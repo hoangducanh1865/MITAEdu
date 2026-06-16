@@ -6,6 +6,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Map;
 
 @Service
@@ -107,15 +108,15 @@ public class ResendEmailService {
     }
 
     private String buildPasswordActionHtml(String name, String resetUrl, String intro, String actionLabel, String ignoreMessage) {
+        String logoUrl = buildLogoUrl(resetUrl);
         return """
                 <!DOCTYPE html>
                 <html lang="vi">
                 <head><meta charset="UTF-8"></head>
-                <body style="font-family:sans-serif;background:#f5f5f5;padding:40px 0;margin:0">
-                  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)">
-                    <div style="background:linear-gradient(135deg,#d32f2f,#b71c1c);padding:32px 40px;text-align:center">
-                      <div style="font-size:2rem">🌙</div>
-                      <h1 style="color:#fff;font-size:1.4rem;margin:8px 0 0;font-family:sans-serif">MITAEdu</h1>
+                <body style="font-family:sans-serif;background:#f0f7fd;padding:40px 0;margin:0">
+                  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(30,122,184,.14);border:1px solid #c5ddf0">
+                    <div style="background:#fff;padding:32px 40px 24px;text-align:center;border-bottom:4px solid #1e7ab8">
+                      <img src="%s" alt="MITA Education" style="display:block;width:320px;max-width:100%%;height:auto;margin:0 auto">
                     </div>
                     <div style="padding:36px 40px">
                       <h2 style="color:#2c2c2c;font-size:1.2rem;margin:0 0 12px">Xin chào, %s!</h2>
@@ -124,7 +125,7 @@ public class ResendEmailService {
                       </p>
                       <div style="text-align:center;margin:32px 0">
                         <a href="%s"
-                           style="display:inline-block;background:#d32f2f;color:#fff;text-decoration:none;
+                           style="display:inline-block;background:#1e7ab8;color:#fff;text-decoration:none;
                                   padding:14px 36px;border-radius:10px;font-weight:700;font-size:1rem">
                           %s
                         </a>
@@ -132,28 +133,28 @@ public class ResendEmailService {
                       <p style="color:#888;font-size:0.82rem;line-height:1.6;margin:0">
                         Link này có hiệu lực trong <strong>1 giờ</strong>. %s<br><br>
                         Hoặc copy link sau vào trình duyệt:<br>
-                        <a href="%s" style="color:#d32f2f;word-break:break-all">%s</a>
+                        <a href="%s" style="color:#1e7ab8;word-break:break-all">%s</a>
                       </p>
                     </div>
-                    <div style="background:#fdf0f0;padding:20px 40px;text-align:center">
-                      <p style="color:#aaa;font-size:0.78rem;margin:0">© 2025 MITAEdu — Nền tảng luyện thi hàng đầu</p>
+                    <div style="background:#f0f7fd;padding:20px 40px;text-align:center;border-top:1px solid #c5ddf0">
+                      <p style="color:#777;font-size:0.78rem;margin:0">© 2026 MITA Education — Luyện thi đánh giá năng lực</p>
                     </div>
                   </div>
                 </body>
                 </html>
-                """.formatted(name, intro, resetUrl, actionLabel, ignoreMessage, resetUrl, resetUrl);
+                """.formatted(logoUrl, name, intro, resetUrl, actionLabel, ignoreMessage, resetUrl, resetUrl);
     }
 
     private String buildEmailHtml(String name, String verifyUrl) {
+        String logoUrl = buildLogoUrl(verifyUrl);
         return """
                 <!DOCTYPE html>
                 <html lang="vi">
                 <head><meta charset="UTF-8"></head>
-                <body style="font-family:sans-serif;background:#f5f5f5;padding:40px 0;margin:0">
-                  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1)">
-                    <div style="background:linear-gradient(135deg,#d32f2f,#b71c1c);padding:32px 40px;text-align:center">
-                      <div style="font-size:2rem">🌙</div>
-                      <h1 style="color:#fff;font-size:1.4rem;margin:8px 0 0;font-family:sans-serif">MITAEdu</h1>
+                <body style="font-family:sans-serif;background:#f0f7fd;padding:40px 0;margin:0">
+                  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(30,122,184,.14);border:1px solid #c5ddf0">
+                    <div style="background:#fff;padding:32px 40px 24px;text-align:center;border-bottom:4px solid #1e7ab8">
+                      <img src="%s" alt="MITA Education" style="display:block;width:320px;max-width:100%%;height:auto;margin:0 auto">
                     </div>
                     <div style="padding:36px 40px">
                       <h2 style="color:#2c2c2c;font-size:1.2rem;margin:0 0 12px">Xin chào, %s!</h2>
@@ -162,7 +163,7 @@ public class ResendEmailService {
                       </p>
                       <div style="text-align:center;margin:32px 0">
                         <a href="%s"
-                           style="display:inline-block;background:#d32f2f;color:#fff;text-decoration:none;
+                           style="display:inline-block;background:#1e7ab8;color:#fff;text-decoration:none;
                                   padding:14px 36px;border-radius:10px;font-weight:700;font-size:1rem">
                           Xác minh email
                         </a>
@@ -170,15 +171,28 @@ public class ResendEmailService {
                       <p style="color:#888;font-size:0.82rem;line-height:1.6;margin:0">
                         Link này có hiệu lực trong <strong>24 giờ</strong>. Nếu bạn không đăng ký tài khoản, hãy bỏ qua email này.<br><br>
                         Hoặc copy link sau vào trình duyệt:<br>
-                        <a href="%s" style="color:#d32f2f;word-break:break-all">%s</a>
+                        <a href="%s" style="color:#1e7ab8;word-break:break-all">%s</a>
                       </p>
                     </div>
-                    <div style="background:#fdf0f0;padding:20px 40px;text-align:center">
-                      <p style="color:#aaa;font-size:0.78rem;margin:0">© 2025 MITAEdu — Nền tảng luyện thi hàng đầu</p>
+                    <div style="background:#f0f7fd;padding:20px 40px;text-align:center;border-top:1px solid #c5ddf0">
+                      <p style="color:#777;font-size:0.78rem;margin:0">© 2026 MITA Education — Luyện thi đánh giá năng lực</p>
                     </div>
                   </div>
                 </body>
                 </html>
-                """.formatted(name, verifyUrl, verifyUrl, verifyUrl);
+                """.formatted(logoUrl, name, verifyUrl, verifyUrl, verifyUrl);
+    }
+
+    private String buildLogoUrl(String actionUrl) {
+        try {
+            URI uri = URI.create(actionUrl);
+            if (uri.getScheme() == null || uri.getHost() == null) {
+                return "https://mitaedu.com/logo-mita-2.png";
+            }
+            String port = uri.getPort() == -1 ? "" : ":" + uri.getPort();
+            return uri.getScheme() + "://" + uri.getHost() + port + "/logo-mita-2.png";
+        } catch (IllegalArgumentException ex) {
+            return "https://mitaedu.com/logo-mita-2.png";
+        }
     }
 }

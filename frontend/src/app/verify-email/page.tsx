@@ -49,8 +49,12 @@ function VerifyEmailContent() {
         textAlign: "center",
       }}>
         {/* Logo */}
-        <div style={{ marginBottom: "24px" }}>
-          <img src="/logo-mita-2.png" alt="MITA Education" style={{ height: "64px", objectFit: "contain" }} />
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+          <img
+            src="/logo-mita-2.png"
+            alt="MITA Education"
+            style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain" }}
+          />
         </div>
 
         {status === "loading" && (

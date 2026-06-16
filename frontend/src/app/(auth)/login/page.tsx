@@ -67,8 +67,12 @@ export default function LoginPage() {
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <img src="/logo-mita-2.png" alt="MITA Edu" style={{ height: "64px", objectFit: "contain" }} />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px" }}>
+          <img
+            src="/logo-mita-2.png"
+            alt="MITA Education"
+            style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain" }}
+          />
           <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
             Đăng nhập để tiếp tục học tập
           </p>
