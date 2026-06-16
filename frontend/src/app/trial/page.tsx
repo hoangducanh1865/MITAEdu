@@ -152,7 +152,7 @@ export default function TrialPage() {
                     ))}
                   </div>
                 )}
-                {activeLesson.videoMediaId || activeLesson.pdfMediaId || activeLesson.handwrittenMediaId
+                {activeLesson.videoMediaId || activeLesson.pdfMediaId || activeLesson.handwrittenMediaId || activeLesson.answerMediaId
                   ? <SecureMediaViewer lesson={activeLesson} />
                   : <VideoPlayer lesson={activeLesson} />
                 }

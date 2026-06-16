@@ -9,6 +9,7 @@ interface SecureLesson {
   videoMediaId?: string;
   pdfMediaId?: string;
   handwrittenMediaId?: string;
+  answerMediaId?: string;
 }
 
 interface Props {
@@ -35,6 +36,9 @@ export default function SecureMediaViewer({ lesson }: Props) {
       : null,
     lesson.handwrittenMediaId
       ? { id: lesson.handwrittenMediaId, label: "File viết tay", icon: "fas fa-pen" }
+      : null,
+    lesson.answerMediaId
+      ? { id: lesson.answerMediaId, label: "Đáp án chi tiết", icon: "fas fa-clipboard-check" }
       : null,
   ].filter(Boolean) as { id: string; label: string; icon: string }[];
 

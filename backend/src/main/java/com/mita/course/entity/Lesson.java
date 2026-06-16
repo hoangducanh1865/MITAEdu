@@ -47,6 +47,9 @@ public class Lesson {
     @Column(name = "handwritten_media_id", length = 100)
     private String handwrittenMediaId;
 
+    @Column(name = "answer_media_id", length = 100)
+    private String answerMediaId;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 }
