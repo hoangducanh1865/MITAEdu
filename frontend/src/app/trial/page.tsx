@@ -10,8 +10,11 @@ import SecureMediaViewer from "@/components/course/SecureMediaViewer";
 import VideoPlayer from "@/components/course/VideoPlayer";
 import Badge from "@/components/ui/Badge";
 import api from "@/lib/api";
-import { getCourseCategoryCode } from "@/lib/courseCategory";
 import type { ApiResponse, Course, Lesson } from "@/types";
+
+const TRIAL_CATEGORY_LABEL = "ĐGNL ĐHQG TP.HCM (V-ACT) 2027";
+const TRIAL_COURSE_NAME = "Khóa Tư Duy Toàn Diện ĐGNL ĐHQG TP.HCM (V-ACT) 2027";
+const TRIAL_COURSE_DESCRIPTION = "Khóa học toàn diện các phần trong kỳ thi: Phần Toán, Phần Sử dụng ngôn ngữ (Tiếng Việt, Tiếng Anh), Phần Tư duy khoa học (đủ các môn: Logic và PTSL, Hóa học, Vật lý, Sinh học, Địa lí, Lịch sử)";
 
 const SUBJECT_STYLES: Record<string, { icon: string; color: string; bg: string }> = {
   "Toán": { icon: "fas fa-calculator", color: "#1565c0", bg: "#e3f2fd" },
@@ -68,7 +71,6 @@ export default function TrialPage() {
   }
 
   const lessons = course.lessons ?? [];
-  const categoryCode = getCourseCategoryCode(course.category);
 
   return (
     <>
@@ -118,13 +120,13 @@ export default function TrialPage() {
 
             <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                <Badge variant="hsa">{categoryCode}</Badge>
+                <Badge variant="hsa">{TRIAL_CATEGORY_LABEL}</Badge>
                 <span style={{ fontSize: "0.78rem", color: "#777" }}>
                   <i className="fas fa-play-circle" style={{ marginRight: "4px" }} />{lessons.length} buổi học thử
                 </span>
               </div>
               <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "#2c2c2c", marginBottom: "6px" }}>
-                {course.name}
+                {TRIAL_COURSE_NAME}
               </h1>
               {course.teacher && (
                 <p style={{ fontSize: "0.875rem", color: "#777" }}>
@@ -132,9 +134,7 @@ export default function TrialPage() {
                   {course.teacher}
                 </p>
               )}
-              {course.description && (
-                <p style={{ fontSize: "0.875rem", color: "#555", marginTop: "10px", lineHeight: 1.6 }}>{course.description}</p>
-              )}
+              <p style={{ fontSize: "0.875rem", color: "#555", marginTop: "10px", lineHeight: 1.6 }}>{TRIAL_COURSE_DESCRIPTION}</p>
             </div>
 
             {activeLesson && (

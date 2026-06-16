@@ -73,6 +73,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/documents/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/documents/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/courses/trial").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/media/*/url").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/exam-packages/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/exams/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/schedules/**").permitAll()
