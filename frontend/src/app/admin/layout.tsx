@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: "fas fa-tachometer-alt", exact: true },
@@ -13,7 +14,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg-page)", color: "var(--text)", display: "flex", flexDirection: "column" }}>
       {/* Top bar */}
       <header style={{
         background: "linear-gradient(135deg,#1e7ab8,#155f8f)", color: "#fff",
@@ -27,16 +28,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             MITAEdu Admin
           </span>
         </div>
-        <Link href="/" style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.82rem", textDecoration: "none" }}>
-          <i className="fas fa-arrow-left" style={{ marginRight: "6px" }} />Về trang chủ
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <ThemeToggle />
+          <Link href="/" style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.82rem", textDecoration: "none" }}>
+            <i className="fas fa-arrow-left" style={{ marginRight: "6px" }} />Về trang chủ
+          </Link>
+        </div>
       </header>
 
       <div style={{ display: "flex", flex: 1 }}>
         {/* Sidebar nav */}
         <nav style={{
           width: "220px", flexShrink: 0,
-          background: "#fff", borderRight: "1px solid #e0e0e0",
+          background: "var(--bg-surface)", borderRight: "1px solid var(--border)",
           padding: "20px 12px", display: "flex", flexDirection: "column", gap: "4px",
         }}>
           {NAV.map((item) => {
@@ -45,8 +49,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link key={item.href} href={item.href} style={{
                 display: "flex", alignItems: "center", gap: "10px",
                 padding: "11px 14px", borderRadius: "10px", textDecoration: "none",
-                background: active ? "#f0f7fd" : "transparent",
-                color: active ? "#1e7ab8" : "#444",
+                background: active ? "var(--bg-muted)" : "transparent",
+                color: active ? "var(--blue)" : "var(--text)",
                 fontWeight: active ? 700 : 500, fontSize: "0.875rem",
                 transition: "all .15s",
               }}>

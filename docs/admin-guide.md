@@ -8,7 +8,7 @@ Luồng đúng của hệ thống hiện tại:
 
 1. Upload file thật lên bucket VCOS/S3.
 2. Tạo hoặc cập nhật bản ghi trong bảng `media_assets`.
-3. Cập nhật bài học trong bảng `lessons` để trỏ tới `video_media_id`, `pdf_media_id`, `handwritten_media_id`.
+3. Cập nhật bài học trong bảng `lessons` để trỏ tới `video_media_id`, `pdf_media_id`, `handwritten_media_id`, `answer_media_id`.
 4. Kiểm tra bằng tài khoản admin, sau đó kiểm tra bằng tài khoản học sinh đã kích hoạt khóa.
 
 Không upload vào `/library`, `/documents`, hay thư mục public của frontend. Hai trang đó không phải nguồn nội dung khóa học bảo mật.
@@ -19,7 +19,8 @@ Checklist nhanh:
 - Endpoint mặc định trong backend: `https://vcos.cloudstorage.com.vn`, cấu hình bằng `VCOS_ENDPOINT`.
 - Khóa HSA đang có trong codebase dùng slug `khoa-nen-tang-vact-2027`.
 - `media_assets.course_slug` phải khớp chính xác với `courses.slug`.
-- Tên object key nên theo mẫu `courses/{course_slug}/b{sort_order}/video.mp4`, `de-bai.pdf`, `viet-tay.pdf`.
+- Tên object key nên theo mẫu `courses/{course_slug}/b{sort_order}/video.mp4`, `de-bai.pdf`, `viet-tay.pdf`, `dap-an-chi-tiet.pdf`.
+- File `dap-an-chi-tiet.pdf` là tab `Đáp án chi tiết`; media id tương ứng nên là `{course_slug}-b{sort_order}-answer`.
 - Với khóa HSA hiện tại, `sort_order` chạy từ 1 đến 179 trên toàn khóa. Ví dụ `Hóa · Bài 1` là `b104`, không phải `b1`.
 
 Xem hướng dẫn đầy đủ, SQL mẫu và mapping từng môn ở [media-upload-guide.md](media-upload-guide.md).
@@ -114,7 +115,7 @@ Nếu học sinh đã nhập mã nhưng vẫn không xem được:
 
 - Kiểm tra mã trong bảng `activation_codes` có `status = 'USED'`.
 - Kiểm tra có dòng tương ứng trong `course_entitlements`.
-- Kiểm tra lesson có `video_media_id`, `pdf_media_id`, hoặc `handwritten_media_id`.
+- Kiểm tra lesson có `video_media_id`, `pdf_media_id`, `handwritten_media_id`, hoặc `answer_media_id`.
 - Kiểm tra `media_assets.course_slug` khớp `courses.slug`.
 
 ## 5. Bảo mật media

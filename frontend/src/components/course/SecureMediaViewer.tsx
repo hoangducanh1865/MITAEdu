@@ -98,9 +98,9 @@ export default function SecureMediaViewer({ lesson }: Props) {
                   onClick={() => setActivePdf(p.id)}
                   style={{
                     display: "inline-flex", alignItems: "center", gap: "8px",
-                    background: active ? "#1e7ab8" : "#f0f7fd",
-                    border: `2px solid ${active ? "#1e7ab8" : "#c5ddf0"}`,
-                    color: active ? "#fff" : "#1e7ab8",
+                    background: active ? "var(--blue)" : "var(--bg-muted)",
+                    border: `2px solid ${active ? "var(--blue)" : "var(--border)"}`,
+                    color: active ? "#fff" : "var(--blue)",
                     borderRadius: "10px", padding: "9px 18px",
                     fontSize: "0.85rem", fontWeight: 700, cursor: "pointer",
                   }}
@@ -150,7 +150,7 @@ function SecureVideo({ mediaId, watermark }: { mediaId: string; watermark: strin
     <div
       style={{
         position: "relative", borderRadius: "16px", overflow: "hidden",
-        background: "#000", aspectRatio: "16/9", border: "2px solid #c5ddf0",
+        background: "#000", aspectRatio: "16/9", border: "2px solid var(--border)",
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
@@ -272,17 +272,17 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
     <div
       style={{
         position: "relative", borderRadius: "16px", overflow: "hidden",
-        border: "2px solid #c5ddf0", background: "#fff", minHeight: "600px",
+        border: "2px solid var(--border)", background: "var(--bg-surface)", minHeight: "600px",
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
       {status === "ready" && (
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          gap: "12px", padding: "10px 12px", borderBottom: "1px solid #c5ddf0",
-          background: "#f8fbfe",
+          gap: "12px", padding: "10px 12px", borderBottom: "1px solid var(--border)",
+          background: "var(--bg-surface-alt)",
         }}>
-          <span style={{ fontSize: "0.82rem", color: "#555", fontWeight: 700 }}>
+          <span style={{ fontSize: "0.82rem", color: "var(--text-muted)", fontWeight: 700 }}>
             <i className="fas fa-file-pdf" style={{ color: "#e53935", marginRight: "6px" }} />
             {label}
           </span>
@@ -292,8 +292,8 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
             disabled={downloading}
             style={{
               display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "7px",
-              border: "1px solid #c5ddf0", borderRadius: "9px", background: "#fff",
-              color: "#1e7ab8", padding: "8px 12px", fontSize: "0.8rem",
+              border: "1px solid var(--border)", borderRadius: "9px", background: "var(--bg-surface)",
+              color: "var(--blue)", padding: "8px 12px", fontSize: "0.8rem",
               fontWeight: 800, cursor: downloading ? "not-allowed" : "pointer",
               opacity: downloading ? 0.7 : 1,
             }}
@@ -320,18 +320,18 @@ function SecurePdf({ mediaId, label, watermark }: { mediaId: string; label: stri
         )
       )}
       {status === "loading" && (
-        <div style={{ padding: "60px", textAlign: "center", color: "#1e7ab8" }}>
+        <div style={{ padding: "60px", textAlign: "center", color: "var(--blue)" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.6rem" }} />
         </div>
       )}
       {status === "error" && (
-        <div style={{ padding: "60px", textAlign: "center", color: "#777" }}>
+        <div style={{ padding: "60px", textAlign: "center", color: "var(--text-muted)" }}>
           <i className="fas fa-lock" style={{ fontSize: "1.6rem", marginBottom: 10 }} /><br />
           Không tải được tài liệu. Vui lòng thử lại sau.
         </div>
       )}
       {status === "unavailable" && (
-        <div style={{ padding: "60px", textAlign: "center", color: "#777" }}>
+        <div style={{ padding: "60px", textAlign: "center", color: "var(--text-muted)" }}>
           <i className="fas fa-cloud-arrow-up" style={{ fontSize: "1.6rem", marginBottom: 10 }} /><br />
           Nội dung chưa được tải lên
         </div>
@@ -406,7 +406,9 @@ function MobilePdfCanvasViewer({
           pageWrap.style.display = "flex";
           pageWrap.style.justifyContent = "center";
           pageWrap.style.padding = "8px";
-          pageWrap.style.background = "#f8fbfe";
+          pageWrap.style.background = getComputedStyle(document.documentElement)
+            .getPropertyValue("--bg-surface-alt")
+            .trim() || "#f8fbfe";
 
           const canvas = document.createElement("canvas");
           const context = canvas.getContext("2d");
@@ -417,7 +419,9 @@ function MobilePdfCanvasViewer({
           canvas.style.width = `${Math.floor(viewport.width)}px`;
           canvas.style.height = `${Math.floor(viewport.height)}px`;
           canvas.style.maxWidth = "100%";
-          canvas.style.border = "1px solid #e2edf7";
+          canvas.style.border = `1px solid ${
+            getComputedStyle(document.documentElement).getPropertyValue("--border-soft").trim() || "#e2edf7"
+          }`;
           canvas.style.background = "#fff";
           canvas.style.boxShadow = "0 2px 8px rgba(30,122,184,.08)";
           context.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -450,7 +454,7 @@ function MobilePdfCanvasViewer({
       className="mobile-pdf-scroll-frame"
       style={{
         position: "relative",
-        background: "#f8fbfe",
+        background: "var(--bg-surface-alt)",
         height: "min(78vh, 720px)",
         minHeight: "520px",
         overflowY: "auto",
@@ -460,7 +464,7 @@ function MobilePdfCanvasViewer({
       }}
     >
       {rendering && (
-        <div style={{ padding: "38px", textAlign: "center", color: "#1e7ab8" }}>
+          <div style={{ padding: "38px", textAlign: "center", color: "var(--blue)" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.4rem" }} />
         </div>
       )}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AvatarDropdown from "./AvatarDropdown";
 import { useSidebar } from "@/lib/SidebarContext";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/", icon: "fa-home", title: "Trang chủ" },
@@ -16,8 +17,8 @@ export default function Navbar() {
   const { sidebarOpen, toggleSidebar } = useSidebar();
 
   return (
-    <header style={{
-      background: "#f0f7fd", borderBottom: "1px solid #c5ddf0",
+    <header className="theme-page" style={{
+      background: "var(--bg-page)", borderBottom: "1px solid var(--border)",
       height: "62px", position: "sticky", top: 0, zIndex: 100,
     }}>
     <div className="navbar-inner" style={{
@@ -35,19 +36,19 @@ export default function Navbar() {
           onClick={toggleSidebar}
           title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
-            background: "none", border: "1px solid #c5ddf0",
+            background: "var(--bg-surface)", border: "1px solid var(--border)",
             width: "36px", height: "36px", borderRadius: "8px",
             display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", color: "#1e7ab8", fontSize: "1rem",
+            cursor: "pointer", color: "var(--blue)", fontSize: "1rem",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#f0f7fd";
-            e.currentTarget.style.borderColor = "#1e7ab8";
+            e.currentTarget.style.background = "var(--bg-muted)";
+            e.currentTarget.style.borderColor = "var(--blue)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "none";
-            e.currentTarget.style.borderColor = "#c5ddf0";
+            e.currentTarget.style.background = "var(--bg-surface)";
+            e.currentTarget.style.borderColor = "var(--border)";
           }}
         >
           <i className="fas fa-bars" />
@@ -67,21 +68,21 @@ export default function Navbar() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "36px", height: "36px", borderRadius: "8px",
-                background: isActive ? "#f0f7fd" : "transparent",
-                color: isActive ? "#1e7ab8" : "#777",
+                background: isActive ? "var(--bg-muted)" : "transparent",
+                color: isActive ? "var(--blue)" : "var(--text-muted)",
                 fontSize: "1rem", transition: "all 0.2s",
                 textDecoration: "none",
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  (e.currentTarget as HTMLElement).style.background = "#f0f7fd";
-                  (e.currentTarget as HTMLElement).style.color = "#1e7ab8";
+                  (e.currentTarget as HTMLElement).style.background = "var(--bg-muted)";
+                  (e.currentTarget as HTMLElement).style.color = "var(--blue)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
                   (e.currentTarget as HTMLElement).style.background = "transparent";
-                  (e.currentTarget as HTMLElement).style.color = "#777";
+                  (e.currentTarget as HTMLElement).style.color = "var(--text-muted)";
                 }
               }}
             >
@@ -93,24 +94,25 @@ export default function Navbar() {
 
       {/* Right: Activation button + Avatar */}
       <div className="navbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <ThemeToggle />
         <button
           className="navbar-activation-btn"
           onClick={() => window.dispatchEvent(new CustomEvent("open-activation-modal"))}
           style={{
             display: "flex", alignItems: "center", gap: "6px",
             padding: "7px 16px", borderRadius: "8px",
-            border: "1.5px solid #1e7ab8", background: "transparent",
-            color: "#1e7ab8", cursor: "pointer",
+            border: "1.5px solid var(--blue)", background: "transparent",
+            color: "var(--blue)", cursor: "pointer",
             fontSize: "0.82rem", fontWeight: 700,
             transition: "all 0.2s", whiteSpace: "nowrap",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#1e7ab8";
+            e.currentTarget.style.background = "var(--blue)";
             e.currentTarget.style.color = "#fff";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#1e7ab8";
+            e.currentTarget.style.color = "var(--blue)";
           }}
         >
           <i className="fas fa-key" style={{ fontSize: "0.75rem" }} />

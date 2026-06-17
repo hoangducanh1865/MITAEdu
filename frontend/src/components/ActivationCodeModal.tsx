@@ -48,7 +48,7 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
   return (
     <Modal open={open} onClose={onClose} title="Nhập mã truy cập">
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.6 }}>
+        <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.6 }}>
           Nhập mã kích hoạt khóa học của bạn. Mã có dạng <strong>MITA-XXXX-XXXX</strong>.
         </p>
 
@@ -61,20 +61,21 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
           autoFocus
           style={{
             width: "100%", padding: "12px 16px",
-            border: "2px solid #c5ddf0", borderRadius: "12px",
+            border: "2px solid var(--border)", borderRadius: "12px",
             fontSize: "1.1rem", fontFamily: "monospace", fontWeight: 700,
-            letterSpacing: "2px", textAlign: "center", color: "#2c2c2c",
+            letterSpacing: "2px", textAlign: "center", color: "var(--text)",
+            background: "var(--input-bg)",
             outline: "none", boxSizing: "border-box",
           }}
-          onFocus={(e) => e.target.style.borderColor = "#1e7ab8"}
-          onBlur={(e) => e.target.style.borderColor = "#c5ddf0"}
+          onFocus={(e) => e.target.style.borderColor = "var(--blue)"}
+          onBlur={(e) => e.target.style.borderColor = "var(--border)"}
         />
 
         {error && (
           <div style={{
-            background: "#fff5f5", border: "1px solid #c5ddf0",
+            background: "var(--blue-light)", border: "1px solid var(--border)",
             borderRadius: "10px", padding: "10px 14px",
-            fontSize: "0.82rem", color: "#1e7ab8",
+            fontSize: "0.82rem", color: "var(--blue)",
           }}>
             <i className="fas fa-exclamation-circle" style={{ marginRight: "6px" }} />
             {error}
@@ -85,8 +86,8 @@ export default function ActivationCodeModal({ open, onClose, onSuccess }: Props)
           type="submit"
           disabled={loading || !canSubmit}
           style={{
-            width: "100%", background: loading || !canSubmit ? "#e0e0e0" : "#1e7ab8",
-            color: loading || !canSubmit ? "#999" : "#fff",
+            width: "100%", background: loading || !canSubmit ? "var(--bg-muted)" : "var(--blue)",
+            color: loading || !canSubmit ? "var(--text-soft)" : "#fff",
             border: "none", borderRadius: "12px",
             padding: "13px", fontFamily: "Nunito, sans-serif",
             fontWeight: 800, fontSize: "0.95rem",

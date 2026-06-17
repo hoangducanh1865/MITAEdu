@@ -12,8 +12,8 @@ import Input from "@/components/ui/Input";
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.5rem", color: "#1e7ab8" }} />
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "var(--bg-page)" }}>
+        <i className="fas fa-spinner fa-spin" style={{ fontSize: "1.5rem", color: "var(--blue)" }} />
       </div>
     }>
       <ResetPasswordForm />
@@ -35,32 +35,32 @@ function ResetPasswordForm() {
   if (!token) {
     return (
       <div style={{
-        minHeight: "100vh", background: "#f0f7fd",
+        minHeight: "100vh", background: "var(--bg-page)",
         display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         <div style={{
-          background: "#fff", borderRadius: "20px",
-          boxShadow: "0 4px 40px rgba(30,122,184,.14)",
+          background: "var(--bg-surface)", borderRadius: "20px",
+          boxShadow: "var(--shadow-strong)",
           padding: "44px 48px", width: "440px", textAlign: "center",
         }}>
           <div style={{
             width: "64px", height: "64px", borderRadius: "50%",
-            background: "#e3f2fd", display: "flex", alignItems: "center",
+            background: "var(--blue-light)", display: "flex", alignItems: "center",
             justifyContent: "center", margin: "0 auto 20px",
-            fontSize: "1.8rem", color: "#155f8f",
+            fontSize: "1.8rem", color: "var(--blue-dark)",
           }}>
             <i className="fas fa-link-slash" />
           </div>
-          <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.2rem", color: "#2c2c2c", marginBottom: "12px" }}>
+          <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.2rem", color: "var(--text)", marginBottom: "12px" }}>
             Link không hợp lệ
           </h2>
-          <p style={{ fontSize: "0.875rem", color: "#777", marginBottom: "24px", lineHeight: 1.6 }}>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginBottom: "24px", lineHeight: 1.6 }}>
             Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.
           </p>
           <Link
             href="/forgot-password"
             style={{
-              display: "inline-block", background: "#1e7ab8", color: "#fff",
+              display: "inline-block", background: "var(--blue)", color: "#fff",
               borderRadius: "10px", padding: "12px 28px",
               fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
             }}
@@ -101,20 +101,23 @@ function ResetPasswordForm() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#f0f7fd",
+      minHeight: "100vh", background: "var(--bg-page)",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       <div style={{
-        background: "#fff", borderRadius: "20px",
-        boxShadow: "0 4px 40px rgba(30,122,184,.14)",
+        background: "var(--bg-surface)", borderRadius: "20px",
+        boxShadow: "var(--shadow-strong)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "2rem", color: "#1e7ab8" }}>
-            🌙 MITA<span style={{ color: "#155f8f" }}>Edu</span>
-          </div>
-          <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
+          <img
+            className="auth-logo"
+            src="/logo-mita-2.png"
+            alt="MITA Education"
+            style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain", margin: "0 auto" }}
+          />
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "6px" }}>
             {success ? "Đặt lại mật khẩu thành công" : "Tạo mật khẩu mới"}
           </p>
         </div>
@@ -124,26 +127,26 @@ function ResetPasswordForm() {
           <div style={{ textAlign: "center" }}>
             <div style={{
               width: "72px", height: "72px", borderRadius: "50%",
-              background: "#e8f5e9", display: "flex", alignItems: "center",
+              background: "var(--success-soft)", display: "flex", alignItems: "center",
               justifyContent: "center", margin: "0 auto 20px",
-              fontSize: "2rem", color: "#2e7d32",
+              fontSize: "2rem", color: "var(--success)",
             }}>
               <i className="fas fa-check-circle" />
             </div>
             <h2 style={{
               fontFamily: "Nunito, sans-serif", fontWeight: 900,
-              fontSize: "1.2rem", color: "#2c2c2c", marginBottom: "12px",
+              fontSize: "1.2rem", color: "var(--text)", marginBottom: "12px",
             }}>
               Mật khẩu đã được cập nhật!
             </h2>
-            <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.65, marginBottom: "28px" }}>
+            <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.65, marginBottom: "28px" }}>
               Mật khẩu của bạn đã được đặt lại thành công.
               Hãy đăng nhập bằng mật khẩu mới.
             </p>
             <Link
               href="/login"
               style={{
-                display: "inline-block", background: "#1e7ab8", color: "#fff",
+                display: "inline-block", background: "var(--blue)", color: "#fff",
                 borderRadius: "10px", padding: "12px 32px",
                 fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
               }}
@@ -175,9 +178,9 @@ function ResetPasswordForm() {
 
             {error && (
               <div style={{
-                background: "#e3f2fd", border: "1px solid #2196f3",
+                background: "var(--blue-light)", border: "1px solid var(--blue)",
                 borderRadius: "10px", padding: "10px 14px",
-                fontSize: "0.875rem", color: "#1970a8",
+                fontSize: "0.875rem", color: "var(--blue-dark)",
               }}>
                 <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }} />
                 {error}
@@ -188,12 +191,12 @@ function ResetPasswordForm() {
               Đặt lại mật khẩu
             </Button>
 
-            <p style={{ textAlign: "center", fontSize: "0.875rem", color: "#777", marginTop: "4px" }}>
-              <Link href="/forgot-password" style={{ color: "#1e7ab8", fontWeight: 600 }}>
+            <p style={{ textAlign: "center", fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "4px" }}>
+              <Link href="/forgot-password" style={{ color: "var(--blue)", fontWeight: 600 }}>
                 Yêu cầu link mới
               </Link>
               {" "}·{" "}
-              <Link href="/login" style={{ color: "#777" }}>
+              <Link href="/login" style={{ color: "var(--text-muted)" }}>
                 Đăng nhập
               </Link>
             </p>

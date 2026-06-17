@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="footer-root" style={{
-      background: "#155f8f",
+      background: "var(--footer-bg)",
       borderTop: "none",
       padding: "40px 60px 0",
       marginTop: "auto",
@@ -39,7 +39,7 @@ export default function Footer() {
 
       <div style={{
         textAlign: "center", marginTop: "32px", fontSize: "0.8rem",
-        color: "rgba(255,255,255,0.6)",
+        color: "var(--footer-muted)",
         borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: "16px",
         paddingBottom: "16px",
       }}>
@@ -86,5 +86,5 @@ const colTitle: React.CSSProperties = {
   color: "#fff", letterSpacing: "0.5px", marginBottom: "12px",
 };
 const colText: React.CSSProperties = {
-  fontSize: "0.8rem", color: "rgba(255,255,255,0.85)", marginBottom: "6px",
+  fontSize: "0.8rem", color: "var(--footer-text)", marginBottom: "6px",
 };

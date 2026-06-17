@@ -80,17 +80,17 @@ export default function AccessCodesPage() {
 
   return (
     <div>
-      <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "#2c2c2c", marginBottom: "24px" }}>
+      <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--text)", marginBottom: "24px" }}>
         Mã kích hoạt
       </h1>
 
-      <div style={{ background: "#fff", borderRadius: "14px", border: "1px solid #e0e0e0", padding: "20px 24px", marginBottom: "20px" }}>
+      <div style={{ background: "var(--bg-surface)", borderRadius: "14px", border: "1px solid var(--border)", padding: "20px 24px", marginBottom: "20px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", marginBottom: "16px" }}>
           <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", margin: 0 }}>Tạo mã mới</h2>
           {generatedCodes && (
             <button
               onClick={() => downloadCsv(generatedCodes, buildFileName(generatedCodes))}
-              style={{ padding: "8px 14px", background: "#f0f7fd", color: "#1e7ab8", border: "1px solid #c5ddf0", borderRadius: "10px", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer" }}
+              style={{ padding: "8px 14px", background: "var(--bg-muted)", color: "var(--blue)", border: "1px solid var(--border)", borderRadius: "10px", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer" }}
             >
               <i className="fas fa-download" style={{ marginRight: "6px" }} />
               Tải lại CSV vừa tạo
@@ -100,11 +100,11 @@ export default function AccessCodesPage() {
 
         <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "flex-end" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <label style={{ fontSize: "0.78rem", color: "#777", fontWeight: 600 }}>Khóa học</label>
+            <label style={{ fontSize: "0.78rem", color: "var(--text-muted)", fontWeight: 600 }}>Khóa học</label>
             <select
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value === "all" ? "all" : Number(e.target.value))}
-              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid #e0e0e0", fontSize: "0.875rem", minWidth: "280px" }}
+              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid var(--border)", background: "var(--input-bg)", color: "var(--text)", fontSize: "0.875rem", minWidth: "280px" }}
             >
               <option value="all">Tất cả khóa hiện có</option>
               {courses.map((course) => (
@@ -114,7 +114,7 @@ export default function AccessCodesPage() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <label style={{ fontSize: "0.78rem", color: "#777", fontWeight: 600 }}>
+            <label style={{ fontSize: "0.78rem", color: "var(--text-muted)", fontWeight: 600 }}>
               {selectedCourse === "all" ? "Số lượng mỗi khóa" : "Số lượng"}
             </label>
             <input
@@ -123,47 +123,47 @@ export default function AccessCodesPage() {
               max={10000}
               value={count}
               onChange={(e) => setCount(Math.max(1, Number(e.target.value) || 1))}
-              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid #e0e0e0", fontSize: "0.875rem", width: "130px" }}
+              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid var(--border)", background: "var(--input-bg)", color: "var(--text)", fontSize: "0.875rem", width: "130px" }}
             />
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <label style={{ fontSize: "0.78rem", color: "#777", fontWeight: 600 }}>
-              Hạn kích hoạt <span style={{ color: "#aaa", fontWeight: 400 }}>(trống = không giới hạn)</span>
+            <label style={{ fontSize: "0.78rem", color: "var(--text-muted)", fontWeight: 600 }}>
+              Hạn kích hoạt <span style={{ color: "var(--text-soft)", fontWeight: 400 }}>(trống = không giới hạn)</span>
             </label>
             <input
               type="datetime-local"
               value={expiresAt}
               onChange={(e) => setExpiresAt(e.target.value)}
-              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid #e0e0e0", fontSize: "0.875rem" }}
+              style={{ padding: "9px 12px", borderRadius: "10px", border: "1px solid var(--border)", background: "var(--input-bg)", color: "var(--text)", fontSize: "0.875rem" }}
             />
           </div>
 
           <button
             onClick={handleGenerate}
             disabled={generating || selectedCourseIds.length === 0}
-            style={{ padding: "10px 20px", background: "#1e7ab8", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: generating ? "not-allowed" : "pointer", opacity: generating ? 0.75 : 1 }}
+            style={{ padding: "10px 20px", background: "var(--blue)", color: "#fff", border: "none", borderRadius: "10px", fontWeight: 700, fontSize: "0.875rem", cursor: generating ? "not-allowed" : "pointer", opacity: generating ? 0.75 : 1 }}
           >
             {generating ? <><i className="fas fa-spinner fa-spin" /> Đang tạo...</> : <><i className="fas fa-plus" /> Tạo và tải CSV</>}
           </button>
         </div>
 
-        <p style={{ margin: "12px 0 0", color: "#777", fontSize: "0.82rem" }}>
+        <p style={{ margin: "12px 0 0", color: "var(--text-muted)", fontSize: "0.82rem" }}>
           Sẽ tạo <strong>{totalWillCreate}</strong> mã. Mỗi mã chỉ mở một khóa tương ứng, hết hiệu lực khi quá hạn hoặc ngay sau khi học sinh dùng.
         </p>
 
         {error && <p style={{ marginTop: "10px", color: "#c62828", fontSize: "0.82rem" }}>{error}</p>}
 
         {generatedCodes && (
-          <div style={{ marginTop: "16px", background: "#f5fff5", border: "1px solid #c8e6c9", borderRadius: "10px", padding: "14px" }}>
-            <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "#2e7d32", marginBottom: "8px" }}>
+          <div style={{ marginTop: "16px", background: "var(--success-soft)", border: "1px solid var(--success)", borderRadius: "10px", padding: "14px" }}>
+            <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--success)", marginBottom: "8px" }}>
               <i className="fas fa-check-circle" /> Đã tạo {generatedCodes.length} mã và tải file CSV.
             </p>
             <div style={{ maxHeight: "160px", overflow: "auto", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "8px" }}>
               {generatedCodes.map((item) => (
-                <code key={item.code} style={{ background: "#fff", border: "1px solid #c8e6c9", borderRadius: "6px", padding: "6px 10px", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.5px" }}>
+                <code key={item.code} style={{ background: "var(--bg-surface)", border: "1px solid var(--success)", borderRadius: "6px", padding: "6px 10px", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.5px" }}>
                   {item.code}
-                  <span style={{ display: "block", color: "#777", fontWeight: 500, letterSpacing: 0, marginTop: "2px" }}>{item.courseName}</span>
+                  <span style={{ display: "block", color: "var(--text-muted)", fontWeight: 500, letterSpacing: 0, marginTop: "2px" }}>{item.courseName}</span>
                 </code>
               ))}
             </div>
@@ -171,19 +171,19 @@ export default function AccessCodesPage() {
         )}
       </div>
 
-      <div style={{ background: "#fff", borderRadius: "14px", border: "1px solid #e0e0e0", padding: "20px 24px" }}>
+      <div style={{ background: "var(--bg-surface)", borderRadius: "14px", border: "1px solid var(--border)", padding: "20px 24px" }}>
         <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", marginBottom: "16px" }}>
           Danh sách mã — {selectedCourse === "all" ? "Tất cả khóa" : courses.find((course) => course.id === selectedCourse)?.name ?? ""}
         </h2>
         {loadingCodes ? (
-          <p style={{ color: "#888" }}><i className="fas fa-spinner fa-spin" /> Đang tải...</p>
+          <p style={{ color: "var(--text-soft)" }}><i className="fas fa-spinner fa-spin" /> Đang tải...</p>
         ) : codes.length === 0 ? (
-          <p style={{ color: "#888" }}>Chưa có mã nào.</p>
+          <p style={{ color: "var(--text-soft)" }}>Chưa có mã nào.</p>
         ) : (
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #c5ddf0" }}>
+                <tr style={{ borderBottom: "2px solid var(--border)" }}>
                   <Th>Mã</Th>
                   <Th>Khóa học</Th>
                   <Th>Trạng thái</Th>
@@ -194,11 +194,11 @@ export default function AccessCodesPage() {
               </thead>
               <tbody>
                 {codes.map((code) => (
-                  <tr key={code.id} style={{ borderBottom: "1px solid #f5f5f5" }}>
+                  <tr key={code.id} style={{ borderBottom: "1px solid var(--border-soft)" }}>
                     <Td><code style={{ fontWeight: 700, letterSpacing: "1px" }}>{code.code}</code></Td>
                     <Td>{code.courseName}</Td>
                     <Td><StatusBadge status={code.status} expiresAt={code.expiresAt} /></Td>
-                    <Td style={{ color: code.expiresAt ? "#555" : "#aaa" }}>
+                    <Td style={{ color: code.expiresAt ? "var(--text-muted)" : "var(--text-soft)" }}>
                       {code.expiresAt
                         ? new Date(code.expiresAt).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })
                         : "Không giới hạn"}
@@ -233,11 +233,11 @@ function StatusBadge({ status, expiresAt }: { status: string; expiresAt?: string
 }
 
 function Th({ children }: { children: React.ReactNode }) {
-  return <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "0.78rem", color: "#777", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap" }}>{children}</th>;
+  return <th style={{ textAlign: "left", padding: "10px 12px", fontSize: "0.78rem", color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap" }}>{children}</th>;
 }
 
 function Td({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
-  return <td style={{ padding: "10px 12px", color: "#444", ...style }}>{children}</td>;
+  return <td style={{ padding: "10px 12px", color: "var(--text)", ...style }}>{children}</td>;
 }
 
 function buildFileName(codes: ActivationCode[]) {

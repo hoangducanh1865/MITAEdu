@@ -18,11 +18,11 @@ export default function VideoPlayer({ lesson }: Props) {
         </div>
       ) : (
         <div style={{
-          borderRadius: "16px", background: "#f5f5f5", aspectRatio: "16/9",
+          borderRadius: "16px", background: "var(--bg-muted)", aspectRatio: "16/9",
           display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "12px",
         }}>
-          <i className="fas fa-video-slash" style={{ fontSize: "2.5rem", color: "#bbb" }} />
-          <p style={{ color: "#999", fontSize: "0.875rem" }}>Bài học này chưa có video</p>
+          <i className="fas fa-video-slash" style={{ fontSize: "2.5rem", color: "var(--text-soft)" }} />
+          <p style={{ color: "var(--text-soft)", fontSize: "0.875rem" }}>Bài học này chưa có video</p>
         </div>
       )}
 
@@ -48,7 +48,7 @@ export default function VideoPlayer({ lesson }: Props) {
 function pdfBtnStyle(color: string): React.CSSProperties {
   return {
     display: "inline-flex", alignItems: "center", gap: "8px",
-    background: "#f0f7fd", border: `2px solid ${color}33`,
+    background: "var(--bg-muted)", border: `2px solid ${color}33`,
     color, borderRadius: "10px", padding: "9px 18px",
     fontSize: "0.85rem", fontWeight: 600,
   };

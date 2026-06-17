@@ -23,8 +23,8 @@ export default function Sidebar() {
     <aside
       className="home-left-sidebar"
       style={{
-        background: "#f0f7fd",
-        borderRight: "1px solid #c5ddf0",
+        background: "var(--bg-page)",
+        borderRight: "1px solid var(--border)",
         display: "flex",
         flexDirection: "column",
         gap: "8px",
@@ -66,7 +66,7 @@ export default function Sidebar() {
 
       {/* Nav items */}
       <nav style={{ display: "flex", flexDirection: "column", gap: "4px", minWidth: "208px" }}>
-        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#f0f7fd">Khóa học</SidebarItem>
+        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#e3f2fd">Khóa học</SidebarItem>
         <SidebarItem href="/trial" icon="fa-play-circle" color="#2e7d32" bg="#e8f5e9">Học thử</SidebarItem>
         {false && <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>}
         {false && <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>}
@@ -76,15 +76,15 @@ export default function Sidebar() {
         )}
       </nav>
 
-      <hr style={{ borderColor: "#c5ddf0", margin: "8px 0", minWidth: "208px" }} />
+      <hr style={{ borderColor: "var(--border)", margin: "8px 0", minWidth: "208px" }} />
 
-      <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#777", letterSpacing: "0.5px", textTransform: "uppercase", padding: "0 4px", minWidth: "208px" }}>
+      <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.5px", textTransform: "uppercase", padding: "0 4px", minWidth: "208px" }}>
         Liên kết
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
         <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
         <SocialLink href="https://m.me/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
-        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
+        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="var(--text)" label="TikTok" />
       </div>
     </aside>
     </>
@@ -98,7 +98,7 @@ function SidebarItem({ href, icon, color, bg, children }: {
     <Link href={href} prefetch={false} style={{
       display: "flex", alignItems: "center", gap: "12px",
       padding: "10px 12px", borderRadius: "10px", fontSize: "0.9rem", fontWeight: 500,
-      color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",
+      color: "var(--text)", transition: "background .15s", whiteSpace: "nowrap",
     }}>
       <span style={{
         width: "30px", height: "30px", borderRadius: "8px",
@@ -119,7 +119,7 @@ function SocialLink({ href, icon, color, label }: {
     <a href={href} target="_blank" rel="noopener noreferrer" style={{
       display: "flex", alignItems: "center", gap: "10px",
       padding: "8px 12px", borderRadius: "10px", fontSize: "0.85rem",
-      color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",
+      color: "var(--text)", transition: "background .15s", whiteSpace: "nowrap",
     }}>
       <i className={icon} style={{ color, width: "16px", textAlign: "center" }} />
       {label}

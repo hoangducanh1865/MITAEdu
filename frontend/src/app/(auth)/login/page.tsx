@@ -59,11 +59,11 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page" style={{
-      minHeight: "100vh", background: "#f0f7fd",
+      minHeight: "100vh", background: "var(--bg-page)",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       <div className="auth-card" style={{
-        background: "#fff", borderRadius: "20px", boxShadow: "0 4px 40px rgba(30,122,184,.14)",
+        background: "var(--bg-surface)", borderRadius: "20px", boxShadow: "var(--shadow-strong)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
@@ -74,7 +74,7 @@ export default function LoginPage() {
             alt="MITA Education"
             style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain" }}
           />
-          <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "6px" }}>
             Đăng nhập để tiếp tục học tập
           </p>
         </div>
@@ -103,7 +103,7 @@ export default function LoginPage() {
             <div style={{ textAlign: "right" }}>
               <Link
                 href="/forgot-password"
-                style={{ fontSize: "0.8rem", color: "#1e7ab8", fontWeight: 600 }}
+                style={{ fontSize: "0.8rem", color: "var(--blue)", fontWeight: 600 }}
               >
                 Quên mật khẩu?
               </Link>
@@ -112,17 +112,17 @@ export default function LoginPage() {
 
           {error && (
             <div style={{
-              background: needVerify ? "#fff8e1" : "#e3f2fd",
-              border: `1px solid ${needVerify ? "#ffca28" : "#2196f3"}`,
+              background: needVerify ? "var(--warning-soft)" : "var(--blue-light)",
+              border: `1px solid ${needVerify ? "var(--warning-border)" : "var(--blue)"}`,
               borderRadius: "10px", padding: "12px 14px", fontSize: "0.875rem",
-              color: needVerify ? "#795548" : "#1970a8",
+              color: needVerify ? "var(--warning-text)" : "var(--blue-dark)",
             }}>
               <i className={`fas ${needVerify ? "fa-envelope" : "fa-exclamation-circle"}`} style={{ marginRight: "8px" }} />
               {error}
               {needVerify && (
                 <div style={{ marginTop: "10px" }}>
                   {resendDone ? (
-                    <span style={{ color: "#2e7d32", fontWeight: 600, fontSize: "0.82rem" }}>
+                    <span style={{ color: "var(--success)", fontWeight: 600, fontSize: "0.82rem" }}>
                       <i className="fas fa-check" style={{ marginRight: "4px" }} />
                       Đã gửi lại email xác minh — vui lòng kiểm tra hộp thư.
                     </span>
@@ -151,9 +151,9 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
+        <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "var(--text-muted)" }}>
           Chưa có tài khoản?{" "}
-          <Link href="/register" prefetch={false} style={{ color: "#1e7ab8", fontWeight: 600 }}>
+          <Link href="/register" prefetch={false} style={{ color: "var(--blue)", fontWeight: 600 }}>
             Đăng ký ngay
           </Link>
         </p>

@@ -94,14 +94,14 @@ export default function ProfilePage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main className="profile-main" style={{ padding: "28px 32px", minWidth: 0, width: "100%" }}>
-          <h1 className="profile-title" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "#1e7ab8", marginBottom: "24px" }}>
+        <main className="profile-main" style={{ padding: "28px 32px", minWidth: 0, width: "100%", background: "var(--bg-page)" }}>
+          <h1 className="profile-title" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.6rem", color: "var(--blue)", marginBottom: "24px" }}>
             <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />Hồ sơ cá nhân
           </h1>
 
           <div className="profile-grid" style={{ display: "grid", gridTemplateColumns: "300px minmax(0, 1fr)", gap: "24px" }}>
             {/* Avatar card */}
-            <div className="profile-card profile-avatar-card" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 20px", textAlign: "center" }}>
+            <div className="profile-card profile-avatar-card" style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "28px 20px", textAlign: "center" }}>
               <div style={{
                 width: "80px", height: "80px", borderRadius: "50%",
                 background: "linear-gradient(135deg,#1e7ab8,#155f8f)",
@@ -110,24 +110,24 @@ export default function ProfilePage() {
               }}>
                 <i className="fas fa-user" />
               </div>
-              <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#2c2c2c" }}>{user?.name}</div>
-              <div style={{ fontSize: "0.8rem", color: "#777", marginTop: "4px" }}>{user?.email}</div>
+              <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "var(--text)" }}>{user?.name}</div>
+              <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "4px" }}>{user?.email}</div>
               {user?.phone && (
-                <div style={{ fontSize: "0.8rem", color: "#777", marginTop: "4px" }}>{user.phone}</div>
+                <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "4px" }}>{user.phone}</div>
               )}
               <div style={{ marginTop: "12px" }}>
-                <span style={{ background: "#f0f7fd", color: "#1e7ab8", borderRadius: "20px", padding: "4px 14px", fontSize: "0.78rem", fontWeight: 700 }}>
+                <span style={{ background: "var(--bg-muted)", color: "var(--blue)", borderRadius: "20px", padding: "4px 14px", fontSize: "0.78rem", fontWeight: 700 }}>
                   {user?.role === "ADMIN" ? "Quản trị viên" : "Học viên"}
                 </span>
               </div>
-              <div style={{ marginTop: "16px", fontSize: "0.75rem", color: "#777" }}>
+              <div style={{ marginTop: "16px", fontSize: "0.75rem", color: "var(--text-muted)" }}>
                 Tham gia từ {user?.createdAt ? new Date(user.createdAt).toLocaleDateString("vi-VN") : "—"}
               </div>
             </div>
 
             {/* Edit form */}
-            <div className="profile-card profile-edit-card" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "28px 32px" }}>
-              <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "20px" }}>
+            <div className="profile-card profile-edit-card" style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "28px 32px" }}>
+              <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text)", marginBottom: "20px" }}>
                 Chỉnh sửa thông tin
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -142,11 +142,11 @@ export default function ProfilePage() {
                 </Button>
               </div>
 
-              <div id="security" style={{ borderTop: "1px solid #c5ddf0", marginTop: "28px", paddingTop: "24px" }}>
-                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: "10px" }}>
+              <div id="security" style={{ borderTop: "1px solid var(--border)", marginTop: "28px", paddingTop: "24px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text)", marginBottom: "10px" }}>
                   Bảo mật tài khoản
                 </h2>
-                <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.6, marginBottom: "16px" }}>
+                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.6, marginBottom: "16px" }}>
                   Để đổi mật khẩu, MITA Education sẽ gửi một link xác nhận đến email <strong>{user?.email}</strong>. Bạn cần mở link đó để thiết lập mật khẩu mới.
                 </p>
                 <Button onClick={requestPasswordChange} loading={requestingPasswordChange} variant="secondary" className="profile-action-btn w-fit">

@@ -29,12 +29,12 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="auth-page" style={{
-      minHeight: "100vh", background: "#f0f7fd",
+      minHeight: "100vh", background: "var(--bg-page)",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
       <div className="auth-card" style={{
-        background: "#fff", borderRadius: "20px",
-        boxShadow: "0 4px 40px rgba(30,122,184,.14)",
+        background: "var(--bg-surface)", borderRadius: "20px",
+        boxShadow: "var(--shadow-strong)",
         padding: "44px 48px", width: "440px",
       }}>
         {/* Logo */}
@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
             alt="MITA Education"
             style={{ display: "block", width: "320px", maxWidth: "100%", height: "auto", objectFit: "contain" }}
           />
-          <p style={{ fontSize: "0.875rem", color: "#777", marginTop: "6px" }}>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "6px" }}>
             {submitted ? "Kiểm tra email của bạn" : "Quên mật khẩu"}
           </p>
         </div>
@@ -55,23 +55,23 @@ export default function ForgotPasswordPage() {
           <div style={{ textAlign: "center" }}>
             <div style={{
               width: "72px", height: "72px", borderRadius: "50%",
-              background: "#e8f5e9", display: "flex", alignItems: "center",
+              background: "var(--success-soft)", display: "flex", alignItems: "center",
               justifyContent: "center", margin: "0 auto 20px",
-              fontSize: "2rem", color: "#2e7d32",
+              fontSize: "2rem", color: "var(--success)",
             }}>
               <i className="fas fa-envelope-open-text" />
             </div>
             <h2 style={{
               fontFamily: "Nunito, sans-serif", fontWeight: 900,
-              fontSize: "1.2rem", color: "#2c2c2c", marginBottom: "12px",
+              fontSize: "1.2rem", color: "var(--text)", marginBottom: "12px",
             }}>
               Email đã được gửi!
             </h2>
-            <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.65, marginBottom: "8px" }}>
+            <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.65, marginBottom: "8px" }}>
               Chúng tôi đã gửi hướng dẫn đặt lại mật khẩu đến<br />
-              <strong style={{ color: "#1e7ab8" }}>{email}</strong>
+              <strong style={{ color: "var(--blue)" }}>{email}</strong>
             </p>
-            <p style={{ fontSize: "0.82rem", color: "#888", lineHeight: 1.6, marginBottom: "28px" }}>
+            <p style={{ fontSize: "0.82rem", color: "var(--text-soft)", lineHeight: 1.6, marginBottom: "28px" }}>
               Vui lòng kiểm tra hộp thư và nhấn vào link trong email.
               Link có hiệu lực trong <strong>1 giờ</strong>.
               (Kiểm tra cả thư mục Spam nếu không thấy.)
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
             <Link
               href="/login"
               style={{
-                display: "inline-block", background: "#1e7ab8", color: "#fff",
+                display: "inline-block", background: "var(--blue)", color: "#fff",
                 borderRadius: "10px", padding: "12px 32px",
                 fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
               }}
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
         ) : (
           /* ── Form nhập email ── */
           <>
-            <p style={{ fontSize: "0.875rem", color: "#555", marginBottom: "24px", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginBottom: "24px", lineHeight: 1.6 }}>
               Nhập địa chỉ email đã đăng ký, chúng tôi sẽ gửi link đặt lại mật khẩu cho bạn.
             </p>
 
@@ -107,9 +107,9 @@ export default function ForgotPasswordPage() {
 
               {error && (
                 <div style={{
-                  background: "#e3f2fd", border: "1px solid #2196f3",
+                  background: "var(--blue-light)", border: "1px solid var(--blue)",
                   borderRadius: "10px", padding: "10px 14px",
-                  fontSize: "0.875rem", color: "#1970a8",
+                  fontSize: "0.875rem", color: "var(--blue-dark)",
                 }}>
                   <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }} />
                   {error}
@@ -121,9 +121,9 @@ export default function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "#777" }}>
+            <p style={{ textAlign: "center", marginTop: "20px", fontSize: "0.875rem", color: "var(--text-muted)" }}>
               Nhớ mật khẩu rồi?{" "}
-              <Link href="/login" style={{ color: "#1e7ab8", fontWeight: 600 }}>
+              <Link href="/login" style={{ color: "var(--blue)", fontWeight: 600 }}>
                 Đăng nhập
               </Link>
             </p>
