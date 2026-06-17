@@ -66,7 +66,7 @@ export default function Sidebar() {
 
       {/* Nav items */}
       <nav style={{ display: "flex", flexDirection: "column", gap: "4px", minWidth: "208px" }}>
-        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#f0f7fd">Khóa học</SidebarItem>
+        <SidebarItem href="/courses" icon="fa-graduation-cap" color="#1e7ab8" bg="#e3f2fd">Khóa học</SidebarItem>
         <SidebarItem href="/trial" icon="fa-play-circle" color="#2e7d32" bg="#e8f5e9">Học thử</SidebarItem>
         {false && <SidebarItem href="/practice" icon="fa-dumbbell" color="#1565c0" bg="#e3f2fd">Phòng luyện</SidebarItem>}
         {false && <SidebarItem href="/news" icon="fa-newspaper" color="#2e7d32" bg="#e8f5e9">Tin tức</SidebarItem>}
@@ -84,7 +84,7 @@ export default function Sidebar() {
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
         <SocialLink href="https://web.facebook.com/mitaeducation" icon="fab fa-facebook" color="#1877f2" label="Facebook" />
         <SocialLink href="https://m.me/mitaeducation" icon="fab fa-facebook-messenger" color="#0095f6" label="Messenger" />
-        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="#000000" label="TikTok" />
+        <SocialLink href="https://www.tiktok.com/@mita.education.official" icon="fab fa-tiktok" color="var(--text)" label="TikTok" />
       </div>
     </aside>
     </>
