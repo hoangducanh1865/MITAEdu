@@ -569,6 +569,16 @@ html[data-theme="dark"] textarea {
 }
 
 /* ── Courses list page ──────────────────────────────── */
+.course-lesson-scroll {
+  max-height: min(680px, calc(100vh - 180px));
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
 @media (max-width: 768px) {
   /* Stack categories above course list */
   .courses-main {
@@ -687,6 +697,10 @@ html[data-theme="dark"] textarea {
   .course-lesson-sticky {
     position: static !important;
     max-height: none !important;
+  }
+
+  .course-lesson-scroll {
+    max-height: 62vh !important;
   }
 
   /* PDF viewer: comfortable height on mobile */

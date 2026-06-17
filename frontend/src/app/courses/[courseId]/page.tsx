@@ -226,11 +226,13 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
                 {subject ? `Bài học · ${subject}` : "Danh sách bài học"}
               </h3>
               {visibleLessons.length > 0 && (
-                <LessonAccordion
-                  lessons={visibleLessons}
-                  onSelect={setActiveLesson}
-                  activeId={activeLesson?.id}
-                />
+                <div className="course-lesson-scroll">
+                  <LessonAccordion
+                    lessons={visibleLessons}
+                    onSelect={setActiveLesson}
+                    activeId={activeLesson?.id}
+                  />
+                </div>
               )}
             </div>
           </div>

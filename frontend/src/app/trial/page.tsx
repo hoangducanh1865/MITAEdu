@@ -166,11 +166,13 @@ export default function TrialPage() {
                 Danh sách học thử
               </h3>
               {lessons.length > 0 && (
-                <LessonAccordion
-                  lessons={lessons}
-                  onSelect={setActiveLesson}
-                  activeId={activeLesson?.id}
-                />
+                <div className="course-lesson-scroll">
+                  <LessonAccordion
+                    lessons={lessons}
+                    onSelect={setActiveLesson}
+                    activeId={activeLesson?.id}
+                  />
+                </div>
               )}
             </div>
           </div>
