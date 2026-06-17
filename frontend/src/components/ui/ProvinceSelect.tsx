@@ -61,14 +61,14 @@ export default function ProvinceSelect({
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label htmlFor={inputId} className="text-sm font-semibold text-[#2c2c2c]">
+        <label htmlFor={inputId} className="text-sm font-semibold text-[var(--text)]">
           {label}
         </label>
       )}
 
       <div className="relative">
         {leftIcon && (
-          <span className="absolute left-3 top-1/2 z-[1] -translate-y-1/2 text-[#777]">
+          <span className="absolute left-3 top-1/2 z-[1] -translate-y-1/2 text-[var(--text-muted)]">
             {leftIcon}
           </span>
         )}
@@ -120,9 +120,9 @@ export default function ProvinceSelect({
             }
           }}
           className={cn(
-            "w-full rounded-xl border border-[#c5ddf0] bg-[#f0f7fd] px-4 py-2.5 pr-10 text-sm outline-none",
-            "focus:border-[#1e7ab8] focus:ring-2 focus:ring-[#1e7ab8]/20 transition-all",
-            "placeholder:text-[#aaa]",
+            "w-full rounded-xl border border-[var(--border)] bg-[var(--input-bg)] px-4 py-2.5 pr-10 text-sm text-[var(--text)] outline-none",
+            "focus:border-[var(--blue)] focus:ring-2 focus:ring-[#1e7ab8]/20 transition-all",
+            "placeholder:text-[var(--input-placeholder)]",
             leftIcon && "pl-10",
             error && "border-red-500",
             className
@@ -139,6 +139,7 @@ export default function ProvinceSelect({
             setOpen((current) => !current);
           }}
           className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-[#777]"
+          style={{ color: "var(--text-muted)" }}
           aria-label="Mở danh sách tỉnh thành"
         >
           <i className={`fas fa-chevron-${open ? "up" : "down"}`} />
@@ -148,7 +149,7 @@ export default function ProvinceSelect({
           <div
             id={`${inputId}-listbox`}
             role="listbox"
-            className="absolute left-0 right-0 top-[calc(100%+6px)] z-[350] overflow-y-auto rounded-xl border border-[#c5ddf0] bg-white p-1 shadow-[0_10px_28px_rgba(30,122,184,.18)]"
+            className="absolute left-0 right-0 top-[calc(100%+6px)] z-[350] overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] p-1 shadow-[0_10px_28px_rgba(30,122,184,.18)]"
             style={{ maxHeight: "210px" }}
           >
             {filtered.length > 0 ? (
@@ -168,12 +169,12 @@ export default function ProvinceSelect({
                     }}
                     className={cn(
                       "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors",
-                      selected && "bg-[#e3f2fd] font-semibold text-[#1e7ab8]",
-                      !selected && active && "bg-[#f0f7fd]",
-                      !selected && !active && "text-[#2c2c2c]"
+                      selected && "bg-[var(--blue-light)] font-semibold text-[var(--blue)]",
+                      !selected && active && "bg-[var(--bg-muted)]",
+                      !selected && !active && "text-[var(--text)]"
                     )}
                   >
-                    <span className="w-4 text-center text-xs text-[#1e7ab8]">
+                    <span className="w-4 text-center text-xs text-[var(--blue)]">
                       {selected && <i className="fas fa-check" />}
                     </span>
                     <span>{province}</span>
@@ -181,7 +182,7 @@ export default function ProvinceSelect({
                 );
               })
             ) : (
-              <div className="px-3 py-3 text-sm text-[#777]">
+              <div className="px-3 py-3 text-sm text-[var(--text-muted)]">
                 Không tìm thấy tỉnh/thành phù hợp
               </div>
             )}

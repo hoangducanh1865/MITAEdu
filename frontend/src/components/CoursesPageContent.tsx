@@ -92,7 +92,7 @@ export default function CoursesPageContent() {
           className="courses-main"
           style={{
             padding: "0",
-            background: "#f0f7fd",
+            background: "var(--bg-page)",
             minHeight: "calc(100vh - 62px)",
           }}
         >
@@ -103,15 +103,15 @@ export default function CoursesPageContent() {
               alignItems: "center",
               gap: "8px",
               fontSize: "0.82rem",
-              color: "#777",
-              background: "#f0f7fd",
+              color: "var(--text-muted)",
+              background: "var(--bg-page)",
             }}
           >
             <Link href="/" style={{ color: "#1e7ab8" }}>
               <i className="fas fa-home" />
             </Link>
-            <span style={{ color: "#ccc" }}>›</span>
-            <span style={{ color: "#2c2c2c", fontWeight: 600 }}>Khóa học</span>
+            <span style={{ color: "var(--border)" }}>›</span>
+            <span style={{ color: "var(--text)", fontWeight: 600 }}>Khóa học</span>
           </div>
 
           <div
@@ -138,7 +138,7 @@ export default function CoursesPageContent() {
                 style={{
                   fontSize: "0.72rem",
                   fontWeight: 800,
-                  color: "#aaa",
+                  color: "var(--text-soft)",
                   letterSpacing: "1.5px",
                   textTransform: "uppercase",
                   marginBottom: "10px",
@@ -170,7 +170,7 @@ export default function CoursesPageContent() {
                         border: active
                           ? "none"
                           : "2px solid transparent",
-                        background: active ? cat.gradient : "#fff",
+                        background: active ? cat.gradient : "var(--bg-surface)",
                         cursor: "pointer",
                         textAlign: "center",
                         transition: "all .15s",
@@ -180,11 +180,11 @@ export default function CoursesPageContent() {
                       }}
                       onMouseEnter={(e) => {
                         if (!active)
-                          e.currentTarget.style.background = "#f0f7fd";
+                          e.currentTarget.style.background = "var(--bg-muted)";
                       }}
                       onMouseLeave={(e) => {
                         if (!active)
-                          e.currentTarget.style.background = "#fff";
+                          e.currentTarget.style.background = "var(--bg-surface)";
                       }}
                     >
                       <div
@@ -195,7 +195,7 @@ export default function CoursesPageContent() {
                           borderRadius: "12px",
                           background: active
                             ? "rgba(255,255,255,0.22)"
-                            : "#e8f4fd",
+                            : "var(--bg-muted)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -210,7 +210,7 @@ export default function CoursesPageContent() {
                         style={{
                           fontWeight: 700,
                           fontSize: "0.8rem",
-                          color: active ? "#fff" : "#2c2c2c",
+                          color: active ? "#fff" : "var(--text)",
                           lineHeight: 1.3,
                         }}
                       >
@@ -229,7 +229,7 @@ export default function CoursesPageContent() {
                   fontFamily: "Nunito, sans-serif",
                   fontWeight: 900,
                   fontSize: "1.4rem",
-                  color: "#2c2c2c",
+                  color: "var(--text)",
                   marginBottom: "4px",
                   letterSpacing: "0.5px",
                 }}
@@ -239,7 +239,7 @@ export default function CoursesPageContent() {
               <p
                 style={{
                   fontSize: "0.82rem",
-                  color: "#888",
+                  color: "var(--text-soft)",
                   marginBottom: "20px",
                 }}
               >
@@ -254,7 +254,7 @@ export default function CoursesPageContent() {
                 </div>
               ) : category === "HSA" ? (
                 courses.length === 0 ? (
-                  <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px" }}>
+                  <div style={{ textAlign: "center", padding: "80px", color: "var(--text-muted)", background: "var(--bg-surface)", borderRadius: "16px" }}>
                     <i className="fas fa-box-open" style={{ fontSize: "3rem", marginBottom: "14px", display: "block", opacity: 0.3 }} />
                     <p>Khóa học đang được chuẩn bị, vui lòng quay lại sau</p>
                   </div>
@@ -267,7 +267,7 @@ export default function CoursesPageContent() {
                         style={{ textDecoration: "none" }}
                       >
                         <div className="courses-subject-card" style={{
-                          background: "#fff", border: "2px solid #e8f0f7", borderRadius: "16px",
+                          background: "var(--bg-surface)", border: "2px solid var(--border-soft)", borderRadius: "16px",
                           padding: "24px 20px", display: "flex", flexDirection: "column",
                           alignItems: "center", gap: "12px", cursor: "pointer",
                           transition: "all .15s", textAlign: "center",
@@ -278,7 +278,7 @@ export default function CoursesPageContent() {
                             e.currentTarget.style.transform = "translateY(-2px)";
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor = "#e8f0f7";
+                            e.currentTarget.style.borderColor = "var(--border-soft)";
                             e.currentTarget.style.boxShadow = "none";
                             e.currentTarget.style.transform = "translateY(0)";
                           }}
@@ -292,10 +292,10 @@ export default function CoursesPageContent() {
                             <i className={subject.icon} />
                           </div>
                           <div>
-                            <div className="courses-subject-name" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c" }}>
+                            <div className="courses-subject-name" style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text)" }}>
                               {subject.name}
                             </div>
-                            <div className="courses-subject-count" style={{ fontSize: "0.78rem", color: "#999", marginTop: "4px" }}>
+                            <div className="courses-subject-count" style={{ fontSize: "0.78rem", color: "var(--text-soft)", marginTop: "4px" }}>
                               {subject.count} bài học
                             </div>
                           </div>
@@ -305,7 +305,7 @@ export default function CoursesPageContent() {
                   </div>
                 )
               ) : courses.length === 0 ? (
-                <div style={{ textAlign: "center", padding: "80px", color: "#777", background: "#fff", borderRadius: "16px" }}>
+                <div style={{ textAlign: "center", padding: "80px", color: "var(--text-muted)", background: "var(--bg-surface)", borderRadius: "16px" }}>
                   <i className="fas fa-box-open" style={{ fontSize: "3rem", marginBottom: "14px", display: "block", opacity: 0.3 }} />
                   <p>Chưa có khóa học nào trong danh mục này</p>
                 </div>
@@ -345,7 +345,7 @@ function CourseCard({ course }: { course: any }) {
           if (thumb) thumb.style.transform = "scale(1)";
         }}
       >
-        <div style={{ width: "200px", height: "150px", borderRadius: "14px", overflow: "hidden", background: "#e0e0e0" }}>
+        <div style={{ width: "200px", height: "150px", borderRadius: "14px", overflow: "hidden", background: "var(--bg-muted)" }}>
           {thumbnailUrl ? (
             <img
               className="c-thumb"
@@ -366,7 +366,7 @@ function CourseCard({ course }: { course: any }) {
         <div style={{ padding: "0 2px" }}>
           <div style={{
             fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "0.82rem",
-            color: "#2c2c2c", textTransform: "uppercase", letterSpacing: "0.3px",
+            color: "var(--text)", textTransform: "uppercase", letterSpacing: "0.3px",
             lineHeight: 1.4, marginBottom: "5px",
             display: "-webkit-box", WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical", overflow: "hidden",
@@ -374,7 +374,7 @@ function CourseCard({ course }: { course: any }) {
             {course.name}
           </div>
           {course.teacher && (
-            <div style={{ fontSize: "0.75rem", color: "#888", display: "flex", alignItems: "center", gap: "5px" }}>
+            <div style={{ fontSize: "0.75rem", color: "var(--text-soft)", display: "flex", alignItems: "center", gap: "5px" }}>
               <i className="fas fa-user" style={{ fontSize: "0.62rem" }} />
               {course.teacher}
             </div>

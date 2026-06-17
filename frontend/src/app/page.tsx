@@ -140,7 +140,7 @@ export default function DashboardPage() {
           {/* ── VINH DANH HỌC SINH THÀNH TÍCH CAO TRONG KỲ THI ĐGNL V-ACT 2026 ──────────────────────────── */}
           <section className="home-section" style={{ padding: "16px 28px 0" }}>
             <div style={{
-              background: "#1e7ab8", borderRadius: "12px",
+              background: "var(--blue)", borderRadius: "12px",
               padding: "14px 24px", color: "#fff",
               display: "flex", alignItems: "center", justifyContent: "center",
               gap: "14px", fontFamily: "Nunito, sans-serif",
@@ -180,12 +180,12 @@ export default function DashboardPage() {
           {/* ── FEEDBACK HỌC VIÊN ─────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 0" }}>
             <div style={{
-              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
-              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
+              background: "var(--bg-surface)", border: "1px solid var(--border)", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "var(--shadow)",
             }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", marginBottom: "16px" }}>
                 <span style={{
-                  display: "inline-block", background: "#1e7ab8", color: "#fff",
+                  display: "inline-block", background: "var(--blue)", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -206,7 +206,7 @@ export default function DashboardPage() {
                     style={{
                       width: "100%", borderRadius: "10px",
                       objectFit: "cover", display: "block",
-                      border: "1px solid #e8f0f7",
+                      border: "1px solid var(--border-soft)",
                     }}
                   />
                 ))}
@@ -224,12 +224,12 @@ export default function DashboardPage() {
           {/* ── KHÓA HỌC MỚI NHẤT ─────────────────────────── */}
           <section className="home-section" style={{ padding: "20px 28px 28px" }}>
             <div style={{
-              background: "#fff", border: "1px solid #c5ddf0", borderRadius: "16px", padding: "20px 24px",
-              boxShadow: "0 2px 8px rgba(30,122,184,.07)",
+              background: "var(--bg-surface)", border: "1px solid var(--border)", borderRadius: "16px", padding: "20px 24px",
+              boxShadow: "var(--shadow)",
             }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
                 <span style={{
-                  display: "inline-block", background: "#1e7ab8", color: "#fff",
+                  display: "inline-block", background: "var(--blue)", color: "#fff",
                   borderRadius: "8px", padding: "8px 18px",
                   fontFamily: "Nunito, sans-serif", fontWeight: 900,
                   fontSize: "0.9rem", letterSpacing: "1px",
@@ -240,9 +240,9 @@ export default function DashboardPage() {
                   {[{ dir: "prev", icon: "fa-arrow-left" }, { dir: "next", icon: "fa-arrow-right" }].map(({ dir, icon }) => (
                     <button key={dir} onClick={() => scrollCourses(dir === "prev" ? -1 : 1)} style={{
                       width: "36px", height: "36px", borderRadius: "50%",
-                      border: "1.5px solid #e0e0e0", background: "#fff",
+                      border: "1.5px solid var(--border)", background: "var(--bg-surface)",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      cursor: "pointer", color: "#555",
+                      cursor: "pointer", color: "var(--text-muted)",
                     }}>
                       <i className={`fas ${icon}`} style={{ fontSize: "0.8rem" }} />
                     </button>
@@ -265,7 +265,7 @@ export default function DashboardPage() {
                       <div style={{
                         width: "100%", aspectRatio: "4/3", borderRadius: "12px",
                         overflow: "hidden",
-                        background: thumbnailUrl ? "#000" : "#fff",
+                        background: thumbnailUrl ? "#000" : "var(--bg-surface)",
                         display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
                         {thumbnailUrl ? (
@@ -284,14 +284,14 @@ export default function DashboardPage() {
                       <div>
                         <div style={{
                           fontFamily: "Nunito, sans-serif", fontWeight: 800,
-                          fontSize: "0.88rem", color: "#2c2c2c",
+                          fontSize: "0.88rem", color: "var(--text)",
                           textTransform: "uppercase", lineHeight: 1.3,
                           marginBottom: "5px",
                         }}>
                           {course.name}
                         </div>
                         {course.teacher && (
-                          <div style={{ fontSize: "0.75rem", color: "#888", display: "flex", alignItems: "center", gap: "5px" }}>
+                          <div style={{ fontSize: "0.75rem", color: "var(--text-soft)", display: "flex", alignItems: "center", gap: "5px" }}>
                             <i className="fas fa-user" style={{ fontSize: "0.62rem" }} />
                             {course.teacher}
                           </div>
@@ -335,9 +335,9 @@ function RoundIconButton({ icon, onClick }: { icon: string; onClick: () => void 
   return (
     <button onClick={onClick} style={{
       width: "36px", height: "36px", borderRadius: "50%",
-      border: "1.5px solid #e0e0e0", background: "#fff",
+      border: "1.5px solid var(--border)", background: "var(--bg-surface)",
       display: "flex", alignItems: "center", justifyContent: "center",
-      cursor: "pointer", color: "#555",
+      cursor: "pointer", color: "var(--text-muted)",
     }}>
       <i className={`fas ${icon}`} style={{ fontSize: "0.8rem" }} />
     </button>
@@ -397,7 +397,7 @@ function SlideDots({
             height: "8px",
             borderRadius: "999px",
             border: "none",
-            background: active === index ? "#1e7ab8" : "#c5ddf0",
+            background: active === index ? "var(--blue)" : "var(--border)",
             cursor: "pointer",
             transition: "width .15s, background .15s",
           }}
@@ -430,7 +430,7 @@ function RightPanel({ onOpenCodeModal }: { onOpenCodeModal: () => void }) {
       {/* ── Access code button ── */}
       <button onClick={onOpenCodeModal} style={{
         width: "100%",
-        background: "#1e7ab8",
+        background: "var(--blue)",
         color: "#fff",
         border: "none",
         borderRadius: "14px",

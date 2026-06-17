@@ -11,8 +11,8 @@ const VARIANTS: Record<string, string> = {
   hsa: "bg-[#e8f5e9] text-[#2e7d32]",
   thpt: "bg-[#fff3e0] text-[#e65100]",
   published: "bg-[#e8f5e9] text-[#2e7d32]",
-  draft: "bg-gray-100 text-gray-500",
-  default: "bg-[#f0f7fd] text-[#1e7ab8]",
+  draft: "bg-[var(--bg-muted)] text-[var(--text-muted)]",
+  default: "bg-[var(--bg-muted)] text-[var(--blue)]",
 };
 
 export default function Badge({ children, variant = "default", className }: BadgeProps) {

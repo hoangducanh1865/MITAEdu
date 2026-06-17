@@ -68,7 +68,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "60px", textAlign: "center", color: "#1e7ab8", background: "#f0f7fd" }}>
+        <main style={{ padding: "60px", textAlign: "center", color: "var(--blue)", background: "var(--bg-page)" }}>
           <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
         </main>
       </div>
@@ -80,7 +80,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main style={{ padding: "60px", textAlign: "center", color: "#777", background: "#f0f7fd" }}>
+        <main style={{ padding: "60px", textAlign: "center", color: "var(--text-muted)", background: "var(--bg-page)" }}>
           Không tìm thấy khóa học
         </main>
       </div>
@@ -127,20 +127,20 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#f0f7fd" }}>
+        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "var(--bg-page)" }}>
           {/* Left: video + info */}
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* Breadcrumb */}
-            <nav style={{ fontSize: "0.82rem", color: "#777" }}>
-              <a href="/" style={{ color: "#777" }}>Trang chủ</a>
+            <nav style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>
+              <a href="/" style={{ color: "var(--text-muted)" }}>Trang chủ</a>
               {" › "}
-              <a href="/courses" style={{ color: "#777" }}>Khóa học</a>
+              <a href="/courses" style={{ color: "var(--text-muted)" }}>Khóa học</a>
               {" › "}
-              <a href={getCourseCategoryUrl(course.category)} style={{ color: "#777" }}>{course.name}</a>
+              <a href={getCourseCategoryUrl(course.category)} style={{ color: "var(--text-muted)" }}>{course.name}</a>
               {subject && (
                 <>
                   {" › "}
-                  <span style={{ color: "#1e7ab8", fontWeight: 600 }}>{subject}</span>
+                  <span style={{ color: "var(--blue)", fontWeight: 600 }}>{subject}</span>
                 </>
               )}
             </nav>
@@ -148,7 +148,7 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
             {/* Subject header when filtered */}
             {subject && subjectInfo && (
               <div style={{
-                background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
+                background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)",
                 padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px",
               }}>
                 <div style={{
@@ -162,11 +162,11 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
                   <div style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: subjectInfo.color }}>
                     {subject}
                   </div>
-                  <div style={{ fontSize: "0.78rem", color: "#999" }}>{visibleLessons.length} bài học</div>
+                  <div style={{ fontSize: "0.78rem", color: "var(--text-soft)" }}>{visibleLessons.length} bài học</div>
                 </div>
                 <a
                   href={`/courses/${courseId}`}
-                  style={{ marginLeft: "auto", fontSize: "0.78rem", color: "#1e7ab8", textDecoration: "none", fontWeight: 600 }}
+                  style={{ marginLeft: "auto", fontSize: "0.78rem", color: "var(--blue)", textDecoration: "none", fontWeight: 600 }}
                 >
                   <i className="fas fa-th" style={{ marginRight: "4px" }} />Tất cả môn
                 </a>
@@ -174,38 +174,38 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
             )}
 
             {/* Course header */}
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
+            <div style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                 <Badge variant={catLower}>{categoryCode}</Badge>
-                <span style={{ fontSize: "0.78rem", color: "#777" }}>
+                <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
                   <i className="fas fa-book" style={{ marginRight: "4px" }} />{course.lessonCount} bài học
                 </span>
               </div>
-              <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "#2c2c2c", marginBottom: "6px" }}>
+              <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--text)", marginBottom: "6px" }}>
                 {course.name}
               </h1>
               {course.teacher && (
-                <p style={{ fontSize: "0.875rem", color: "#777" }}>
-                  <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "#1e7ab8" }} />
+                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
+                  <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "var(--blue)" }} />
                   {course.teacher}
                 </p>
               )}
               {course.description && (
-                <p style={{ fontSize: "0.875rem", color: "#555", marginTop: "10px", lineHeight: 1.6 }}>{course.description}</p>
+                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "10px", lineHeight: 1.6 }}>{course.description}</p>
               )}
             </div>
 
             {/* Media player */}
             {activeLesson && (
-              <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
-                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: activeLesson.description ? "6px" : "16px" }}>
+              <div style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "20px 24px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text)", marginBottom: activeLesson.description ? "6px" : "16px" }}>
                   {activeLesson.title}
                 </h2>
                 {activeLesson.description && (
-                  <div style={{ fontSize: "0.8rem", color: "#777", lineHeight: 1.5, marginBottom: "16px" }}>
+                  <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "16px" }}>
                     {activeLesson.description.split(" | ").map((item, i) => (
                       <div key={i} style={{ display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "2px" }}>
-                        <span style={{ color: "#1e7ab8", fontWeight: 700, flexShrink: 0 }}>·</span>
+                        <span style={{ color: "var(--blue)", fontWeight: 700, flexShrink: 0 }}>·</span>
                         <span>{item}</span>
                       </div>
                     ))}
@@ -221,8 +221,8 @@ function ApiCourseDetail({ courseId, subject }: { courseId: string; subject: str
 
           {/* Right: lesson list */}
           <div className="course-lesson-panel" style={{ width: "320px", flexShrink: 0 }}>
-            <div className="course-lesson-sticky" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "16px", position: "sticky", top: "80px" }}>
-              <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#1e7ab8", marginBottom: "14px" }}>
+            <div className="course-lesson-sticky" style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "16px", position: "sticky", top: "80px" }}>
+              <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--blue)", marginBottom: "14px" }}>
                 {subject ? `Bài học · ${subject}` : "Danh sách bài học"}
               </h3>
               {visibleLessons.length > 0 && (
@@ -245,8 +245,8 @@ function LockedCourseView({ course, onOpenCodeModal }: { course: Course; onOpenC
   const catLower = course.category.toLowerCase() as "tsa" | "hsa" | "thpt";
   const categoryCode = getCourseCategoryCode(course.category);
   return (
-    <main style={{ flex: 1, padding: "40px 28px", background: "#f0f7fd", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
-      <div style={{ background: "#fff", borderRadius: "20px", border: "2px solid #c5ddf0", padding: "40px", maxWidth: "560px", width: "100%", textAlign: "center" }}>
+    <main style={{ flex: 1, padding: "40px 28px", background: "var(--bg-page)", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
+      <div style={{ background: "var(--bg-surface)", borderRadius: "20px", border: "2px solid var(--border)", padding: "40px", maxWidth: "560px", width: "100%", textAlign: "center" }}>
         {course.thumbnailUrl && (
           <img src={course.thumbnailUrl} alt={course.name}
             style={{ width: "100%", maxHeight: "200px", objectFit: "cover", borderRadius: "12px", marginBottom: "24px" }} />
@@ -254,17 +254,17 @@ function LockedCourseView({ course, onOpenCodeModal }: { course: Course; onOpenC
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
           <Badge variant={catLower}>{categoryCode}</Badge>
         </div>
-        <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "#2c2c2c", marginBottom: "8px" }}>
+        <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.5rem", color: "var(--text)", marginBottom: "8px" }}>
           {course.name}
         </h1>
         {course.teacher && (
-          <p style={{ fontSize: "0.875rem", color: "#777", marginBottom: "8px" }}>
-            <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "#1e7ab8" }} />
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginBottom: "8px" }}>
+            <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "var(--blue)" }} />
             {course.teacher}
           </p>
         )}
         {course.description && (
-          <p style={{ fontSize: "0.875rem", color: "#555", lineHeight: 1.6, marginBottom: "24px" }}>{course.description}</p>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", lineHeight: 1.6, marginBottom: "24px" }}>{course.description}</p>
         )}
 
         {/* Lock banner */}
@@ -284,7 +284,7 @@ function LockedCourseView({ course, onOpenCodeModal }: { course: Course; onOpenC
         <button
           onClick={onOpenCodeModal}
           style={{
-            width: "100%", background: "#1e7ab8", color: "#fff",
+            width: "100%", background: "var(--blue)", color: "#fff",
             border: "none", borderRadius: "14px", padding: "15px",
             fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem",
             cursor: "pointer", display: "flex", alignItems: "center",

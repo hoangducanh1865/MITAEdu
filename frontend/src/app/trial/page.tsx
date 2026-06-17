@@ -48,7 +48,7 @@ export default function TrialPage() {
         <Navbar />
         <div className="layout">
           <Sidebar />
-          <main style={{ padding: "60px", textAlign: "center", color: "#1e7ab8", background: "#f0f7fd" }}>
+          <main style={{ padding: "60px", textAlign: "center", color: "var(--blue)", background: "var(--bg-page)" }}>
             <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem" }} />
           </main>
         </div>
@@ -62,7 +62,7 @@ export default function TrialPage() {
         <Navbar />
         <div className="layout">
           <Sidebar />
-          <main style={{ padding: "60px", textAlign: "center", color: "#777", background: "#f0f7fd" }}>
+          <main style={{ padding: "60px", textAlign: "center", color: "var(--text-muted)", background: "var(--bg-page)" }}>
             Không tìm thấy nội dung học thử
           </main>
         </div>
@@ -77,16 +77,16 @@ export default function TrialPage() {
       <Navbar />
       <div className="layout">
         <Sidebar />
-        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "#f0f7fd" }}>
+        <main className="course-detail-main" style={{ padding: "24px 28px", display: "flex", gap: "24px", background: "var(--bg-page)" }}>
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "20px" }}>
-            <nav style={{ fontSize: "0.82rem", color: "#777" }}>
-              <Link href="/" style={{ color: "#777" }}>Trang chủ</Link>
+            <nav style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>
+              <Link href="/" style={{ color: "var(--text-muted)" }}>Trang chủ</Link>
               {" › "}
-              <span style={{ color: "#1e7ab8", fontWeight: 600 }}>Học thử</span>
+              <span style={{ color: "var(--blue)", fontWeight: 600 }}>Học thử</span>
             </nav>
 
             <div style={{
-              background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0",
+              background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)",
               padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap",
             }}>
               {lessons.map((lesson) => {
@@ -98,9 +98,9 @@ export default function TrialPage() {
                     key={lesson.id}
                     onClick={() => setActiveLesson(lesson)}
                     style={{
-                      border: active ? `2px solid ${style.color}` : "2px solid #e8f0f7",
-                      background: active ? style.bg : "#fff",
-                      color: active ? style.color : "#2c2c2c",
+                      border: active ? `2px solid ${style.color}` : "2px solid var(--border-soft)",
+                      background: active ? style.bg : "var(--bg-surface)",
+                      color: active ? style.color : "var(--text)",
                       borderRadius: "12px",
                       padding: "10px 14px",
                       display: "flex",
@@ -118,35 +118,35 @@ export default function TrialPage() {
               })}
             </div>
 
-            <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
+            <div style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                 <Badge variant="hsa">{TRIAL_CATEGORY_LABEL}</Badge>
-                <span style={{ fontSize: "0.78rem", color: "#777" }}>
+                <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
                   <i className="fas fa-play-circle" style={{ marginRight: "4px" }} />{lessons.length} buổi học thử
                 </span>
               </div>
-              <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "#2c2c2c", marginBottom: "6px" }}>
+              <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: "1.4rem", color: "var(--text)", marginBottom: "6px" }}>
                 {TRIAL_COURSE_NAME}
               </h1>
               {course.teacher && (
-                <p style={{ fontSize: "0.875rem", color: "#777" }}>
-                  <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "#1e7ab8" }} />
+                <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
+                  <i className="fas fa-chalkboard-teacher" style={{ marginRight: "6px", color: "var(--blue)" }} />
                   {course.teacher}
                 </p>
               )}
-              <p style={{ fontSize: "0.875rem", color: "#555", marginTop: "10px", lineHeight: 1.6 }}>{TRIAL_COURSE_DESCRIPTION}</p>
+              <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginTop: "10px", lineHeight: 1.6 }}>{TRIAL_COURSE_DESCRIPTION}</p>
             </div>
 
             {activeLesson && (
-              <div style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "20px 24px" }}>
-                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#2c2c2c", marginBottom: activeLesson.description ? "6px" : "16px" }}>
+              <div style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "20px 24px" }}>
+                <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--text)", marginBottom: activeLesson.description ? "6px" : "16px" }}>
                   {activeLesson.title}
                 </h2>
                 {activeLesson.description && (
-                  <div style={{ fontSize: "0.8rem", color: "#777", lineHeight: 1.5, marginBottom: "16px" }}>
+                  <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "16px" }}>
                     {activeLesson.description.split(" | ").map((item, i) => (
                       <div key={i} style={{ display: "flex", gap: "6px", alignItems: "flex-start", marginBottom: "2px" }}>
-                        <span style={{ color: "#1e7ab8", fontWeight: 700, flexShrink: 0 }}>·</span>
+                        <span style={{ color: "var(--blue)", fontWeight: 700, flexShrink: 0 }}>·</span>
                         <span>{item}</span>
                       </div>
                     ))}
@@ -161,8 +161,8 @@ export default function TrialPage() {
           </div>
 
           <div className="course-lesson-panel" style={{ width: "320px", flexShrink: 0 }}>
-            <div className="course-lesson-sticky" style={{ background: "#fff", borderRadius: "16px", border: "2px solid #c5ddf0", padding: "16px", position: "sticky", top: "80px" }}>
-              <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#1e7ab8", marginBottom: "14px" }}>
+            <div className="course-lesson-sticky" style={{ background: "var(--bg-surface)", borderRadius: "16px", border: "2px solid var(--border)", padding: "16px", position: "sticky", top: "80px" }}>
+              <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1rem", color: "var(--blue)", marginBottom: "14px" }}>
                 Danh sách học thử
               </h3>
               {lessons.length > 0 && (

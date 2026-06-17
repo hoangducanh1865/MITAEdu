@@ -23,8 +23,8 @@ export default function Sidebar() {
     <aside
       className="home-left-sidebar"
       style={{
-        background: "#f0f7fd",
-        borderRight: "1px solid #c5ddf0",
+        background: "var(--bg-page)",
+        borderRight: "1px solid var(--border)",
         display: "flex",
         flexDirection: "column",
         gap: "8px",
@@ -76,9 +76,9 @@ export default function Sidebar() {
         )}
       </nav>
 
-      <hr style={{ borderColor: "#c5ddf0", margin: "8px 0", minWidth: "208px" }} />
+      <hr style={{ borderColor: "var(--border)", margin: "8px 0", minWidth: "208px" }} />
 
-      <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#777", letterSpacing: "0.5px", textTransform: "uppercase", padding: "0 4px", minWidth: "208px" }}>
+      <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.5px", textTransform: "uppercase", padding: "0 4px", minWidth: "208px" }}>
         Liên kết
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", minWidth: "208px" }}>
@@ -98,7 +98,7 @@ function SidebarItem({ href, icon, color, bg, children }: {
     <Link href={href} prefetch={false} style={{
       display: "flex", alignItems: "center", gap: "12px",
       padding: "10px 12px", borderRadius: "10px", fontSize: "0.9rem", fontWeight: 500,
-      color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",
+      color: "var(--text)", transition: "background .15s", whiteSpace: "nowrap",
     }}>
       <span style={{
         width: "30px", height: "30px", borderRadius: "8px",
@@ -119,7 +119,7 @@ function SocialLink({ href, icon, color, label }: {
     <a href={href} target="_blank" rel="noopener noreferrer" style={{
       display: "flex", alignItems: "center", gap: "10px",
       padding: "8px 12px", borderRadius: "10px", fontSize: "0.85rem",
-      color: "#2c2c2c", transition: "background .15s", whiteSpace: "nowrap",
+      color: "var(--text)", transition: "background .15s", whiteSpace: "nowrap",
     }}>
       <i className={icon} style={{ color, width: "16px", textAlign: "center" }} />
       {label}

@@ -18,9 +18,9 @@ export default function Button({
 }: ButtonProps) {
   const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all cursor-pointer border-0 disabled:cursor-not-allowed disabled:opacity-60";
   const variants = {
-    primary: "bg-[#1e7ab8] hover:bg-[#155f8f] text-white",
-    secondary: "bg-[#f0f7fd] hover:bg-[#e3f2fd] text-[#1e7ab8]",
-    ghost: "bg-transparent hover:bg-[#f0f7fd] text-[#2c2c2c]",
+    primary: "bg-[var(--blue)] hover:bg-[var(--blue-dark)] text-white",
+    secondary: "bg-[var(--bg-muted)] hover:bg-[var(--blue-light)] text-[var(--blue)]",
+    ghost: "bg-transparent hover:bg-[var(--bg-muted)] text-[var(--text)]",
     danger: "bg-red-600 hover:bg-red-700 text-white",
   };
   const sizes = {

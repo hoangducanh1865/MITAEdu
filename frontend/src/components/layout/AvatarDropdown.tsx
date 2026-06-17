@@ -37,8 +37,8 @@ export default function AvatarDropdown() {
           className="public-auth-link public-auth-link-login"
           href="/login"
           style={{
-            fontSize: "0.875rem", fontWeight: 600, color: "#1e7ab8",
-            padding: "6px 14px", borderRadius: "8px", border: "1.5px solid #1e7ab8",
+            fontSize: "0.875rem", fontWeight: 600, color: "var(--blue)",
+            padding: "6px 14px", borderRadius: "8px", border: "1.5px solid var(--blue)",
             textDecoration: "none", transition: "background .15s",
           }}
         >
@@ -69,7 +69,7 @@ export default function AvatarDropdown() {
           background: "none", border: "none", cursor: "pointer", padding: "4px",
         }}
       >
-        <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#2c2c2c" }}>
+        <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text)" }}>
           {user.name ?? "Người dùng"}
         </span>
         <div
@@ -82,15 +82,15 @@ export default function AvatarDropdown() {
         >
           <i className="fas fa-user" />
         </div>
-        <i className="fas fa-chevron-down" style={{ fontSize: "0.7rem", color: "#777" }} />
+        <i className="fas fa-chevron-down" style={{ fontSize: "0.7rem", color: "var(--text-muted)" }} />
       </button>
 
       {open && (
         <div
           style={{
             position: "absolute", right: 0, top: "calc(100% + 8px)",
-            background: "#fff", borderRadius: "12px", boxShadow: "0 4px 20px rgba(0,0,0,.12)",
-            border: "1px solid #c5ddf0", minWidth: "180px", zIndex: 200,
+            background: "var(--bg-surface)", borderRadius: "12px", boxShadow: "var(--shadow-strong)",
+            border: "1px solid var(--border)", minWidth: "180px", zIndex: 200,
             padding: "8px 0",
           }}
         >
@@ -105,10 +105,10 @@ export default function AvatarDropdown() {
               <i className="fas fa-history" style={{ width: "16px" }} /> Lịch sử làm bài
             </Link>
           )}
-          <hr style={{ borderColor: "#c5ddf0", margin: "4px 12px" }} />
+          <hr style={{ borderColor: "var(--border)", margin: "4px 12px" }} />
           <button
             onClick={logout}
-            style={{ ...dropItemStyle, width: "100%", textAlign: "left", color: "#1e7ab8" }}
+            style={{ ...dropItemStyle, width: "100%", textAlign: "left", color: "var(--blue)" }}
           >
             <i className="fas fa-sign-out-alt" style={{ width: "16px" }} /> Đăng xuất
           </button>
@@ -120,7 +120,7 @@ export default function AvatarDropdown() {
 
 const dropItemStyle: React.CSSProperties = {
   display: "flex", alignItems: "center", gap: "10px",
-  padding: "9px 16px", fontSize: "0.875rem", color: "#2c2c2c",
+  padding: "9px 16px", fontSize: "0.875rem", color: "var(--text)",
   background: "none", border: "none", cursor: "pointer",
   transition: "background .15s",
 };

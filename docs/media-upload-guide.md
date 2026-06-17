@@ -9,6 +9,7 @@ Frontend không đọc thẳng file từ bucket. Frontend chỉ nhận các medi
 - `videoMediaId`: video bài giảng.
 - `pdfMediaId`: file đề bài/tài liệu chính, hiển thị tab `Đề bài`.
 - `handwrittenMediaId`: file lời giải/file viết tay, hiển thị tab `File viết tay`.
+- `answerMediaId`: file đáp án chi tiết, hiển thị tab `Đáp án chi tiết`.
 
 Khi học sinh mở bài, frontend gọi:
 
@@ -22,7 +23,7 @@ Backend sẽ:
 2. Kiểm tra quyền xem khóa bằng `media_assets.course_slug`.
 3. Ký presigned URL cho `media_assets.object_key`.
 
-Vì vậy một bài chỉ hiện media khi cả 3 thứ cùng đúng:
+Vì vậy một bài chỉ hiện media khi các điều kiện sau cùng đúng:
 
 - File thật tồn tại trong bucket tại đúng `object_key`.
 - Có bản ghi `media_assets` trỏ tới đúng `object_key` và đúng `course_slug`.
@@ -51,6 +52,7 @@ Quy ước object key mới:
 courses/{course_slug}/b{sort_order}/video.mp4
 courses/{course_slug}/b{sort_order}/de-bai.pdf
 courses/{course_slug}/b{sort_order}/viet-tay.pdf
+courses/{course_slug}/b{sort_order}/dap-an-chi-tiet.pdf
 ```
 
 Quy ước media id mới:
@@ -59,6 +61,7 @@ Quy ước media id mới:
 {course_slug}-b{sort_order}-video
 {course_slug}-b{sort_order}-pdf
 {course_slug}-b{sort_order}-handwritten
+{course_slug}-b{sort_order}-answer
 ```
 
 Ví dụ cho khóa HSA, bài có `sort_order = 1`:
@@ -67,10 +70,12 @@ Ví dụ cho khóa HSA, bài có `sort_order = 1`:
 courses/khoa-nen-tang-vact-2027/b1/video.mp4
 courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf
 courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf
+courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf
 
 khoa-nen-tang-vact-2027-b1-video
 khoa-nen-tang-vact-2027-b1-pdf
 khoa-nen-tang-vact-2027-b1-handwritten
+khoa-nen-tang-vact-2027-b1-answer
 ```
 
 Khuyến nghị giữ tên file ASCII cố định như trên. Tên tiếng Việt hoặc có dấu cách vẫn có thể upload được, nhưng dễ sai khi copy object key vào SQL.
@@ -129,6 +134,7 @@ Nếu query không trả dòng nào, cần tạo khóa và lesson trước, rồ
 courses/{slug_thuc_te_cua_tsa}/b{sort_order}/video.mp4
 courses/{slug_thuc_te_cua_tsa}/b{sort_order}/de-bai.pdf
 courses/{slug_thuc_te_cua_tsa}/b{sort_order}/viet-tay.pdf
+courses/{slug_thuc_te_cua_tsa}/b{sort_order}/dap-an-chi-tiet.pdf
 ```
 
 Nếu cần tạo slug mới cho khóa TSA, khuyến nghị dùng slug ổn định, không đổi sau khi đã upload:
@@ -156,6 +162,7 @@ Nếu query không trả dòng nào, cần tạo khóa và lesson trước, rồ
 courses/{slug_thuc_te_cua_thpt}/b{sort_order}/video.mp4
 courses/{slug_thuc_te_cua_thpt}/b{sort_order}/de-bai.pdf
 courses/{slug_thuc_te_cua_thpt}/b{sort_order}/viet-tay.pdf
+courses/{slug_thuc_te_cua_thpt}/b{sort_order}/dap-an-chi-tiet.pdf
 ```
 
 Nếu cần tạo slug mới cho khóa THPT, khuyến nghị dùng slug ổn định:
@@ -176,6 +183,7 @@ Chỉ dùng slug này nếu dòng trong bảng `courses.slug` cũng đúng y h�
    - `video.mp4`
    - `de-bai.pdf`
    - `viet-tay.pdf`
+   - `dap-an-chi-tiet.pdf`
 4. Nếu console cho sửa content type, đặt:
    - Video: `video/mp4`
    - PDF: `application/pdf`
@@ -186,6 +194,7 @@ Ví dụ HSA, Toán Bài 1:
 courses/khoa-nen-tang-vact-2027/b1/video.mp4
 courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf
 courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf
+courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf
 ```
 
 ### Cách 2: Dùng AWS CLI compatible
@@ -213,6 +222,10 @@ aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./de-bai.pdf \
 
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./viet-tay.pdf \
   "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf" \
+  --content-type "application/pdf"
+
+aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./dap-an-chi-tiet.pdf \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf" \
   --content-type "application/pdf"
 ```
 
@@ -258,6 +271,13 @@ VALUES
     'application/pdf',
     'khoa-nen-tang-vact-2027',
     'Toán · Bài 1 · File viết tay'
+  ),
+  (
+    'khoa-nen-tang-vact-2027-b1-answer',
+    'courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf',
+    'application/pdf',
+    'khoa-nen-tang-vact-2027',
+    'Toán · Bài 1 · Đáp án chi tiết'
   )
 ON CONFLICT (id) DO UPDATE
 SET object_key = EXCLUDED.object_key,
@@ -268,7 +288,8 @@ SET object_key = EXCLUDED.object_key,
 UPDATE lessons
 SET video_media_id = 'khoa-nen-tang-vact-2027-b1-video',
     pdf_media_id = 'khoa-nen-tang-vact-2027-b1-pdf',
-    handwritten_media_id = 'khoa-nen-tang-vact-2027-b1-handwritten'
+    handwritten_media_id = 'khoa-nen-tang-vact-2027-b1-handwritten',
+    answer_media_id = 'khoa-nen-tang-vact-2027-b1-answer'
 WHERE course_id = (
     SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
 )
@@ -302,6 +323,13 @@ VALUES
     'application/pdf',
     'khoa-nen-tang-vact-2027',
     'Hóa · Bài 1 · File viết tay'
+  ),
+  (
+    'khoa-nen-tang-vact-2027-b104-answer',
+    'courses/khoa-nen-tang-vact-2027/b104/dap-an-chi-tiet.pdf',
+    'application/pdf',
+    'khoa-nen-tang-vact-2027',
+    'Hóa · Bài 1 · Đáp án chi tiết'
   )
 ON CONFLICT (id) DO UPDATE
 SET object_key = EXCLUDED.object_key,
@@ -312,7 +340,8 @@ SET object_key = EXCLUDED.object_key,
 UPDATE lessons
 SET video_media_id = 'khoa-nen-tang-vact-2027-b104-video',
     pdf_media_id = 'khoa-nen-tang-vact-2027-b104-pdf',
-    handwritten_media_id = 'khoa-nen-tang-vact-2027-b104-handwritten'
+    handwritten_media_id = 'khoa-nen-tang-vact-2027-b104-handwritten',
+    answer_media_id = 'khoa-nen-tang-vact-2027-b104-answer'
 WHERE course_id = (
     SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
 )
@@ -349,14 +378,15 @@ SET object_key = EXCLUDED.object_key,
 UPDATE lessons
 SET video_media_id = 'khoa-nen-tang-vact-2027-b179-video',
     pdf_media_id = 'khoa-nen-tang-vact-2027-b179-pdf',
-    handwritten_media_id = NULL
+    handwritten_media_id = NULL,
+    answer_media_id = NULL
 WHERE course_id = (
     SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
 )
 AND sort_order = 179;
 ```
 
-Nếu một bài chưa có file viết tay, để `handwritten_media_id = NULL`. Nếu chưa có video, để `video_media_id = NULL`. UI sẽ chỉ hiển thị phần có media id.
+Nếu một bài chưa có file viết tay, để `handwritten_media_id = NULL`. Nếu chưa có file đáp án chi tiết, để `answer_media_id = NULL`. Nếu chưa có video, để `video_media_id = NULL`. UI sẽ chỉ hiển thị phần có media id.
 
 ## 6. Mẫu kiểm tra sau khi chạy SQL
 
@@ -367,7 +397,8 @@ SELECT l.sort_order,
        l.title,
        l.video_media_id,
        l.pdf_media_id,
-       l.handwritten_media_id
+       l.handwritten_media_id,
+       l.answer_media_id
 FROM lessons l
 JOIN courses c ON c.id = l.course_id
 WHERE c.slug = 'khoa-nen-tang-vact-2027'
@@ -390,12 +421,14 @@ SELECT l.sort_order,
        l.title,
        ma_v.object_key AS video_key,
        ma_p.object_key AS pdf_key,
-       ma_h.object_key AS handwritten_key
+       ma_h.object_key AS handwritten_key,
+       ma_a.object_key AS answer_key
 FROM lessons l
 JOIN courses c ON c.id = l.course_id
 LEFT JOIN media_assets ma_v ON ma_v.id = l.video_media_id
 LEFT JOIN media_assets ma_p ON ma_p.id = l.pdf_media_id
 LEFT JOIN media_assets ma_h ON ma_h.id = l.handwritten_media_id
+LEFT JOIN media_assets ma_a ON ma_a.id = l.answer_media_id
 WHERE c.slug = 'khoa-nen-tang-vact-2027'
   AND l.sort_order = 1;
 ```
@@ -409,13 +442,14 @@ WHERE c.slug = 'khoa-nen-tang-vact-2027'
 5. Video phải hiện nếu có `video_media_id`.
 6. Tab `Đề bài` phải hiện nếu có `pdf_media_id`.
 7. Tab `File viết tay` phải hiện nếu có `handwritten_media_id`.
+8. Tab `Đáp án chi tiết` phải hiện nếu có `answer_media_id`.
 
 Sau đó test bằng học sinh:
 
 1. Đăng nhập học sinh chưa kích hoạt khóa.
 2. Mở khóa HSA, phải thấy khóa bị khóa.
 3. Dùng mã kích hoạt khóa HSA.
-4. Mở lại bài có media, phải xem được video/PDF.
+4. Mở lại bài có media, phải xem được video/PDF/đáp án chi tiết.
 
 ## 8. Lỗi thường gặp
 
@@ -426,13 +460,13 @@ Nguyên nhân thường là lesson chưa trỏ tới media id.
 Chạy:
 
 ```sql
-SELECT sort_order, title, video_media_id, pdf_media_id, handwritten_media_id
+SELECT sort_order, title, video_media_id, pdf_media_id, handwritten_media_id, answer_media_id
 FROM lessons
 WHERE course_id = (SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027')
   AND sort_order = 1;
 ```
 
-Nếu 3 cột media đều `NULL`, hãy chạy `UPDATE lessons ...` ở mục 5.
+Nếu các cột media cần dùng đang `NULL`, hãy chạy `UPDATE lessons ...` ở mục 5.
 
 ### Backend báo không tìm thấy media
 
@@ -446,7 +480,8 @@ FROM media_assets
 WHERE id IN (
   'khoa-nen-tang-vact-2027-b1-video',
   'khoa-nen-tang-vact-2027-b1-pdf',
-  'khoa-nen-tang-vact-2027-b1-handwritten'
+  'khoa-nen-tang-vact-2027-b1-handwritten',
+  'khoa-nen-tang-vact-2027-b1-answer'
 );
 ```
 
@@ -501,6 +536,7 @@ toan-vact-hsa-b1-handwritten
 khoa-nen-tang-vact-2027-b1-video
 khoa-nen-tang-vact-2027-b1-pdf
 khoa-nen-tang-vact-2027-b1-handwritten
+khoa-nen-tang-vact-2027-b1-answer
 ```
 
 ## 9. Quy trình chuẩn cho mỗi đợt upload
@@ -523,6 +559,7 @@ local-upload/
     video.mp4
     de-bai.pdf
     viet-tay.pdf
+    dap-an-chi-tiet.pdf
   b2/
     video.mp4
     de-bai.pdf

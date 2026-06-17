@@ -28,17 +28,17 @@ export default function Modal({ open, onClose, title, children, className }: Mod
     >
       <div
         className={cn(
-          "bg-white rounded-2xl shadow-xl p-7 min-w-[340px] max-w-[90vw] relative",
+          "rounded-2xl shadow-xl p-7 min-w-[340px] max-w-[90vw] relative bg-[var(--bg-surface)] text-[var(--text)] border border-[var(--border)]",
           className
         )}
         onClick={(e) => e.stopPropagation()}
       >
         {title && (
           <div className="flex items-center justify-between mb-5">
-            <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#1e7ab8" }}>
+            <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "var(--blue)" }}>
               {title}
             </h3>
-            <button onClick={onClose} className="text-[#777] hover:text-[#1e7ab8] transition-colors">
+            <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--blue)] transition-colors">
               <i className="fas fa-times" />
             </button>
           </div>
