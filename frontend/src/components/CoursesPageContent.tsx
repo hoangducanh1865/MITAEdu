@@ -20,30 +20,28 @@ const CATEGORIES: {
   label: string;
   short: string;
   color: string;
-  gradient: string;
 }[] = [
   {
     value: "TSA",
     label: "Khóa Trại hè Đánh thức tư duy ĐGNL",
     short: COURSE_CATEGORY_CODES.TSA,
     color: "#1e7ab8",
-    gradient: "linear-gradient(135deg,#1e7ab8,#155f8f)",
   },
   {
     value: "HSA",
     label: "Khóa Nền Tảng - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
     short: COURSE_CATEGORY_CODES.HSA,
-    color: "#1565c0",
-    gradient: "linear-gradient(135deg,#1565c0,#0d47a1)",
+    color: "#1e7ab8",
   },
   {
     value: "THPT",
     label: "Khóa Luyện Đề - Tư Duy Toàn Diện ĐGNL TP HCM 2027 (V-ACT)",
     short: COURSE_CATEGORY_CODES.THPT,
     color: "#0e6fa3",
-    gradient: "linear-gradient(135deg,#0e6fa3,#0a4f78)",
   },
 ];
+
+const CATEGORY_ACTIVE_GRADIENT = "linear-gradient(135deg,#1e7ab8,#155f8f)";
 
 const CAT_TITLES: Record<string, string> = {
   TSA: "KHÓA TRẠI HÈ ĐÁNH THỨC TƯ DUY ĐGNL",
@@ -170,7 +168,7 @@ export default function CoursesPageContent() {
                         border: active
                           ? "none"
                           : "2px solid transparent",
-                        background: active ? cat.gradient : "var(--bg-surface)",
+                        background: active ? CATEGORY_ACTIVE_GRADIENT : "var(--bg-surface)",
                         cursor: "pointer",
                         textAlign: "center",
                         transition: "all .15s",

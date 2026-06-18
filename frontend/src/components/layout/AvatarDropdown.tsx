@@ -61,15 +61,16 @@ export default function AvatarDropdown() {
   }
 
   return (
-    <div ref={ref} style={{ position: "relative" }}>
+    <div ref={ref} className="avatar-dropdown-root" style={{ position: "relative" }}>
       <button
+        className="avatar-dropdown-button"
         onClick={() => setOpen((o) => !o)}
         style={{
           display: "flex", alignItems: "center", gap: "8px",
           background: "none", border: "none", cursor: "pointer", padding: "4px",
         }}
       >
-        <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text)" }}>
+        <span className="avatar-dropdown-name" style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text)" }}>
           {user.name ?? "Người dùng"}
         </span>
         <div

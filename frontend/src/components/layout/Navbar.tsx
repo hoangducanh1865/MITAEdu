@@ -33,6 +33,7 @@ export default function Navbar() {
 
         {/* Toggle Sidebar Button */}
         <button
+          className="navbar-menu-toggle"
           onClick={toggleSidebar}
           title={sidebarOpen ? "Ẩn thanh bên" : "Hiện thanh bên"}
           style={{
