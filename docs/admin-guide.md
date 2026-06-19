@@ -19,9 +19,9 @@ Checklist nhanh:
 - Endpoint mặc định trong backend: `https://vcos.cloudstorage.com.vn`, cấu hình bằng `VCOS_ENDPOINT`.
 - Khóa HSA đang có trong codebase dùng slug `khoa-nen-tang-vact-2027`.
 - `media_assets.course_slug` phải khớp chính xác với `courses.slug`.
-- Tên object key nên theo mẫu `courses/{course_slug}/b{sort_order}/video.mp4`, `de-bai.pdf`, `viet-tay.pdf`, `dap-an-chi-tiet.pdf`.
-- File `dap-an-chi-tiet.pdf` là tab `Đáp án chi tiết`; media id tương ứng nên là `{course_slug}-b{sort_order}-answer`.
-- Với khóa HSA hiện tại, `sort_order` chạy từ 1 đến 179 trên toàn khóa. Ví dụ `Hóa · Bài 1` là `b104`, không phải `b1`.
+- Object key theo cấu trúc MÔN: `courses/{course_slug}/{subject}/b{bai}/video.mp4`, `de-bai.pdf`, `viet-tay.pdf`, `dap-an-chi-tiet.pdf`.
+- File `dap-an-chi-tiet.pdf` là tab `Đáp án chi tiết`; media id tương ứng là `{course_slug}-{subject}-b{bai}-answer`.
+- `{subject}` ∈ `toan | tieng-viet | tieng-anh | hoa-hoc | sinh-hoc | lich-su | dia-li | vat-li`; `{bai}` là SỐ BÀI TRONG TỪNG MÔN (lấy từ title `... · Bài N`), không phải `sort_order` toàn khóa. Ví dụ `Hóa · Bài 1` là `hoa-hoc/b1`, `Tiếng Việt · Bài 0` là `tieng-viet/b0`.
 
 Xem hướng dẫn đầy đủ, SQL mẫu và mapping từng môn ở [media-upload-guide.md](media-upload-guide.md).
 

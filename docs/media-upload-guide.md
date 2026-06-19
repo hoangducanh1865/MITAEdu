@@ -46,36 +46,48 @@ VCOS_BUCKET=mita-edu-123
 VCOS_URL_TTL_SECONDS=7200
 ```
 
-Quy ước object key mới:
+Quy ước object key (THEO MÔN — cập nhật từ migration `V20`):
 
 ```text
-courses/{course_slug}/b{sort_order}/video.mp4
-courses/{course_slug}/b{sort_order}/de-bai.pdf
-courses/{course_slug}/b{sort_order}/viet-tay.pdf
-courses/{course_slug}/b{sort_order}/dap-an-chi-tiet.pdf
+courses/{course_slug}/{subject}/b{bai}/video.mp4
+courses/{course_slug}/{subject}/b{bai}/de-bai.pdf
+courses/{course_slug}/{subject}/b{bai}/viet-tay.pdf
+courses/{course_slug}/{subject}/b{bai}/dap-an-chi-tiet.pdf
 ```
 
-Quy ước media id mới:
+Quy ước media id:
 
 ```text
-{course_slug}-b{sort_order}-video
-{course_slug}-b{sort_order}-pdf
-{course_slug}-b{sort_order}-handwritten
-{course_slug}-b{sort_order}-answer
+{course_slug}-{subject}-b{bai}-video
+{course_slug}-{subject}-b{bai}-pdf
+{course_slug}-{subject}-b{bai}-handwritten
+{course_slug}-{subject}-b{bai}-answer
 ```
 
-Ví dụ cho khóa HSA, bài có `sort_order = 1`:
+Trong đó:
+
+- `{subject}` ∈ `toan | tieng-viet | tieng-anh | hoa-hoc | sinh-hoc | lich-su | dia-li | vat-li`.
+- `{bai}` = **số bài trong từng môn** (lấy từ title `... · Bài N`), KHÔNG còn dùng `sort_order` toàn khóa. Toán bắt đầu `b1`; Tiếng Việt bắt đầu `b0`.
+
+Ví dụ cho khóa HSA, `Toán · Bài 1`:
 
 ```text
-courses/khoa-nen-tang-vact-2027/b1/video.mp4
-courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf
-courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf
-courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/video.mp4
+courses/khoa-nen-tang-vact-2027/toan/b1/de-bai.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/viet-tay.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/dap-an-chi-tiet.pdf
 
-khoa-nen-tang-vact-2027-b1-video
-khoa-nen-tang-vact-2027-b1-pdf
-khoa-nen-tang-vact-2027-b1-handwritten
-khoa-nen-tang-vact-2027-b1-answer
+khoa-nen-tang-vact-2027-toan-b1-video
+khoa-nen-tang-vact-2027-toan-b1-pdf
+khoa-nen-tang-vact-2027-toan-b1-handwritten
+khoa-nen-tang-vact-2027-toan-b1-answer
+```
+
+Và `Hóa · Bài 1` (trước đây là `b104`, nay nằm trong thư mục môn):
+
+```text
+courses/khoa-nen-tang-vact-2027/hoa-hoc/b1/video.mp4
+khoa-nen-tang-vact-2027-hoa-hoc-b1-video
 ```
 
 Khuyến nghị giữ tên file ASCII cố định như trên. Tên tiếng Việt hoặc có dấu cách vẫn có thể upload được, nhưng dễ sai khi copy object key vào SQL.
@@ -102,20 +114,20 @@ Số bài: 179
 Object root: courses/khoa-nen-tang-vact-2027/
 ```
 
-Mapping môn theo `sort_order`:
+Mapping môn → thư mục con (số `b{bai}` reset theo TỪNG môn):
 
-| Môn | Bài trong UI | `sort_order` dùng trong object key |
-| --- | --- | --- |
-| Toán | Bài 1 đến Bài 58 | `b1` đến `b58` |
-| Tiếng Việt | Bài 0 đến Bài 22 | `b59` đến `b81` |
-| Tiếng Anh | Bài 1 đến Bài 22 | `b82` đến `b103` |
-| Hóa | Bài 1 đến Bài 23 | `b104` đến `b126` |
-| Sinh học | Bài 1 đến Bài 14 | `b127` đến `b140` |
-| Sử | Bài 1 đến Bài 16 | `b141` đến `b156` |
-| Địa | Bài 1 đến Bài 16 | `b157` đến `b172` |
-| Lí | Bài 1 đến Bài 7 | `b173` đến `b179` |
+| Môn | Thư mục `{subject}` | Bài trong UI | Object key dùng |
+| --- | --- | --- | --- |
+| Toán | `toan` | Bài 1 → 58 | `toan/b1` → `toan/b58` |
+| Tiếng Việt | `tieng-viet` | Bài 0 → 22 | `tieng-viet/b0` → `tieng-viet/b22` |
+| Tiếng Anh | `tieng-anh` | Bài 1 → 22 | `tieng-anh/b1` → `tieng-anh/b22` |
+| Hóa | `hoa-hoc` | Bài 1 → 23 | `hoa-hoc/b1` → `hoa-hoc/b23` |
+| Sinh học | `sinh-hoc` | Bài 1 → 14 | `sinh-hoc/b1` → `sinh-hoc/b14` |
+| Sử | `lich-su` | Bài 1 → 16 | `lich-su/b1` → `lich-su/b16` |
+| Địa | `dia-li` | Bài 1 → 16 | `dia-li/b1` → `dia-li/b16` |
+| Lí | `vat-li` | Bài 1 → 7 | `vat-li/b1` → `vat-li/b7` |
 
-Điểm dễ nhầm: `sort_order` là số thứ tự toàn khóa. Vì vậy `Hóa · Bài 1` upload vào `b104`, không phải `b1`.
+`b{bai}` giờ là số bài trong môn (khớp đúng "Bài N" trên UI), không còn là `sort_order` toàn khóa. Ví dụ `Hóa · Bài 1` upload vào `hoa-hoc/b1` (trước đây là `b104`).
 
 ### TSA: Khóa Trại hè Đánh thức tư duy ĐGNL
 
@@ -191,10 +203,10 @@ Chỉ dùng slug này nếu dòng trong bảng `courses.slug` cũng đúng y h�
 Ví dụ HSA, Toán Bài 1:
 
 ```text
-courses/khoa-nen-tang-vact-2027/b1/video.mp4
-courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf
-courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf
-courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/video.mp4
+courses/khoa-nen-tang-vact-2027/toan/b1/de-bai.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/viet-tay.pdf
+courses/khoa-nen-tang-vact-2027/toan/b1/dap-an-chi-tiet.pdf
 ```
 
 ### Cách 2: Dùng AWS CLI compatible
@@ -213,72 +225,46 @@ Upload HSA Toán Bài 1:
 
 ```bash
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./video.mp4 \
-  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/video.mp4" \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/toan/b1/video.mp4" \
   --content-type "video/mp4"
 
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./de-bai.pdf \
-  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf" \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/toan/b1/de-bai.pdf" \
   --content-type "application/pdf"
 
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./viet-tay.pdf \
-  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf" \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/toan/b1/viet-tay.pdf" \
   --content-type "application/pdf"
 
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./dap-an-chi-tiet.pdf \
-  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf" \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/toan/b1/dap-an-chi-tiet.pdf" \
   --content-type "application/pdf"
 ```
 
-Upload HSA Hóa Bài 1:
+Upload HSA Hóa Bài 1 (vào thư mục môn `hoa-hoc`, KHÔNG còn là `b104`):
 
 ```bash
 aws --endpoint-url "$VCOS_ENDPOINT" s3 cp ./video.mp4 \
-  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/b104/video.mp4" \
+  "s3://$VCOS_BUCKET/courses/khoa-nen-tang-vact-2027/hoa-hoc/b1/video.mp4" \
   --content-type "video/mp4"
 ```
 
 ## 5. SQL nối media vào bài học
 
-### Mẫu đầy đủ cho một bài
+> **Lưu ý:** Migration `V20__restructure_media_by_subject.sql` đã tự tạo sẵn 4 media cho TẤT CẢ bài của mọi môn theo cấu trúc môn ở trên và nối vào `lessons`. Bình thường KHÔNG cần chạy SQL tay — chỉ cần upload file đúng object key là xem được. Phần dưới chỉ dùng khi cần ghi đè/sửa riêng một bài.
 
-Thay 3 giá trị này trước khi chạy:
+### Template ghi đè một bài
 
-- `course_slug`
-- `sort_order`
-- `title_prefix`
+Thay `{subject}` (vd `toan`, `hoa-hoc`) và `{bai}` (số bài trong môn) cho phù hợp:
 
 ```sql
--- Ví dụ: HSA Toán Bài 1
+-- Ví dụ: HSA Toán Bài 1  ->  subject = toan, bai = 1
 INSERT INTO media_assets (id, object_key, content_type, course_slug, title)
 VALUES
-  (
-    'khoa-nen-tang-vact-2027-b1-video',
-    'courses/khoa-nen-tang-vact-2027/b1/video.mp4',
-    'video/mp4',
-    'khoa-nen-tang-vact-2027',
-    'Toán · Bài 1 · Video bài giảng'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b1-pdf',
-    'courses/khoa-nen-tang-vact-2027/b1/de-bai.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Toán · Bài 1 · Đề bài'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b1-handwritten',
-    'courses/khoa-nen-tang-vact-2027/b1/viet-tay.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Toán · Bài 1 · File viết tay'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b1-answer',
-    'courses/khoa-nen-tang-vact-2027/b1/dap-an-chi-tiet.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Toán · Bài 1 · Đáp án chi tiết'
-  )
+  ('khoa-nen-tang-vact-2027-toan-b1-video',       'courses/khoa-nen-tang-vact-2027/toan/b1/video.mp4',           'video/mp4',       'khoa-nen-tang-vact-2027', 'Toán · Bài 1 · Video bài giảng'),
+  ('khoa-nen-tang-vact-2027-toan-b1-pdf',         'courses/khoa-nen-tang-vact-2027/toan/b1/de-bai.pdf',          'application/pdf', 'khoa-nen-tang-vact-2027', 'Toán · Bài 1 · Đề bài'),
+  ('khoa-nen-tang-vact-2027-toan-b1-handwritten', 'courses/khoa-nen-tang-vact-2027/toan/b1/viet-tay.pdf',        'application/pdf', 'khoa-nen-tang-vact-2027', 'Toán · Bài 1 · File viết tay'),
+  ('khoa-nen-tang-vact-2027-toan-b1-answer',      'courses/khoa-nen-tang-vact-2027/toan/b1/dap-an-chi-tiet.pdf', 'application/pdf', 'khoa-nen-tang-vact-2027', 'Toán · Bài 1 · Đáp án chi tiết')
 ON CONFLICT (id) DO UPDATE
 SET object_key = EXCLUDED.object_key,
     content_type = EXCLUDED.content_type,
@@ -286,107 +272,21 @@ SET object_key = EXCLUDED.object_key,
     title = EXCLUDED.title;
 
 UPDATE lessons
-SET video_media_id = 'khoa-nen-tang-vact-2027-b1-video',
-    pdf_media_id = 'khoa-nen-tang-vact-2027-b1-pdf',
-    handwritten_media_id = 'khoa-nen-tang-vact-2027-b1-handwritten',
-    answer_media_id = 'khoa-nen-tang-vact-2027-b1-answer'
-WHERE course_id = (
-    SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
-)
-AND sort_order = 1;
+SET video_media_id       = 'khoa-nen-tang-vact-2027-toan-b1-video',
+    pdf_media_id         = 'khoa-nen-tang-vact-2027-toan-b1-pdf',
+    handwritten_media_id = 'khoa-nen-tang-vact-2027-toan-b1-handwritten',
+    answer_media_id      = 'khoa-nen-tang-vact-2027-toan-b1-answer'
+WHERE course_id = (SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027')
+  AND title LIKE 'Toán · Bài 1:%';
 ```
 
-### HSA: ví dụ Hóa Bài 1
+Các môn khác làm tương tự, chỉ đổi `{subject}`/`{bai}`:
 
-`Hóa · Bài 1` có `sort_order = 104`, nên object key dùng `b104`.
+- `Hóa · Bài 1`  → id `khoa-nen-tang-vact-2027-hoa-hoc-b1-*`, key `courses/khoa-nen-tang-vact-2027/hoa-hoc/b1/...`
+- `Lí · Bài 7`   → id `khoa-nen-tang-vact-2027-vat-li-b7-*`,  key `courses/khoa-nen-tang-vact-2027/vat-li/b7/...`
+- `Tiếng Việt · Bài 0` → id `khoa-nen-tang-vact-2027-tieng-viet-b0-*`, key `.../tieng-viet/b0/...`
 
-```sql
-INSERT INTO media_assets (id, object_key, content_type, course_slug, title)
-VALUES
-  (
-    'khoa-nen-tang-vact-2027-b104-video',
-    'courses/khoa-nen-tang-vact-2027/b104/video.mp4',
-    'video/mp4',
-    'khoa-nen-tang-vact-2027',
-    'Hóa · Bài 1 · Video bài giảng'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b104-pdf',
-    'courses/khoa-nen-tang-vact-2027/b104/de-bai.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Hóa · Bài 1 · Đề bài'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b104-handwritten',
-    'courses/khoa-nen-tang-vact-2027/b104/viet-tay.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Hóa · Bài 1 · File viết tay'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b104-answer',
-    'courses/khoa-nen-tang-vact-2027/b104/dap-an-chi-tiet.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Hóa · Bài 1 · Đáp án chi tiết'
-  )
-ON CONFLICT (id) DO UPDATE
-SET object_key = EXCLUDED.object_key,
-    content_type = EXCLUDED.content_type,
-    course_slug = EXCLUDED.course_slug,
-    title = EXCLUDED.title;
-
-UPDATE lessons
-SET video_media_id = 'khoa-nen-tang-vact-2027-b104-video',
-    pdf_media_id = 'khoa-nen-tang-vact-2027-b104-pdf',
-    handwritten_media_id = 'khoa-nen-tang-vact-2027-b104-handwritten',
-    answer_media_id = 'khoa-nen-tang-vact-2027-b104-answer'
-WHERE course_id = (
-    SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
-)
-AND sort_order = 104;
-```
-
-### HSA: ví dụ Lí Bài 7
-
-`Lí · Bài 7` có `sort_order = 179`.
-
-```sql
-INSERT INTO media_assets (id, object_key, content_type, course_slug, title)
-VALUES
-  (
-    'khoa-nen-tang-vact-2027-b179-video',
-    'courses/khoa-nen-tang-vact-2027/b179/video.mp4',
-    'video/mp4',
-    'khoa-nen-tang-vact-2027',
-    'Lí · Bài 7 · Video bài giảng'
-  ),
-  (
-    'khoa-nen-tang-vact-2027-b179-pdf',
-    'courses/khoa-nen-tang-vact-2027/b179/de-bai.pdf',
-    'application/pdf',
-    'khoa-nen-tang-vact-2027',
-    'Lí · Bài 7 · Đề bài'
-  )
-ON CONFLICT (id) DO UPDATE
-SET object_key = EXCLUDED.object_key,
-    content_type = EXCLUDED.content_type,
-    course_slug = EXCLUDED.course_slug,
-    title = EXCLUDED.title;
-
-UPDATE lessons
-SET video_media_id = 'khoa-nen-tang-vact-2027-b179-video',
-    pdf_media_id = 'khoa-nen-tang-vact-2027-b179-pdf',
-    handwritten_media_id = NULL,
-    answer_media_id = NULL
-WHERE course_id = (
-    SELECT id FROM courses WHERE slug = 'khoa-nen-tang-vact-2027'
-)
-AND sort_order = 179;
-```
-
-Nếu một bài chưa có file viết tay, để `handwritten_media_id = NULL`. Nếu chưa có file đáp án chi tiết, để `answer_media_id = NULL`. Nếu chưa có video, để `video_media_id = NULL`. UI sẽ chỉ hiển thị phần có media id.
+`V20` đã gán đủ 4 media id cho mọi bài. Bài nào chưa có file thì phần đó hiện "Nội dung chưa được tải lên". Muốn ẩn hẳn một phần (vd bài không có file viết tay), set cột tương ứng trong `lessons` `= NULL`.
 
 ## 6. Mẫu kiểm tra sau khi chạy SQL
 
@@ -478,10 +378,10 @@ Chạy:
 SELECT id
 FROM media_assets
 WHERE id IN (
-  'khoa-nen-tang-vact-2027-b1-video',
-  'khoa-nen-tang-vact-2027-b1-pdf',
-  'khoa-nen-tang-vact-2027-b1-handwritten',
-  'khoa-nen-tang-vact-2027-b1-answer'
+  'khoa-nen-tang-vact-2027-toan-b1-video',
+  'khoa-nen-tang-vact-2027-toan-b1-pdf',
+  'khoa-nen-tang-vact-2027-toan-b1-handwritten',
+  'khoa-nen-tang-vact-2027-toan-b1-answer'
 );
 ```
 
@@ -515,28 +415,27 @@ Kiểm tra object key có tồn tại trong bucket:
 
 ```bash
 aws --endpoint-url "$VCOS_ENDPOINT" s3 ls \
-  "s3://mita-edu-123/courses/khoa-nen-tang-vact-2027/b1/"
+  "s3://mita-edu-123/courses/khoa-nen-tang-vact-2027/toan/b1/"
 ```
 
 Nếu không thấy file, upload lại đúng đường dẫn.
 
-### Dữ liệu legacy `toan-vact-hsa`
+### Dữ liệu legacy & flat cũ
 
-Migration cũ có seed media id dạng:
+Trước `V20`, media từng được seed dạng phẳng:
 
 ```text
-toan-vact-hsa-b1-video
-toan-vact-hsa-b1-pdf
-toan-vact-hsa-b1-handwritten
+toan-vact-hsa-b1-*                  (legacy, course_slug sai)
+khoa-nen-tang-vact-2027-b1-*        (flat theo sort_order toàn khóa)
 ```
 
-Đây là dữ liệu legacy. Với nội dung mới, dùng slug thật `khoa-nen-tang-vact-2027`. Nếu muốn chuẩn hóa lại Bài 1 HSA, chạy SQL ở mục 5 cho `b1` để tạo bộ id mới rồi update lesson về:
+`V20` đã tự XÓA hết các id này và thay bằng id theo môn:
 
 ```text
-khoa-nen-tang-vact-2027-b1-video
-khoa-nen-tang-vact-2027-b1-pdf
-khoa-nen-tang-vact-2027-b1-handwritten
-khoa-nen-tang-vact-2027-b1-answer
+khoa-nen-tang-vact-2027-toan-b1-video
+khoa-nen-tang-vact-2027-toan-b1-pdf
+khoa-nen-tang-vact-2027-toan-b1-handwritten
+khoa-nen-tang-vact-2027-toan-b1-answer
 ```
 
 ## 9. Quy trình chuẩn cho mỗi đợt upload
@@ -551,23 +450,25 @@ WHERE c.slug = 'khoa-nen-tang-vact-2027'
 ORDER BY l.sort_order;
 ```
 
-2. Đặt file local theo từng bài:
+2. Đặt file local theo từng môn / từng bài:
 
 ```text
 local-upload/
-  b1/
-    video.mp4
-    de-bai.pdf
-    viet-tay.pdf
-    dap-an-chi-tiet.pdf
-  b2/
-    video.mp4
-    de-bai.pdf
+  toan/
+    b1/
+      video.mp4
+      de-bai.pdf
+      viet-tay.pdf
+      dap-an-chi-tiet.pdf
+    b2/
+      video.mp4
+      de-bai.pdf
+  hoa-hoc/
+    b1/
+      video.mp4
 ```
 
-3. Upload lên bucket theo cùng số `b{sort_order}`.
-4. Chạy SQL `INSERT INTO media_assets ... ON CONFLICT`.
-5. Chạy SQL `UPDATE lessons ...`.
-6. Kiểm tra bằng query ở mục 6.
-7. Test admin trên website.
-8. Test học sinh bằng mã kích hoạt thật.
+3. Upload lên bucket theo đúng `courses/khoa-nen-tang-vact-2027/{subject}/b{bai}/...` (V20 đã gán media id sẵn, không cần chạy SQL nữa).
+4. Kiểm tra bằng query ở mục 6.
+5. Test admin trên website.
+6. Test học sinh bằng mã kích hoạt thật.
